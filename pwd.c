@@ -1,0 +1,9 @@
+/*
+
+getcwd gets the current directory.asm
+
+chdir targets the directory file and changes the working directory
+
+needs to work with cd. CD changes the pwd directory with chdir. 
+
+*/

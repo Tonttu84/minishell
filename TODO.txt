@@ -1,0 +1,19 @@
+Can I just replace the quotes with escape characters?
+
+Hypothesis:
+Step 1: Replace quotes with escape characters 
+Step 2 strip escape characters that dont matter.
+
+Doesnt work, awk needs quotes
+
+Lexer then parsing
+
+Quotes are not delimiters. So you need to handle delimiters seperately. c"d .." (dosnt work but is already valid syntax to be passed and doest need any syntaxing)
+"<" Stuff inside "blaa$arg blaa" needs to be expanded first then changed into 'blaaargvalue blaa'
+
+
+One possibility would be to have the token be inside single quotes
+
+https://linuxhandbook.com/shell-builtin-commands/
+
+$0 is a special parameter that represents the name of the script being executed. When you run a script, the shell assigns $0 to the name of the script. This can be particularly useful for logging, debugging, or providing usage information.
