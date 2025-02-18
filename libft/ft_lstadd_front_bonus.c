@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 16:55:05 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/18 18:52:40 by jrimpila         ###   ########.fr       */
+/*   Created: 2024/11/01 14:33:50 by jtuomi            #+#    #+#             */
+/*   Updated: 2024/11/01 14:40:57 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
-
-
-#include "minishell.h"
-
-void ft_exit(t_data *data, char *message, int exit_code)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	//free everything
-	(void) data;
-
-	fprintf(stderr, "%s\n", message);
-	exit(exit_code);
+	new->next = *lst;
+	*lst = new;
 }
-

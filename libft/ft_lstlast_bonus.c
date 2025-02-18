@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 16:55:05 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/18 18:52:40 by jrimpila         ###   ########.fr       */
+/*   Created: 2024/11/01 14:46:33 by jtuomi            #+#    #+#             */
+/*   Updated: 2024/11/07 18:44:57 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
-
-
-#include "minishell.h"
-
-void ft_exit(t_data *data, char *message, int exit_code)
+t_list	*ft_lstlast(t_list *lst)
 {
-	//free everything
-	(void) data;
-
-	fprintf(stderr, "%s\n", message);
-	exit(exit_code);
+	if (!lst)
+		return (NULL);
+	if (!lst->next)
+		return (lst);
+	return (ft_lstlast(lst->next));
 }
-

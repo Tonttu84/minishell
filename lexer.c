@@ -5,30 +5,7 @@
 #define BLUE "\x1b[34m"
 #define GREEN "\x1b[32m"
 
-/*
 
-Step 1: Read
-Input: find . -name "*.txt" | grep "pattern" > results.txt
-
-Step 2: Process Quotes
-Input: find . -name "*.txt" | grep "pattern" > results.txt
-
-Step 3: Split into Commands
-Command 1: find . -name "*.txt" Command 2: grep "pattern" > results.txt
-
-Step 4: Special Operators
-Command 1: find . -name "*.txt" Command 2: grep "pattern" Redirection: > results.txt
-
-Step 5: Expansion
-Command 1: find . -name "*.txt" Command 2: grep "pattern" Redirection: > results.txt
-
-Step 6: Word Splitting
-Command 1 Name: find Command 1 Arguments: . -name "*.txt" Command 2 Name: grep Command 2 Arguments: "pattern"
-
-Step 7: Execution
-Execute Command 1: find . -name "*.txt" Pipe to Command 2: grep "pattern" Redirection: > results.txt
-
-*/
 
 void remove_quotes(t_char *dst, char *src, t_data *data)
 {
@@ -38,6 +15,7 @@ void remove_quotes(t_char *dst, char *src, t_data *data)
 	int k;
 	int exp;
 
+	(void)(data);
 	exp = 0;
     in_s_quotes = 0;
     in_d_quotes = 0;
@@ -90,7 +68,7 @@ void remove_quotes(t_char *dst, char *src, t_data *data)
 		}
         i++;
     }
-    dst[i].c = '\0'; // Null-terminate the dst array
+    dst[i].c = '\0'; 
 }
 
 // real << should not have a space on the right side, I will have to check what is the correct behavior
@@ -99,7 +77,10 @@ void remove_quotes(t_char *dst, char *src, t_data *data)
 //Should get caught if it is surrounded by spaces but give error
 void mark_commands(t_char *com_line, t_data *data)
 {
-    int i = 0;
+    int i;
+	
+	(void)data;
+	i = 0;
     while(com_line[i].c != 0)
     {
         if (i == 0 || com_line[i].esc || com_line[i - 1].esc || com_line[i + 1].c == 0 || com_line[i + 1].esc)
@@ -124,6 +105,7 @@ void mark_env_var(t_char *newline, int start, t_data *data)
 {
 	int end;
 
+	(void)data;
 	end = start;
 	newline[end].var = 1;
 	end++;
@@ -144,10 +126,11 @@ void mark_env_var(t_char *newline, int start, t_data *data)
 
 }
 
-void	expand_arguments(t_char *newline, t_data *data)
+void	mark_arguments(t_char *newline, t_data *data)
 {
 	int	i;
 
+	(void)data;
 	i = 0;
 	while (newline[i].c != 0)
 	{
@@ -164,11 +147,12 @@ void lexify(char *line, t_data *data)
 {
     t_char *newline;
     int i;
-
-    newline = ft_calloc(ft_strlen(line) + 1, sizeof(t_char), data);
+	
+	(void) data;
+    newline = ft_xcalloc(ft_strlen(line) + 1, sizeof(t_char), data);
     remove_quotes(newline, line, data);
 	mark_commands(newline, data);
-	expand_arguments(newline, data);
+	mark_arguments(newline, data);
     i = 0;
     while (newline[i].c)
     {
@@ -194,9 +178,8 @@ void lexify(char *line, t_data *data)
    
 }
 
-int main(int argc, char *argv[])
+void test(t_data data[1])
 {
-    static t_data data[1]; 
     // Example lines for testing your parsing function
 char *test_lines[] =
 {
@@ -215,11 +198,19 @@ char *test_lines[] =
 };
 
     
-    for (int i = 0; i < sizeof(test_lines) / sizeof(test_lines[0]); i++)
+    for (unsigned int i = 0; i < sizeof(test_lines) / sizeof(test_lines[0]); i++)
 	{
         printf("Test line %d: %s\n", i + 1, test_lines[i]);
         lexify(test_lines[i], data);
         printf("\n");
     }
-    return (0);
+   
+	int i = 0;
+	while (i < MAX_VARS)
+	{
+		printf("%s\n", data->env[i]);
+		i++;
+
+	}
+
 }

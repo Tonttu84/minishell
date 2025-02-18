@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 16:55:05 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/18 18:52:40 by jrimpila         ###   ########.fr       */
+/*   Created: 2024/11/01 12:16:57 by jtuomi            #+#    #+#             */
+/*   Updated: 2024/11/07 14:01:26 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
-
-
-#include "minishell.h"
-
-void ft_exit(t_data *data, char *message, int exit_code)
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-	//free everything
-	(void) data;
+	unsigned int	i;
 
-	fprintf(stderr, "%s\n", message);
-	exit(exit_code);
+	i = 0;
+	if (!s || !f)
+		return ;
+	while (s[i])
+	{
+		f(i, &s[i]);
+		i++;
+	}
 }
-

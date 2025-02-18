@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   ft_xcalloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 16:55:05 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/18 18:52:40 by jrimpila         ###   ########.fr       */
+/*   Created: 2024/10/29 14:01:06 by jrimpila          #+#    #+#             */
+/*   Updated: 2025/02/18 20:17:50 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
-
 #include "minishell.h"
 
-void ft_exit(t_data *data, char *message, int exit_code)
+//BASH sets ERRNO ENOMEM
+//1 is the general error code for  malloc fails
+
+void	*ft_xcalloc(size_t nmemb, size_t size, t_data *data)
 {
-	//free everything
-	(void) data;
+	void	*ptr;
 
-	fprintf(stderr, "%s\n", message);
-	exit(exit_code);
+	if (nmemb == 0 || size == 0)
+	{
+		nmemb = 1;
+		size = 1;
+	}
+	if (nmemb > SIZE_MAX / size)
+		ft_exit(data, "ERROR MESSAGE", 1);
+	ptr = (void *)malloc(nmemb * size);
+	if (ptr == NULL)
+		ft_exit(data, "ERROR MESSAGE", 1);
+	ft_memset(ptr, 0, (nmemb * size));
+	return (ptr);
 }
-

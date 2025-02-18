@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 16:55:05 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/18 18:52:40 by jrimpila         ###   ########.fr       */
+/*   Created: 2024/10/29 11:10:29 by jtuomi            #+#    #+#             */
+/*   Updated: 2024/11/09 17:41:41 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
-
-
-#include "minishell.h"
-
-void ft_exit(t_data *data, char *message, int exit_code)
+char	*ft_strchr(const char *s, int c)
 {
-	//free everything
-	(void) data;
+	size_t	i;
+	char	cc;
 
-	fprintf(stderr, "%s\n", message);
-	exit(exit_code);
+	i = 0;
+	cc = (char)c;
+	while (s[i])
+	{
+		if (s[i] == cc)
+			return ((char *)&s[i]);
+		i++;
+	}
+	if (s[i] == cc)
+		return ((char *)&s[i]);
+	return (NULL);
 }
-

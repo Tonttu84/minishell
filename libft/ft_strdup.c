@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 16:55:05 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/18 18:52:40 by jrimpila         ###   ########.fr       */
+/*   Created: 2024/10/29 15:32:40 by jtuomi            #+#    #+#             */
+/*   Updated: 2024/11/06 14:21:47 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
-
-
-#include "minishell.h"
-
-void ft_exit(t_data *data, char *message, int exit_code)
+char	*ft_strdup(const char *s)
 {
-	//free everything
-	(void) data;
+	char	*str;
+	size_t	i;
 
-	fprintf(stderr, "%s\n", message);
-	exit(exit_code);
+	i = ft_strlen(s);
+	str = ft_calloc(i + 1, sizeof "");
+	if (!str)
+		return (NULL);
+	ft_strlcpy(str, s, i + 1);
+	return (str);
 }
-

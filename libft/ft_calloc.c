@@ -3,32 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 14:01:06 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/01/26 16:52:40 by jrimpila         ###   ########.fr       */
+/*   Created: 2024/10/28 16:48:12 by jtuomi            #+#    #+#             */
+/*   Updated: 2024/11/08 14:19:53 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-//BASH sets ERRNO ENOMEM
-//1 is the general error code for  malloc fails
-
-void	*ft_calloc(size_t nmemb, size_t size, t_data *data)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
 	void	*ptr;
+	size_t	bytes;
 
-	if (nmemb == 0 || size == 0)
+	if (!size || !nmemb)
+		return (malloc(0));
+	if (SIZE_MAX / size > nmemb)
 	{
-		nmemb = 1;
-		size = 1;
+		bytes = size * nmemb;
+		ptr = malloc(bytes);
+		if (!ptr)
+			return (NULL);
+		ft_bzero(ptr, bytes);
+		return (ptr);
 	}
-	if (nmemb > SIZE_MAX / size)
-		ft_exit(data, "ERROR MESSAGE", 1);
-	ptr = (void *)malloc(nmemb * size);
-	if (ptr == NULL)
-		ft_exit(data, "ERROR MESSAGE", 1);
-	ft_memset(ptr, 0, (nmemb * size));
-	return (ptr);
+	return (NULL);
 }

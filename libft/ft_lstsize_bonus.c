@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 15:04:45 by jrimpila          #+#    #+#             */
-/*   Updated: 2024/11/02 14:29:21 by jrimpila         ###   ########.fr       */
+/*   Created: 2024/11/01 14:41:18 by jtuomi            #+#    #+#             */
+/*   Updated: 2024/11/07 18:47:14 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isalpha(int c)
+#include "libft.h"
+
+int	ft_lstsize(t_list *lst)
 {
-	if (c >= 'a' && c <= 'z')
-		return (1);
-	if (c >= 'A' && c <= 'Z')
-		return (1);
-	return (0);
+	t_list			*last;
+	unsigned int	size;
+
+	size = 0;
+	last = lst;
+	while (last)
+	{
+		size++;
+		last = last->next;
+	}
+	return (size);
 }

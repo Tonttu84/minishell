@@ -6,13 +6,41 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:36:25 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/18 14:23:51 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/18 20:36:52 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// _=/usr/bin/env does weird stuff cant be unset
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 
-//env ei printtaa tyhjia arvoa
-//export ei printtaa _=
+
+//Creates a copy of env variables
+void init(char env_cpy[MAX_VARS + 1][MAX_LENGHT + 1], char **orig, t_data *data)
+{
+	int i;
+
+	(void) data;
+	i = 0;
+	while (i < MAX_VARS && orig[i])
+	{
+		ft_strlcpy(env_cpy[i], orig[i], MAX_LENGHT);
+		i++;
+	}
+	
+}
+
+
+int main(int argc, char **argv, char *envp[])
+{
+	static t_data	data[1];
+	
+	(void) argv;
+	if (argc != 1)
+	{
+		return (-1);
+	}
+	init(data->env, envp, data);
+	test(data);
+}
+
