@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:33:26 by jtuomi            #+#    #+#             */
-/*   Updated: 2024/12/04 17:12:46 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/02/19 19:39:50 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,28 @@
 # include <stdint.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdbool.h> 
+
+typedef struct s_char
+{
+    char c;        
+    bool esc;
+	bool com;
+	bool var;
+	bool blok;
+} t_char;
+
+
+typedef enum e_token
+{
+	
+    SINGLE_QUOTE, // 0
+    DOUBLE_QUOTE, // 1
+    NORMAL,			//2
+	RAW,			//3
+	DELIMIT,		//4
+	ARGUMENT
+}   t_token;
 
 typedef struct s_ldiv
 {
@@ -25,11 +47,19 @@ typedef struct s_ldiv
 	long int		rem;
 }					t_ldiv;
 
+typedef struct s_node
+{
+	struct s_node	*prev;
+	struct s_node	*next;
+	t_char			*str;
+	t_token			type;
+}	t_node;
+
 typedef struct s_list
 {
-	void			*content;
-	struct s_list	*next;
-}					t_list;
+	t_node	*first;
+	t_node	*last;
+}	t_list;
 
 char				*ft_ltostr(long val, unsigned int base);
 char				*ft_strtrim(char const *s1, char const *set);
@@ -75,7 +105,7 @@ void				ft_putnbr_fd(int n, int fd);
 void				ft_putendl_fd(char *s, int fd);
 
 void				ft_lstadd_front(t_list **lst, t_list *new);
-void				ft_lstadd_back(t_list **lst, t_list *new);
+void			ft_lstadd_back(t_list *stack, t_node *new);
 void				ft_lstdelone(t_list *lst, void (*del)(void *));
 void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));

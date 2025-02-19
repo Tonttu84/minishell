@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/18 20:35:46 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/19 19:36:08 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,43 +30,14 @@
 
 #define ENV_SIZE 4096
 
+#define RED "\x1b[31m"
+#define RESET "\x1b[0m"
+#define BLUE "\x1b[34m"
+#define GREEN "\x1b[32m"
+#define YELLOW "\x1b[33m"
 
 //ghost variable marks removed quotes that only act as delimiter for $expansion
-typedef struct s_char
-{
-    char c;        
-    bool esc;
-	bool com;
-	bool var;
-	bool blok;
-} t_char;
 
-
-typedef enum e_token
-{
-	
-    SINGLE_QUOTE, // 0
-    DOUBLE_QUOTE, // 1
-    NORMAL,			//2
-	RAW,			//3
-	DELIMIT,		//4
-	ARGUMENT
-}   t_token;
-
-typedef struct s_node
-{
-	struct s_node	*prev;
-	struct s_node	*next;
-	char			*str;
-	char			*original;
-	t_token			type;
-}	t_node;
-
-typedef struct s_stack
-{
-	t_node	*first;
-	t_node	*last;
-}	t_stack;
 
 typedef struct s_data
 {
@@ -74,7 +45,7 @@ typedef struct s_data
 	char	**history;
 	int		his_i;
 	char	env[MAX_VARS + 1][MAX_LENGHT + 1];
-	t_stack tokens;
+	t_list tokens;
 }	t_data;
 
 
@@ -86,11 +57,19 @@ typedef struct s_point
 }	t_point;
 
 void test(t_data data[]);
+typedef void (*node_func)(t_list *list, t_node *node);
+void		ft_exit(t_data *data, char *message, int exit_code);
+void		*ft_xcalloc(size_t nmemb, size_t size, t_data *data);
+size_t		ft_strlen(const char *s);
+void		*ft_memset(void *s, int c, size_t n);
+int			ft_isalpha(int c);
+int			ft_isalnum(int c);
+size_t		ft_wrdlen(t_char *str, t_data *data);
+const char	*find_env(t_char *source, t_data *data);
+void		create_list(t_data *data, t_char *line);
+void 		iterate_list(t_list *list, node_func func);
 
-void ft_exit(t_data *data, char *message, int exit_code);
-void	*ft_xcalloc(size_t nmemb, size_t size, t_data *data);
-size_t	ft_strlen(const char *s);
-void	*ft_memset(void *s, int c, size_t n);
-int		ft_isalpha(int c);
-int	ft_isalnum(int c);
+
+void print_node(t_list *list, t_node *node);
+
 

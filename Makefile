@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+         #
+#    By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/14 13:14:15 by jtuomi            #+#    #+#              #
-#    Updated: 2025/02/16 18:51:29 by jtuomi           ###   ########.fr        #
+#    Updated: 2025/02/19 19:40:52 by jrimpila         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,8 @@ CC = cc
 INCLUDE_DIRS = libft
 CFLAGS = -Wall -Wextra -Werror -g2
 SRC = lexer.c	ft_xcalloc.c\
-	exit.c \
-	main.c
+	exit.c	env.c utils.c \
+	main.c create_list.c ft_lstaddback.c
 OBJ := $(SRC:%.c=%.o)
 MAKE = make -C
 NAME = minishell

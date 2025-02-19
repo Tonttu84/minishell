@@ -1,9 +1,7 @@
 #include "minishell.h"
 
-#define RED "\x1b[31m"
-#define RESET "\x1b[0m"
-#define BLUE "\x1b[34m"
-#define GREEN "\x1b[32m"
+
+
 
 
 
@@ -143,7 +141,7 @@ void	mark_arguments(t_char *newline, t_data *data)
 }
 
 
-void lexify(char *line, t_data *data)
+t_char *lexify(char *line, t_data *data)
 {
     t_char *newline;
     int i;
@@ -166,6 +164,11 @@ void lexify(char *line, t_data *data)
 		{
             printf("%s%c%s", BLUE, newline[i].c, RESET);
         }
+		else if (newline[i].c == '$' && newline[i].var)
+			{
+				printf("%s%s%s", YELLOW, find_env(newline + i, data), RESET);
+				printf("%s%c%s", GREEN, newline[i].c, RESET);
+			}
 		else if (newline[i].var)
 		{
             printf("%s%c%s", GREEN, newline[i].c, RESET);
@@ -175,11 +178,13 @@ void lexify(char *line, t_data *data)
         i++;
     }
     printf("\n");
+	return (newline);
    
 }
 
 void test(t_data data[1])
 {
+	t_char *result;
     // Example lines for testing your parsing function
 char *test_lines[] =
 {
@@ -201,16 +206,45 @@ char *test_lines[] =
     for (unsigned int i = 0; i < sizeof(test_lines) / sizeof(test_lines[0]); i++)
 	{
         printf("Test line %d: %s\n", i + 1, test_lines[i]);
-        lexify(test_lines[i], data);
+        result = lexify(test_lines[i], data);
         printf("\n");
+		//create_list(data, result);
+		free(result);
+		result = NULL;
+		//printf("Printing nodes:  ");
+		//iterate_list(&data->tokens, print_node);
+		//printf("Stopped printing nodes\n");
     }
    
 	int i = 0;
 	while (i < MAX_VARS)
 	{
-		printf("%s\n", data->env[i]);
+		if (data->env[i][0])
+			printf("%s\n", data->env[i]);
 		i++;
-
 	}
+  t_char test[6];
+    
+    // Setting up the t_char array to represent $HOME
+    test[0].c = '$';
+    test[0].var = 1;
+    
+    test[1].c = 'H';
+    test[1].var = 1;
+    
+    test[2].c = 'O';
+    test[2].var = 1;
+    
+    test[3].c = 'M';
+    test[3].var = 1;
+    
+    test[4].c = 'E';
+    test[4].var = 1;
+    
+    test[5].c = '\0'; // Null-terminator
+
+
+
+	printf("%s\n",find_env(test, data));
 
 }
