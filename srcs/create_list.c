@@ -6,11 +6,11 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:50:42 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/19 19:38:47 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/19 21:50:10 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 size_t set_line(t_char *line, t_node *node, t_data *data)
 {

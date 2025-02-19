@@ -6,11 +6,11 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:41:05 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/19 19:32:05 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/19 21:50:29 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 
 

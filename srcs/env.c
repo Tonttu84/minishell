@@ -6,11 +6,11 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:32:26 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/19 18:44:12 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/19 21:51:19 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 /*get_env can have special characters
 
 ! is not a valid variable

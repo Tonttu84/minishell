@@ -6,11 +6,12 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/19 19:36:08 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/19 20:52:07 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+#ifndef MINISHELL_H
+#define MINISHELL_H
 
 # include <stddef.h>
 # include <stdint.h>
@@ -26,7 +27,7 @@
 # include <unistd.h>
 # include <errno.h>
 # include <stdbool.h> 
-# include "libft/libft.h"
+# include "../libft/libft.h"
 
 #define ENV_SIZE 4096
 
@@ -73,3 +74,4 @@ void 		iterate_list(t_list *list, node_func func);
 void print_node(t_list *list, t_node *node);
 
 
+#endif

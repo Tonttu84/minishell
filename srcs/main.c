@@ -6,11 +6,11 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:36:25 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/19 15:32:04 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/19 21:50:48 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 

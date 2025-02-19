@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 static void	add_back_utils(t_list *stack, t_node *new, t_node *cur)
 {

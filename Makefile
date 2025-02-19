@@ -6,7 +6,7 @@
 #    By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/14 13:14:15 by jtuomi            #+#    #+#              #
-#    Updated: 2025/02/19 19:40:52 by jrimpila         ###   ########.fr        #
+#    Updated: 2025/02/19 22:04:42 by jtuomi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,11 @@ AR = ar rcs
 CC = cc
 INCLUDE_DIRS = libft
 CFLAGS = -Wall -Wextra -Werror -g2
-SRC = lexer.c	ft_xcalloc.c\
+SRC = main.c lexer.c \
 	exit.c	env.c utils.c \
-	main.c create_list.c ft_lstaddback.c
+	create_list.c ft_lstaddback.c \
+	ft_xcalloc.c
+SRC := $(addprefix srcs/, $(SRC))
 OBJ := $(SRC:%.c=%.o)
 MAKE = make -C
 NAME = minishell
@@ -28,7 +30,7 @@ $(NAME) : $(OBJ) $(LIBFT)
 %.o: %.c
 	$(CC) $(CFLAGS) -o $@ -c $<
 $(LIBFT):
-	$(MAKE) libft all supp
+	$(MAKE) libft all supp bonus
 clean:
 	$(MAKE) libft clean
 	rm -f $(OBJ)

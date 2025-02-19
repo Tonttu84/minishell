@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:33:26 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/02/19 19:39:50 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/19 22:23:31 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 # include <stdint.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdbool.h> 
+# include <stdbool.h>
+
 
 typedef struct s_char
 {
@@ -60,6 +61,8 @@ typedef struct s_list
 	t_node	*first;
 	t_node	*last;
 }	t_list;
+
+
 
 char				*ft_ltostr(long val, unsigned int base);
 char				*ft_strtrim(char const *s1, char const *set);

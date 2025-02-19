@@ -5,22 +5,51 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/01 15:49:05 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/02/19 13:40:43 by jrimpila         ###   ########.fr       */
+/*   Created: 2025/02/19 13:41:58 by jrimpila          #+#    #+#             */
+/*   Updated: 2025/02/19 13:42:19 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+static void	add_back_utils(t_list *stack, t_node *new, t_node *cur)
 {
-	t_list	*last;
+	cur -> next = new;
+	stack -> last = new;
+}
 
-	if (!lst || !new)
+static void	initialize_empty_stack(t_list *stack, t_node *new)
+{
+	stack->first = new;
+	stack->last = new;
+	new->next = new;
+	new->prev = new;
+}
+
+void	ft_lstadd_back(t_list *stack, t_node *new)
+{
+	t_node	*cur;
+
+	if (new == NULL)
+	{
+		perror("DEBUG: Tried to add an empty stack");
 		return ;
-	last = ft_lstlast(*lst);
-	if (!last)
-		*lst = new;
-	else
-		last->next = new;
+	}
+	if (stack->first == NULL)
+		return (initialize_empty_stack(stack, new));
+	cur = stack->first;
+	if (stack->first == stack->last)
+	{
+		add_back_utils(stack, new, cur);
+		cur->prev = new;
+		new->prev = cur;
+		new->next = cur;
+		return ;
+	}
+	while (cur != stack->last)
+		cur = cur->next;
+	add_back_utils(stack, new, cur);
+	new->prev = cur;
+	new->next = stack->first;
+	stack->first->prev = stack->last;
 }
