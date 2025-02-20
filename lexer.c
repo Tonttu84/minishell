@@ -83,14 +83,14 @@ void mark_commands(t_char *com_line, t_data *data)
     {
         if (i == 0 || com_line[i].esc || com_line[i - 1].esc || com_line[i + 1].c == 0 || com_line[i + 1].esc)
             ;
-        else if (com_line[i - 1].c == '<' && !com_line[i - 2].esc && com_line[i - 2].c == ' ' && com_line[i].c == '<' && com_line[i + 1].c == ' ')
-            com_line[i].com = 1;
+      //  else if (com_line[i - 1].c == '<' && !com_line[i - 2].esc && com_line[i - 2].c == ' ' && com_line[i].c == '<' && com_line[i + 1].c == ' ')
+       //     com_line[i].com = 1;
         else if (com_line[i - 1].c == '>' && !com_line[i - 2].esc && com_line[i - 2].c == ' ' && com_line[i].c == '>' && com_line[i + 1].c == ' ')
             com_line[i].com = 1;
         else if (com_line[i - 1].c == ' ' && com_line[i].c == '>' && com_line[i + 1].c == '>' && !com_line[i + 2].esc && com_line[i + 2].c == ' ')
             com_line[i].com = 1;
-        else if (com_line[i].c == '<' && com_line[i + 1].c == '<' && com_line[i + 2].c != 0 && (com_line[i + 2].esc == 0 && com_line[i + 2].c != ' '))
-            com_line[i].com = 1;
+   //     else if (com_line[i].c == '<' && com_line[i + 1].c == '<' && com_line[i + 2].c != 0 && (com_line[i + 2].esc == 0 && com_line[i + 2].c != ' '))
+      //      com_line[i].com = 1;
         else if (com_line[i - 1].c != ' ' || com_line[i + 1].c != ' ')
             ;
         else if (com_line[i].c == '|' || com_line[i].c == '<' || com_line[i].c == '>')
@@ -195,10 +195,10 @@ char *test_lines[] =
     "ps -ef | grep $SHELL > shell_processes.txt",
     "cd $TEMP && ls -l > temp_dir_list.txt",
     "tar -czvf $BACKUP/archive.tar.gz $HOME/documents",
-    "echo tadaa \"$HOSTNAM'E'\" << hostname.txt",
+    "e''c\"h\"o tadaa \"$HOSTNAM'E'\" >> hostname.txt",
     "awk '{print $2}' $DATA_FILE > second_column.txt",
     "df -h $HOME > disk_usage_home.txt",
-	"echo '$HOME'",
+	"echo $HOM''E",
 	"./pipex infile \"ls -a\" \"cat -e\" outfile | \"cat -e\" outfile"
 };
 
