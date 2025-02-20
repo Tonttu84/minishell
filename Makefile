@@ -6,7 +6,7 @@
 #    By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/14 13:14:15 by jtuomi            #+#    #+#              #
-#    Updated: 2025/02/19 19:40:52 by jrimpila         ###   ########.fr        #
+#    Updated: 2025/02/20 13:09:02 by jrimpila         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ INCLUDE_DIRS = libft
 CFLAGS = -Wall -Wextra -Werror -g2
 SRC = lexer.c	ft_xcalloc.c\
 	exit.c	env.c utils.c \
-	main.c create_list.c ft_lstaddback.c
+	main.c create_list.c ft_lstaddback.c debug.c
 OBJ := $(SRC:%.c=%.o)
 MAKE = make -C
 NAME = minishell

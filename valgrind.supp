@@ -1,0 +1,7 @@
+{
+    ignore_uninit_env
+    Memcheck:Cond
+    fun:match_env_argument
+    obj:/usr/libexec/valgrind/*
+}
+

@@ -6,11 +6,29 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:41:58 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/19 13:42:19 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/20 13:56:19 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void set_type(t_list *stack, t_node *new)
+{
+	if (stack->first == new)
+		new->type = CMD;
+	if (new->str == NULL)
+		new ->type = DELIMIT;
+	else if (new->str[0].c == '|' && new->str[0].com)
+		new->type = PIPE;
+	else if (new->prev->prev->str[0].c == '|' && new->prev->prev->str[0].com)
+		new->type = CMD;
+	else if (new->prev->prev->str[0].c == '>' && new->prev->prev->str[0].com)
+		new->type = REDIR_FILE;
+	else if (new->str[0].com)
+		new->type = CTRL;
+	else 
+		new->type = ARG;
+}
 
 static void	add_back_utils(t_list *stack, t_node *new, t_node *cur)
 {
@@ -20,10 +38,12 @@ static void	add_back_utils(t_list *stack, t_node *new, t_node *cur)
 
 static void	initialize_empty_stack(t_list *stack, t_node *new)
 {
+	
 	stack->first = new;
 	stack->last = new;
 	new->next = new;
 	new->prev = new;
+	new->type = CMD;
 }
 
 void	ft_lstadd_back(t_list *stack, t_node *new)
@@ -31,10 +51,7 @@ void	ft_lstadd_back(t_list *stack, t_node *new)
 	t_node	*cur;
 
 	if (new == NULL)
-	{
-		perror("DEBUG: Tried to add an empty stack");
-		return ;
-	}
+		return (perror("DEBUG: Tried to add an empty stack"));
 	if (stack->first == NULL)
 		return (initialize_empty_stack(stack, new));
 	cur = stack->first;
@@ -44,6 +61,7 @@ void	ft_lstadd_back(t_list *stack, t_node *new)
 		cur->prev = new;
 		new->prev = cur;
 		new->next = cur;
+		set_type(stack, new);
 		return ;
 	}
 	while (cur != stack->last)
@@ -52,4 +70,9 @@ void	ft_lstadd_back(t_list *stack, t_node *new)
 	new->prev = cur;
 	new->next = stack->first;
 	stack->first->prev = stack->last;
+
+	//This spot could check for ivalid stuff like > > but for now Im just adding the normal types
+	set_type(stack, new);
+	
+	
 }
