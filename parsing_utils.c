@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:54:24 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/22 17:49:45 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/22 17:56:41 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ t_sent *conv_linked_to_sentence(t_node *node)
 	{
 		sentence->inpipe = 1;
 		node = destroy_node(&get_data()->tokens, node);
+		if (node->type == DELIMIT)
 		node = destroy_node(&get_data()->tokens, node);
 	}
 	i = 0;
@@ -89,13 +90,15 @@ t_sent *conv_linked_to_sentence(t_node *node)
 			else 
 				sentence->outfile = cnvrt_to_char(node->str);
 		}
-		else
+		else if (node->type != DELIMIT)
 		{ 
 			sentence->array[i] = cnvrt_to_char(node->str);
 			i++;
 		}
 		node = destroy_node(&get_data()->tokens, node);
 	} 
+	if (node->type == DELIMIT)
+		node = destroy_node(&get_data()->tokens, node);
 	if (node->type == PIPE)
 		sentence->outpipe = 1;
 	else 
@@ -114,10 +117,13 @@ t_sent *conv_linked_to_sentence(t_node *node)
 			else 
 				sentence->outfile = cnvrt_to_char(node->str);
 		}
-		else
+		else if (node->type != DELIMIT)
+		{ 
 			sentence->array[i] = cnvrt_to_char(node->str);
+			i++;
+		}
+		node = destroy_node(&get_data()->tokens, node);
 	}
-	node = destroy_node(&get_data()->tokens, node);
 	return (sentence);
 }
 
