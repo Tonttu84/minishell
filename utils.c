@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:41:05 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/21 16:00:10 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/22 17:40:03 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,15 @@ size_t ft_wrdlen(t_char *str, t_data *data)
 	return (count_i++);
 }
 
-void destroy_node(t_list *list, t_node *node)
+t_node *destroy_node(t_list *list, t_node *node)
 {
+	t_node *cur;
+	
+	cur = node->next;
 	if (list->first == node && list->last == node)
 	{
 		list->first = NULL;
+		cur = NULL;
 		list->last = NULL;
 	}
 	else if (list->first == node)
@@ -68,6 +72,7 @@ void destroy_node(t_list *list, t_node *node)
 	node->str = NULL;
 	free(node);
 	node = NULL;
+	return (cur);
 	
 }
 

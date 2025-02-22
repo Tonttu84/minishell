@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/22 16:02:36 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/22 17:40:11 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@
 # include "libft/libft.h"
 
 #define ENV_SIZE 4096
+#ifndef MAX_SENT_SIZE
+#define MAX_SENT_SIZE (50)
+#endif
+#ifndef MAX_SENTENCES
+#define MAX_SENTENCES (20)
+#endif
 
 #define RED             "\x1b[31m"
 #define GREEN           "\x1b[32m"  // Used for variable expansion
@@ -62,10 +68,18 @@ typedef struct s_data
     char    env[MAX_VARS + 1][MAX_LENGTH + 1];
     int     env_count;   
     t_list  tokens;
+	t_sent *page[MAX_SENT_SIZE];
 }   t_data;
 
+typedef struct s_sent
+{
+	char *array[MAX_SENT_SIZE];
+	bool inpipe;
+	bool outpipe;
+	char *infile;
+	char *outfile;
 
-
+}	t_sent;
 typedef struct s_point
 {
 	t_node	*node; 
@@ -88,5 +102,6 @@ void 		iterate_list(t_list *list, node_func func);
 t_data *get_data(void);
 void debug_print(t_char *array, t_data *data);
 void print_node(t_list *list, t_node *node);
-
+size_t ft_tcharlen(t_char *line);
+t_node *destroy_node(t_list *list, t_node *node);
 
