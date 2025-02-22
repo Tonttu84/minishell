@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:41:58 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/20 13:56:19 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:29:12 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ static void set_type(t_list *stack, t_node *new)
 	else if (new->prev->prev->str[0].c == '|' && new->prev->prev->str[0].com)
 		new->type = CMD;
 	else if (new->prev->prev->str[0].c == '>' && new->prev->prev->str[0].com)
-		new->type = REDIR_FILE;
+		new->type = OUT_FILE;
+	else if (new->prev->prev->str[0].c == '<' && new->prev->prev->str[0].com)
+		new->type = IN_FILE;
 	else if (new->str[0].com)
 		new->type = CTRL;
 	else 

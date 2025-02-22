@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/20 13:48:56 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/21 19:15:16 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ const char	*find_env(t_char *source, t_data *data);
 void		create_list(t_data *data, t_char *line);
 void 		iterate_list(t_list *list, node_func func);
 
-
+void debug_print(t_char *array, t_data *data);
 void print_node(t_list *list, t_node *node);
 
 

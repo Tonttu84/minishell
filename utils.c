@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:41:05 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/20 13:08:12 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:00:10 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,15 @@ void iterate_list(t_list *list, node_func func)
 }
 
 
+//Im discounting empty quotes 
 size_t ft_wrdlen(t_char *str, t_data *data)
 {
 	size_t i;
+	size_t count_i;
 	
 	(void) data;
 	i = 0;
+	count_i = 0;
 	if (str == NULL)
 	{
 		perror("DEBUG: Pointer is NULL for ft_wrdlen\n");
@@ -41,16 +44,30 @@ size_t ft_wrdlen(t_char *str, t_data *data)
 	}		
 	while (str[i].c != 0 && (str[i].c != ' ' || str[i].esc == 1))
 	{
+		if (str[i].ghost == 0)
+			count_i++;
 		i++;
 	}
-	return (i);
+	return (count_i++);
 }
 
-void destroy_node(t_node *node)
+void destroy_node(t_list *list, t_node *node)
 {
-	
+	if (list->first == node && list->last == node)
+	{
+		list->first = NULL;
+		list->last = NULL;
+	}
+	else if (list->first == node)
+		list->first = node->next;
+	else if (list->last == node)
+		list->last = node -> prev;
+	node->next->prev = node->prev;
 	node->prev->next = node->next;
-	
+	free(node->str);
+	node->str = NULL;
+	free(node);
+	node = NULL;
 	
 }
 

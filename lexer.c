@@ -6,73 +6,127 @@ jrimpila@c3r5p5:~/Git/minishell$ export GHOST=tadaa<<ta
 > 
 */
 
+int check_emp_arg(char *src, int i, t_char *dst, int *k, int in_d_quotes, int in_s_quotes);
+
+
+//checks if the next meaningful character is a delimiter
+int	next_is_delim(char *str, int i, t_char *dst, int k)
+{
+	if (dst[k -1].added)
+		return 0;
+	if (i != 0 && dst[k - 1].c != ' ' && dst[k - 1].esc != 0)
+	{	
+		return 0;
+	}
+	i += 2; 	
+	while (str[i] != 0 && str[i] != ' ')
+	{
+		if (str[i] == '\'' && str[i] == '\'')
+			{
+				i += 2;
+			}
+		else if (str[i] == '\"' && str[i] == '\"')
+			i += 2;
+		else
+			return (0);
+	}
+	return (1);
+	
+
+}
+
+
+
 
 
 
 
 void remove_quotes(t_char *dst, char *src, t_data *data)
 {
-    int i;
-    int in_s_quotes;
-    int in_d_quotes;
-	int k;
-	int exp;
+    int i = 0;
+    int in_s_quotes = 0;
+    int in_d_quotes = 0;
+    int k = 0;
+    int exp = 0;
 
-	(void)(data);
-	exp = 0;
-    in_s_quotes = 0;
-    in_d_quotes = 0;
-    i = 0;
-	k = 0;
+    (void)(data);
+
     while (src && src[i] != 0)
     {
-        if (in_s_quotes && src[i] == '\'')
+        if (check_emp_arg(src, i, dst, &k, in_d_quotes, in_s_quotes))
+            i++;
+        else if (in_s_quotes && src[i] == '\'')
             in_s_quotes = 0;
         else if (in_d_quotes && src[i] == '\"')
-            {
-				in_d_quotes = 0;
-				exp = 0;
-				dst[k + 1].blok = 1;
-			}
+        {
+            in_d_quotes = 0;
+            exp = 0;
+            dst[k + 1].blok = 1;
+        }
         else if (!in_d_quotes && !in_s_quotes && src[i] == '\"')
             in_d_quotes = 1;
         else if (!in_d_quotes && !in_s_quotes && src[i] == '\'')
-            {
-				in_s_quotes = 1;
-				dst[k + 1].blok = 1;
-			}
+        {
+            in_s_quotes = 1;
+            dst[k + 1].blok = 1;
+        }
         else if (in_s_quotes)
         {
             dst[k].c = src[i];
             dst[k].esc = 1;
-			k++;
+            k++;
         }
-		else if (in_d_quotes)
+        else if (in_d_quotes)
         {
             dst[k].c = src[i];
-			if (src[i] == '$')
-            	exp = 1;
-			else if (exp == 1)
-			{
-				if (ft_isalnum(src[i]) == 0 && src[i] != '_')
-					{
-						exp = 0;
-						dst[k + 1].blok = 1;
-					}
-			}
-			if (exp == 0)		
-				dst[k].esc = 1;
-			k++;
+            if (src[i] == '$')
+                exp = 1;
+            else if (exp == 1)
+            {
+                if (ft_isalnum(src[i]) == 0 && src[i] != '_')
+                {
+                    exp = 0;
+                    dst[k + 1].blok = 1;
+                }
+            }
+            if (exp == 0)        
+                dst[k].esc = 1;
+            k++;
         }
         else
         {
-			dst[k].c = src[i];
-			k++;
-		}
+            dst[k].c = src[i];
+            k++;
+        }
         i++;
     }
     dst[i].c = '\0'; 
 }
+
+//I will later refactor to remove the i and just pass the pointer to (src + i);
+int check_emp_arg(char *src, int i, t_char *dst, int *k, int in_d_quotes, int in_s_quotes)
+{
+    if (!in_d_quotes && !in_s_quotes && src[i] == '\'' && src[i + 1] == '\'' && next_is_delim(src, i, dst, *k))
+    {
+        dst[*k].ghost = 1;
+        dst[*k].c = 'G';
+        dst[*k + 1].c = ' ';
+        dst[*k + 1].added = 1;
+        *k += 2;
+        return 1;
+    }
+    else if (!in_d_quotes && !in_s_quotes && src[i] == '\"' && src[i + 1] == '\"' && next_is_delim(src, i, dst, *k))
+    {
+        dst[*k].ghost = 1;
+        dst[*k].c = 'G';
+        dst[*k + 1].c = ' ';
+        dst[*k + 1].added = 1;
+        *k += 2;
+        return 1;
+    }
+    return 0;
+}
+
 
 // real << should not have a space on the right side, I will have to check what is the correct behavior
 //It seems to require non whitespace character 
@@ -120,7 +174,7 @@ void mark_env_var(t_char *newline, int start, t_data *data)
 		newline[end].var = 1;
 		end++;
 	}
-	while(newline[end].c != 0 && !newline[end].esc && (ft_isalnum(newline[end].c) || newline[end].c == '_' ))
+	while(newline[end].ghost || (newline[end].c != 0 && !newline[end].esc && (ft_isalnum(newline[end].c) || newline[end].c == '_' )) )
 	{
 		if (newline[end + 1].blok != 1)
 			newline[end].var = 1;
@@ -158,6 +212,8 @@ int copy_env_to_tchar(t_char *dst, int i, const char *env)
 		dst[i].var = 1;
 		dst[i].esc = 0;
 		dst[i].com = 0;
+		dst[i].ghost = 0;
+		dst[i].added = 0;
 		i++;
 		env_i++;
 	}
@@ -182,10 +238,12 @@ void expand_arguments(t_char *dst, t_char *src, t_data *data)
 		}
 		if (src[si].var == 0)
 			{
+				dst[di].ghost = src[si].ghost;
 				dst[di].c = src[si].c;
 				dst[di].esc = src[si].esc;
 				dst[di].var = src[si].var;
 				dst[di].com = src[si].com;
+				dst[di].added = src[si].added;
 				di++;
 			}
 		si++;
@@ -194,86 +252,37 @@ void expand_arguments(t_char *dst, t_char *src, t_data *data)
 }
 
 
-t_char *lexify(char *line, t_data *data)
-{
+
+
+t_char *lexify(char *line, t_data *data) {
     t_char *newline;
-    int i;
-	static t_char expanded[1000];
-	
-	(void) data;
+    static t_char expanded[1000];
+
+    (void) data;
     newline = ft_xcalloc(ft_strlen(line) + 1, sizeof(t_char), data);
     remove_quotes(newline, line, data);
-	mark_commands(newline, data);
-	mark_arguments(newline, data);
-	expand_arguments(expanded, newline, data);
-    i = 0;
-    while (newline[i].c)
-    {
-		if (newline[i].esc && newline[i].c == ' ')
-			printf("%s_%s", RED, RESET);
-        else if (newline[i].esc)
-        {
-            printf("%s%c%s", RED, newline[i].c, RESET);
-        }
-		else if (newline[i].com)
-		{
-            printf("%s%c%s", BLUE, newline[i].c, RESET);
-        }
-		else if (newline[i].c == '$' && newline[i].var)
-			{
-				printf("%s%s%s", YELLOW, find_env(newline + i, data), RESET);
-				printf("%s%c%s", GREEN, newline[i].c, RESET);
-			}
-		else if (newline[i].var)
-		{
-            printf("%s%c%s", GREEN, newline[i].c, RESET);
-        }
-        else
-            printf("%c", newline[i].c);
-        i++;
-    }
-    printf("\n");
+    mark_commands(newline, data);
+    mark_arguments(newline, data);
+    expand_arguments(expanded, newline, data);
 
-	i = 0;
-	while (expanded[i].c)
-{
-    if (expanded[i].esc && expanded[i].c == ' ')
-        printf("%s_%s", RED, RESET);
-    else if (expanded[i].esc)
-    {
-        printf("%s%c%s", RED, expanded[i].c, RESET);
-    }
-    else if (expanded[i].com)
-    {
-        printf("%s%c%s", BLUE, expanded[i].c, RESET);
-    }
-    else if (expanded[i].c == '$' && expanded[i].var)
-    {
-        printf("%s%s%s", YELLOW, find_env(expanded + i, data), RESET);
-        printf("%s%c%s", GREEN, expanded[i].c, RESET);
-    }
-    else if (expanded[i].var)
-    {
-        printf("%s%c%s", GREEN, expanded[i].c, RESET);
-    }
-    else
-        printf("%c", expanded[i].c);
-    i++;
+    debug_print(newline, data);
+    debug_print(expanded, data);
+
+    create_list(data, expanded);
+    iterate_list(&data->tokens , print_node);
+    return (newline);
 }
-	printf("\n");
-	create_list(data, expanded);
-	iterate_list(&data->tokens , print_node);
-	return (newline);
-   
-}
+
 
 void test(t_data data[1])
 {
 	t_char *result;
     // Example lines for testing your parsing function
 char *test_lines[] =
-{
-    "cat \"$HOME/input.txt\" | grep \"search_pattern\" > \"$HOME/output.txt\" > \"$HOME/error.log\" | sort | uniq | while read line; |   echo \"Found line: \\\"$line\\\"\"; done; echo \"Current user: $USER\" | echo \"Non-existent variable: $NONEXISTENTVAR\"",
+{ 
+
+
+"cat \"$HOME/i\"\"nput.txt\" \'\' \'\'\"\" | echo $US""ER \'\'grep $invalid \"search_pattern\" < \"$HOME/input.txt\" > \"$HOME/error.log\" | sort | uniq |   echo > test.txt \"Found line: \"$line\"\" echo \"Current user: $USER\" | echo \"Non-existent variable: $NONEXISTENTVAR\"",
 };
 
     
@@ -285,9 +294,7 @@ char *test_lines[] =
 		//create_list(data, result);
 		free(result);
 		result = NULL;
-		//printf("Printing nodes:  ");
-		//iterate_list(&data->tokens, print_node);
-		//printf("Stopped printing nodes\n");
+		
     }
    /*
 	int i = 0;

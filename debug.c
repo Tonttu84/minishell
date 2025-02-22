@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:06:42 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/20 13:59:03 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/21 19:16:20 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@ const char* token_to_string(t_token token)
 {
     switch(token)
 	{
-        case DELIMIT: return "DELIMIT";
+        case DELIMIT: return "";
         case ARG: return "ARG";
         case CMD: return "CMD";
-        case REDIR_FILE: return "REDIR_FILE";
+        case OUT_FILE: return "OUT_FILE";
+		case IN_FILE: return "IN_FILE";
         case CTRL: return "CTRL";
 		case PIPE: return "PIPE";
         default: return "UNKNOWN";
@@ -31,10 +32,11 @@ const char* token_to_color(t_token token)
 {
     switch (token)
 	{
+		case IN_FILE: return BRIGHT_BLUE;
         case DELIMIT:     return YELLOW;
         case ARG:         return CYAN;
         case CMD:         return MAGENTA;
-        case REDIR_FILE:  return WHITE;
+        case OUT_FILE:  return WHITE;
         case CTRL:        return BLUE;
 		case PIPE:			return BRIGHT_YELLOW;			
         default:          return RESET;
@@ -82,3 +84,28 @@ void print_node(t_list *list, t_node *node)
     }
     printf("}");
 }
+void debug_print(t_char *array, t_data *data) {
+    int i = 0;
+    while (array[i].c) {
+        if (array[i].esc && array[i].c == ' ') {
+            printf("%s_%s", RED, RESET);
+        } else if (array[i].esc) {
+            printf("%s%c%s", RED, array[i].c, RESET);
+        } else if (array[i].com) {
+            printf("%s%c%s", BLUE, array[i].c, RESET);
+        } else if (array[i].c == '$' && array[i].var) {
+            printf("%s%s%s", YELLOW, find_env(array + i, data), RESET);
+            printf("%s%c%s", GREEN, array[i].c, RESET);
+        } else if (array[i].var) {
+            printf("%s%c%s", GREEN, array[i].c, RESET);
+        } else if (array[i].c == ' ' && array[i].ghost) {
+            printf("[G]");
+        } else {
+            printf("%c", array[i].c);
+        }
+        i++;
+    }
+    printf("\n");
+}
+
+
