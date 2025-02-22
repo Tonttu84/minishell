@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:50:42 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/21 18:55:00 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/22 12:32:37 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ t_node *create_node(t_char *line, size_t start, size_t size, t_data *data)
 	t_node *node;
 	t_char *str;
 	int i;
-	
 	
 	str = NULL;
 	node = ft_xcalloc(sizeof(t_node), 1, data);
@@ -50,7 +49,6 @@ void create_list(t_data *data, t_char *line)
 	size_t i;
 	size_t strsize;
 	
-
 	i = 0;
 	while(line[i].c != 0 )
 	{
@@ -68,3 +66,11 @@ void create_list(t_data *data, t_char *line)
 		}
 	}
 }
+
+t_data *get_data(void)
+{
+	static t_data data;
+
+	return (&data);
+}
+
