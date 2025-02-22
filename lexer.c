@@ -129,6 +129,10 @@ int check_emp_arg(char *src, int i, t_char *dst, int *k, int in_d_quotes, int in
 //It seems to require non whitespace character 
 
 //Should get caught if it is surrounded by spaces but give error
+
+
+///>test is also legal
+///> needs to be unscaped
 void mark_commands(t_char *com_line, t_data *data)
 {
 	int i;
@@ -259,7 +263,7 @@ t_char *lexify(char *line, t_data *data)
 	static t_char expanded[1000];
 
 	(void) data;
-	newline = ft_xcalloc(ft_strlen(line) + 1, sizeof(t_char), data);
+	newline = ft_xcalloc(ft_strlen(line) + 1, sizeof(t_char));
 	remove_quotes(newline, line);
 	 debug_print(newline, data);
 	mark_commands(newline, data);

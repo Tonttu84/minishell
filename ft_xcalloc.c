@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:01:06 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/18 20:17:50 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/22 16:01:51 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 //BASH sets ERRNO ENOMEM
 //1 is the general error code for  malloc fails
 
-void	*ft_xcalloc(size_t nmemb, size_t size, t_data *data)
+void	*ft_xcalloc(size_t nmemb, size_t size)
 {
 	void	*ptr;
-
+	t_data *data;
+	
+	data = get_data();
 	if (nmemb == 0 || size == 0)
 	{
 		nmemb = 1;

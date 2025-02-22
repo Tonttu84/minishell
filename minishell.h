@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/21 19:15:16 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/22 16:02:36 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct s_point
 void test(t_data data[]);
 typedef void (*node_func)(t_list *list, t_node *node);
 void		ft_exit(t_data *data, char *message, int exit_code);
-void		*ft_xcalloc(size_t nmemb, size_t size, t_data *data);
+void		*ft_xcalloc(size_t nmemb, size_t size);
 size_t		ft_strlen(const char *s);
 void		*ft_memset(void *s, int c, size_t n);
 int			ft_isalpha(int c);
@@ -85,7 +85,7 @@ size_t		ft_wrdlen(t_char *str, t_data *data);
 const char	*find_env(t_char *source, t_data *data);
 void		create_list(t_data *data, t_char *line);
 void 		iterate_list(t_list *list, node_func func);
-
+t_data *get_data(void);
 void debug_print(t_char *array, t_data *data);
 void print_node(t_list *list, t_node *node);
 

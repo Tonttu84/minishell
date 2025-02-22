@@ -6,29 +6,29 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:50:42 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/22 12:32:37 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/22 16:03:13 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_node *create_node(t_char *line, size_t start, size_t size, t_data *data)
+t_node *create_node(t_char *line, size_t start, size_t size)
 {
 	t_node *node;
 	t_char *str;
 	int i;
 	
 	str = NULL;
-	node = ft_xcalloc(sizeof(t_node), 1, data);
+	node = ft_xcalloc(sizeof(t_node), 1);
 	if (line && line[start].c == 'G' && line[start].ghost)
 	{
-		str = ft_xcalloc(sizeof(t_char), 1, data);
+		str = ft_xcalloc(sizeof(t_char), 1);
 		str[0].c = 0;
 	}
 	else if (line)
 	{
 		i = 0;
-		str = ft_xcalloc(sizeof(t_char), size + 1, data);
+		str = ft_xcalloc(sizeof(t_char), size + 1);
 		while (line[start].c != 0 && (line[start].c!= ' ' || line[start].esc))
 		{
 		str[i].c = line[start].c;
@@ -55,9 +55,9 @@ void create_list(t_data *data, t_char *line)
 		while(line[i].c != 0 && line[i].c == ' ' && line[i].esc == 0)
 			i++;
 		strsize = ft_wrdlen(line + i, data);
-		ft_lstadd_back(&data->tokens, create_node(line, i, strsize, data));
+		ft_lstadd_back(&data->tokens, create_node(line, i, strsize));
 		//creates a delimiter token
-		ft_lstadd_back(&data->tokens, create_node(NULL, 0, 0, data));
+		ft_lstadd_back(&data->tokens, create_node(NULL, 0, 0));
 		while(line[i].c != 0)
 		{
 			if (line[i].c == ' ' && line[i].esc == 0)
