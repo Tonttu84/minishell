@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:32:26 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/19 21:51:19 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/02/21 19:33:19 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ int match_env_argument(t_char *source, char *env_var)
 {
 	int i;
 	
-	if (env_var == NULL)
+	i = 0;
+	if (env_var == NULL || env_var[0] == '\0')
 		return (0);
 	if (source[0].c != '$' || (ft_isalnum(source[1].c) == 0 && source[1].c != '_'))
-		;
-		//perror("DEBUG iffy input to match_env_argument\n");
+		perror("DEBUG iffy input to match_env_argument\n");
 	i = 1;
-	while(source[i].c == env_var[i - 1] && source[i].var)
+	while(env_var[i - 1] &&  source[i].c &&  source[i].c == env_var[i - 1] && source[i].var )
 	{
 		i++;
 	}
@@ -60,12 +60,14 @@ const char *ft_get_env(const char *target)
 	return (target);
 }
 
+//export finds all, ENV only finds if there is =
+
 const char *find_env(t_char *source, t_data *data)
 {
 	int	i;
 
 	i = 0;
-	while (i < MAX_VARS)
+	while (i < data->env_count)
 	{
 		if (match_env_argument(source, data->env[i]))
 			return (ft_get_env(data->env[i]));
@@ -81,7 +83,7 @@ void env(t_data *data)
 
 	i = 0;
 	str = NULL;
-	while (i < MAX_LENGHT)
+	while (i < MAX_LENGTH)
 	{
 		str = ft_get_env(data->env[i]);
 		if (str && str[0])

@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:33:26 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/02/19 22:23:31 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/02/21 19:26:52 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,21 @@ typedef struct s_char
 	bool com;
 	bool var;
 	bool blok;
+	bool ghost;
+	bool added;
 } t_char;
 
 
 typedef enum e_token
 {
+	DELIMIT,		
+	ARG,
+	CMD,
+	OUT_FILE,
+	IN_FILE,
+	CTRL,
+	PIPE
 	
-    SINGLE_QUOTE, // 0
-    DOUBLE_QUOTE, // 1
-    NORMAL,			//2
-	RAW,			//3
-	DELIMIT,		//4
-	ARGUMENT
 }   t_token;
 
 typedef struct s_ldiv
