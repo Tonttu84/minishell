@@ -6,7 +6,7 @@
 #    By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 10:10:39 by jtuomi            #+#    #+#              #
-#    Updated: 2024/11/20 14:56:56 by jtuomi           ###   ########.fr        #
+#    Updated: 2025/02/19 22:02:28 by jtuomi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ SRCS = ft_atof.c \
 	ft_tolower.c \
 	ft_toupper.c \
 	ft_ltostr.c
-BONUS_SRCS = 	ft_lstadd_back_bonus.c \
+BONUS_SRCS = 	ft_lstaddback.c \
 	ft_lstadd_front_bonus.c \
 	ft_lstclear_bonus.c \
 	ft_lstdelone_bonus.c \

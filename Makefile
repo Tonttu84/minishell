@@ -17,6 +17,7 @@ CFLAGS = -Wall -Wextra -Werror -g2
 SRC = lexer.c	ft_xcalloc.c parsing_utils.c \
 	exit.c	env.c utils.c \
 	main.c create_list.c ft_lstaddback.c debug.c
+SRC := $(addprefix srcs/, $(SRC))
 OBJ := $(SRC:%.c=%.o)
 MAKE = make -C
 NAME = minishell
@@ -28,7 +29,7 @@ $(NAME) : $(OBJ) $(LIBFT)
 %.o: %.c
 	$(CC) $(CFLAGS) -o $@ -c $<
 $(LIBFT):
-	$(MAKE) libft all supp
+	$(MAKE) libft all supp bonus
 clean:
 	$(MAKE) libft clean
 	rm -f $(OBJ)

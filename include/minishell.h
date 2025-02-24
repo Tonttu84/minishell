@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
+#ifndef MINISHELL_H
+#define MINISHELL_H
 
 # include <stddef.h>
 # include <stdint.h>
@@ -26,7 +27,7 @@
 # include <unistd.h>
 # include <errno.h>
 # include <stdbool.h> 
-# include "libft/libft.h"
+# include "../libft/libft.h"
 
 #define ENV_SIZE 4096
 #ifndef MAX_SENT_SIZE
@@ -107,3 +108,4 @@ void print_node(t_list *list, t_node *node);
 size_t ft_tcharlen(t_char *line);
 t_node *destroy_node(t_list *list, t_node *node);
 
+#endif

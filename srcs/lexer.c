@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../include/minishell.h"
 
 /*
 jrimpila@c3r5p5:~/Git/minishell$ export GHOST=tadaa<<ta

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 t_node *create_node(t_char *line, size_t start, size_t size)
 {
@@ -73,4 +73,3 @@ t_data *get_data(void)
 
 	return (&data);
 }
-
