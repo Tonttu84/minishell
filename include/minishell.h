@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/24 13:59:46 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/24 20:03:22 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@
 
 # define ENV_SIZE 4096
 # ifndef MAX_SENT_SIZE
-#  define MAX_SENT_SIZE (50)
+#  define MAX_SENT_SIZE (200)
 # endif
 # ifndef MAX_SENTENCES
-#  define MAX_SENTENCES (20)
+#  define MAX_SENTENCES (50)
 # endif
 
 # define RED "\x1b[31m"

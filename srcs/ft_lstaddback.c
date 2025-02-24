@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:41:58 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/24 14:09:06 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/24 20:08:40 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,19 @@
 
 static void	set_type(t_list *stack, t_node *new)
 {
+	static int args = 0;
+	(void) stack;
+	
 	// redirections should have higher direction
-	if (stack->first == new)
-		new->type = CMD;
 	if (new->str == NULL)
 		new->type = DELIMIT;
 	else if (new->str[0].c == '|' && new->str[0].com)
-		new->type = PIPE;
+		{
+			new->type = PIPE;
+			args = 0;
+		}
 	else if ((new->str[0].c == '>' || new->str[0].c == '<') && new->str[0].com)
 		new->type = REDIRECT;
-	else if ((new->prev->prev->str[0].c == '|') && new->prev->prev->str[0].com)
-		new->type = CMD;
 	else if (new->prev->prev->str[0].c == '>'
 		&& new->prev->prev->str[1].c == '>' && new->prev->prev->str[0].com)
 		new->type = APPEND;
@@ -38,7 +40,15 @@ static void	set_type(t_list *stack, t_node *new)
 	else if (new->str[0].com)
 		new->type = CTRL;
 	else
-		new->type = ARG;
+		{
+			if (args == 0)
+				new->type = CMD;
+			else 
+			{
+				new->type = ARG;
+			}
+			args++;
+		}
 }
 
 static void	add_back_utils(t_list *stack, t_node *new, t_node *cur)
@@ -53,7 +63,7 @@ static void	initialize_empty_stack(t_list *stack, t_node *new)
 	stack->last = new;
 	new->next = new;
 	new->prev = new;
-	new->type = CMD;
+	set_type(stack, new);
 }
 
 void	ft_lstadd_back(t_list *stack, t_node *new)

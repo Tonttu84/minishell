@@ -6,7 +6,7 @@
 #    By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/14 13:14:15 by jtuomi            #+#    #+#              #
-#    Updated: 2025/02/22 16:16:18 by jrimpila         ###   ########.fr        #
+#    Updated: 2025/02/24 20:01:21 by jrimpila         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ $(NAME) : $(OBJ) $(LIBFT)
 %.o: %.c
 	$(CC) $(CFLAGS) -o $@ -c $<
 $(LIBFT):
-	$(MAKE) libft all supp bonus
+	$(MAKE) libft all supp
 clean:
 	$(MAKE) libft clean
 	rm -f $(OBJ)
