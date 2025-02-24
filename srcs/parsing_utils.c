@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:54:24 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/24 14:16:05 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/24 20:31:25 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,19 +81,9 @@ t_sent	*conv_linked_to_sentence(t_node *node)
 	while (node != get_data()->tokens.last && node->type != PIPE)
 	{
 		if (node->next->next->type == IN_FILE)
-		{
-			if (sentence->infile != NULL)
-				perror("Too many infiles");
-			else
 				sentence->infile = cnvrt_to_char(node->str);
-		}
 		else if (node->next->next->type == OUT_FILE)
-		{
-			if (sentence->outfile != NULL)
-				perror("Too many infiles");
-			else
 				sentence->outfile = cnvrt_to_char(node->str);
-		}
 		else if (node->type != DELIMIT)
 		{
 			sentence->array[i] = cnvrt_to_char(node->str);
@@ -108,19 +98,9 @@ t_sent	*conv_linked_to_sentence(t_node *node)
 	else
 	{
 		if (node->next->next->type == IN_FILE)
-		{
-			if (sentence->infile != NULL)
-				perror("Too many infiles");
-			else
 				sentence->infile = cnvrt_to_char(node->str);
-		}
 		else if (node->next->next->type == OUT_FILE)
-		{
-			if (sentence->outfile != NULL)
-				perror("Too many infiles");
-			else
 				sentence->outfile = cnvrt_to_char(node->str);
-		}
 		else if (node->type != DELIMIT)
 		{
 			sentence->array[i] = cnvrt_to_char(node->str);
@@ -170,6 +150,7 @@ t_sent	**create_page(t_list *stack)
 	{
 		// TODO create redirection files
 		// HEREDOCS should capture input here
+		//If open fails, abort at this point
 		page[i] = conv_linked_to_sentence(cur);
 		i++;
 	}
