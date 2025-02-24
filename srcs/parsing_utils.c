@@ -10,117 +10,119 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
-//Untested 24.2
+// Untested 24.2
 
-static int ft_isescapable(char c);
+static int	ft_isescapable(char c);
 
-
-size_t ft_tcharlen(t_char *line)
+size_t	ft_tcharlen(t_char *line)
 {
-    size_t length = 0;
-    while (line[length].c != '\0')
-    {
-        length++;
-    }
-    return length;
+	size_t	length;
+
+	length = 0;
+	while (line[length].c != '\0')
+	{
+		length++;
+	}
+	return (length);
 }
 
-char *cnvrt_to_char(t_char *line)
+char	*cnvrt_to_char(t_char *line)
 {
-	size_t i;
-	size_t k;
-	
+	size_t	i;
+	size_t	k;
+	size_t	length;
+	char	*result;
+
 	i = 0;
 	k = 0;
-    size_t length = ft_tcharlen(line);
-    char *result = ft_xcalloc((ft_tcharlen(line) * 2) + 1, sizeof(char));
-    while (i < length)
-    {
+	length = ft_tcharlen(line);
+	result = ft_xcalloc((ft_tcharlen(line) * 2) + 1, sizeof(char));
+	while (i < length)
+	{
 		if (line[k].esc && ft_isescapable(line[k].c))
-		{	
-				result[i] = '\\';
-				i++; 
+		{
+			result[i] = '\\';
+			i++;
 		}
-        result[i] = line[k].c;
+		result[i] = line[k].c;
 		i++;
 		k++;
-    }
-    result[length] = '\0';
-    return result;
+	}
+	result[length] = '\0';
+	return (result);
 }
 
-
-static int ft_isescapable(char c)
+static int	ft_isescapable(char c)
 {
-    if (c == '*' || c == '?' || c == '[' || c == ']' || c == '{' || c == '}' || 
-        c == '~' || c == '$' || c == '(' || c == ')' || c == '\\' || c == '\'' ||
-        c == '\"' || c == '>' || c == '<' || c == '|' || c == '&' || c == ';' || 
-        c == '!' || c == '#' || c == ' ')
-        return (1);
-    return (0);
+	if (c == '*' || c == '?' || c == '[' || c == ']' || c == '{' || c == '}'
+		|| c == '~' || c == '$' || c == '(' || c == ')' || c == '\\'
+		|| c == '\'' || c == '\"' || c == '>' || c == '<' || c == '|'
+		|| c == '&' || c == ';' || c == '!' || c == '#' || c == ' ')
+		return (1);
+	return (0);
 }
 
-t_sent *conv_linked_to_sentence(t_node *node)
+t_sent	*conv_linked_to_sentence(t_node *node)
 {
-	int i;
-	t_sent *sentence;
-	
+	int		i;
+	t_sent	*sentence;
+
 	sentence = ft_xcalloc(sizeof(t_node), 1);
-	if(node->type == PIPE)
+	if (node->type == PIPE)
 	{
 		sentence->inpipe = 1;
 		node = destroy_node(&get_data()->tokens, node);
 		if (node->type == DELIMIT)
-		node = destroy_node(&get_data()->tokens, node);
+			node = destroy_node(&get_data()->tokens, node);
 	}
 	i = 0;
-	while(node != get_data()->tokens.last && node->type != PIPE)
+	while (node != get_data()->tokens.last && node->type != PIPE)
 	{
 		if (node->next->next->type == IN_FILE)
 		{
 			if (sentence->infile != NULL)
 				perror("Too many infiles");
-			else 
+			else
 				sentence->infile = cnvrt_to_char(node->str);
 		}
 		else if (node->next->next->type == OUT_FILE)
 		{
 			if (sentence->outfile != NULL)
 				perror("Too many infiles");
-			else 
+			else
 				sentence->outfile = cnvrt_to_char(node->str);
 		}
 		else if (node->type != DELIMIT)
-		{ 
+		{
 			sentence->array[i] = cnvrt_to_char(node->str);
 			i++;
 		}
 		node = destroy_node(&get_data()->tokens, node);
-	} 
+	}
 	if (node->type == DELIMIT)
 		node = destroy_node(&get_data()->tokens, node);
 	if (node->type == PIPE)
 		sentence->outpipe = 1;
-	else 
+	else
 	{
 		if (node->next->next->type == IN_FILE)
 		{
 			if (sentence->infile != NULL)
 				perror("Too many infiles");
-			else 
+			else
 				sentence->infile = cnvrt_to_char(node->str);
 		}
 		else if (node->next->next->type == OUT_FILE)
 		{
 			if (sentence->outfile != NULL)
 				perror("Too many infiles");
-			else 
+			else
 				sentence->outfile = cnvrt_to_char(node->str);
 		}
 		else if (node->type != DELIMIT)
-		{ 
+		{
 			sentence->array[i] = cnvrt_to_char(node->str);
 			i++;
 		}
@@ -129,12 +131,12 @@ t_sent *conv_linked_to_sentence(t_node *node)
 	return (sentence);
 }
 
-void destroy_old_page(void)
+void	destroy_old_page(void)
 {
-	int i;
-	int k;
-	t_data *data;
-		
+	int		i;
+	int		k;
+	t_data	*data;
+
 	data = get_data();
 	i = 0;
 	while (i < MAX_SENTENCES)
@@ -152,15 +154,12 @@ void destroy_old_page(void)
 	}
 }
 
-
-t_sent **create_page(t_list *stack)
+t_sent	**create_page(t_list *stack)
 {
-	t_sent **page;
-	t_node *cur;
-	int i;
+	t_sent	**page;
+	t_node	*cur;
+	int		i;
 
-	
-	
 	destroy_old_page();
 	page = get_data()->page;
 	if (stack == NULL || stack->first == NULL)
@@ -169,11 +168,10 @@ t_sent **create_page(t_list *stack)
 	i = 0;
 	while (cur)
 	{
-		//TODO create redirection files
-		//HEREDOCS should capture input here
+		// TODO create redirection files
+		// HEREDOCS should capture input here
 		page[i] = conv_linked_to_sentence(cur);
 		i++;
 	}
 	return (page);
-
-} 
+}

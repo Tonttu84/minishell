@@ -10,17 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
-
 #include "../include/minishell.h"
 
-void ft_exit(t_data *data, char *message, int exit_code)
+void	ft_exit(t_data *data, char *message, int exit_code)
 {
-	//free everything
-	(void) data;
-
+	// free everything
+	(void)data;
 	fprintf(stderr, "%s\n", message);
 	exit(exit_code);
 }
-

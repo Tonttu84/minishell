@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
 /*get_env can have special characters
 
 ! is not a valid variable
@@ -24,18 +25,20 @@ jrimpila@c1r1p11:~/Hiveprojects/philo5.3$ export SPECIAL_VAR=1!@#$%^&*()_3+{}|:"
 bash: !@#: event not found
 */
 
-//returns 1 for match, 0 for no match.
-int match_env_argument(t_char *source, char *env_var)
+// returns 1 for match, 0 for no match.
+int	match_env_argument(t_char *source, char *env_var)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	if (env_var == NULL || env_var[0] == '\0')
 		return (0);
-	if (source[0].c != '$' || (ft_isalnum(source[1].c) == 0 && source[1].c != '_'))
+	if (source[0].c != '$' || (ft_isalnum(source[1].c) == 0
+			&& source[1].c != '_'))
 		perror("DEBUG iffy input to match_env_argument\n");
 	i = 1;
-	while(env_var[i - 1] &&  source[i].c &&  source[i].c == env_var[i - 1] && source[i].var )
+	while (env_var[i - 1] && source[i].c && source[i].c == env_var[i - 1]
+		&& source[i].var)
 	{
 		i++;
 	}
@@ -44,12 +47,10 @@ int match_env_argument(t_char *source, char *env_var)
 	return (0);
 }
 
-
-
-const char *ft_get_env(const char *target)
+const char	*ft_get_env(const char *target)
 {
-	int		i;
-	
+	int	i;
+
 	i = 0;
 	if (target == NULL)
 		return (NULL);
@@ -60,9 +61,9 @@ const char *ft_get_env(const char *target)
 	return (target);
 }
 
-//export finds all, ENV only finds if there is =
+// export finds all, ENV only finds if there is =
 
-const char *find_env(t_char *source, t_data *data)
+const char	*find_env(t_char *source, t_data *data)
 {
 	int	i;
 
@@ -76,10 +77,10 @@ const char *find_env(t_char *source, t_data *data)
 	return (NULL);
 }
 
-void env(t_data *data)
+void	env(t_data *data)
 {
-	const char *str;
-	int i;
+	const char	*str;
+	int			i;
 
 	i = 0;
 	str = NULL;
@@ -87,7 +88,7 @@ void env(t_data *data)
 	{
 		str = ft_get_env(data->env[i]);
 		if (str && str[0])
-		printf("%s\n", str);
+			printf("%s\n", str);
 		i++;
 	}
 }

@@ -12,12 +12,12 @@
 
 #include "../include/minishell.h"
 
-t_node *create_node(t_char *line, size_t start, size_t size)
+t_node	*create_node(t_char *line, size_t start, size_t size)
 {
-	t_node *node;
-	t_char *str;
-	int i;
-	
+	t_node	*node;
+	t_char	*str;
+	int		i;
+
 	str = NULL;
 	node = ft_xcalloc(sizeof(t_node), 1);
 	if (line && line[start].c == 'G' && line[start].ghost)
@@ -29,47 +29,46 @@ t_node *create_node(t_char *line, size_t start, size_t size)
 	{
 		i = 0;
 		str = ft_xcalloc(sizeof(t_char), size + 1);
-		while (line[start].c != 0 && (line[start].c!= ' ' || line[start].esc))
+		while (line[start].c != 0 && (line[start].c != ' ' || line[start].esc))
 		{
-		str[i].c = line[start].c;
-		str[i].esc = line[start].esc;
-		str[i].var = line[start].var;
-		str[i].com = line[start].com;
-		start++;
-		i++;
+			str[i].c = line[start].c;
+			str[i].esc = line[start].esc;
+			str[i].var = line[start].var;
+			str[i].com = line[start].com;
+			start++;
+			i++;
 		}
 	}
 	node->str = str;
 	return (node);
 }
 
-
-void create_list(t_data *data, t_char *line)
+void	create_list(t_data *data, t_char *line)
 {
-	size_t i;
-	size_t strsize;
-	
+	size_t	i;
+	size_t	strsize;
+
 	i = 0;
-	while(line[i].c != 0 )
+	while (line[i].c != 0)
 	{
-		while(line[i].c != 0 && line[i].c == ' ' && line[i].esc == 0)
+		while (line[i].c != 0 && line[i].c == ' ' && line[i].esc == 0)
 			i++;
 		strsize = ft_wrdlen(line + i, data);
 		ft_lstadd_back(&data->tokens, create_node(line, i, strsize));
-		//creates a delimiter token
+		// creates a delimiter token
 		ft_lstadd_back(&data->tokens, create_node(NULL, 0, 0));
-		while(line[i].c != 0)
+		while (line[i].c != 0)
 		{
 			if (line[i].c == ' ' && line[i].esc == 0)
-				break;
+				break ;
 			i++;
 		}
 	}
 }
 
-t_data *get_data(void)
+t_data	*get_data(void)
 {
-	static t_data data;
+	static t_data	data;
 
 	return (&data);
 }

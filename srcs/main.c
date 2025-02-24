@@ -14,13 +14,13 @@
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 
-
-//Creates a copy of env variables
-void init(char env_cpy[MAX_VARS + 1][MAX_LENGTH + 1], char **orig, t_data *data)
+// Creates a copy of env variables
+void	init(char env_cpy[MAX_VARS + 1][MAX_LENGTH + 1], char **orig,
+		t_data *data)
 {
-	int i;
+	int	i;
 
-	(void) data;
+	(void)data;
 	i = 0;
 	while (i < MAX_VARS && orig[i])
 	{
@@ -30,11 +30,11 @@ void init(char env_cpy[MAX_VARS + 1][MAX_LENGTH + 1], char **orig, t_data *data)
 	data->env_count = i;
 }
 
-int main(int argc, char **argv, char *envp[])
+int	main(int argc, char **argv, char *envp[])
 {
 	static t_data	data[1];
-	
-	(void) argv;
+
+	(void)argv;
 	if (argc != 1)
 	{
 		return (-1);
@@ -42,4 +42,3 @@ int main(int argc, char **argv, char *envp[])
 	init(data->env, envp, data);
 	test(data);
 }
-
