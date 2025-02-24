@@ -330,7 +330,7 @@ char *test_lines[] =
 { 
 
 
-"cat \"$HOME/i\"\"nput.txt\"<<outfile.txt \'\' \'\'\"\" | echo $US\"\"ER \'\'grep $invalid \"search_pattern\" < \"$HOME/input.txt\" > \"$HOME/error.log\" | sort | uniq |   echo > test.txt \"Found line: \"$line\"\" echo \"Current user: $USER\" | echo \"Non-existent variable: $NONEXISTENTVAR\"",
+"cat \"$HOME/i\"\"nput.txt\">>outfile.txt \'\' \'\'\"\" | echo $US\"\"ER \'\'grep $invalid \"search_pattern\" < \"$HOME/input.txt\" > \"$HOME/error.log\" | sort | uniq |   echo > test.txt \"Found line: \"$line\"\" echo \"Current user: $USER\" | echo \"Non-existent variable: $NONEXISTENTVAR\"",
 };
 
 	
