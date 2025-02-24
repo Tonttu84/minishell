@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:41:58 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/24 13:08:24 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/24 14:09:06 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 static void set_type(t_list *stack, t_node *new)
 {
 	
+	//redirections should have higher direction
+
 	if (stack->first == new)
 		new->type = CMD;
 	if (new->str == NULL)

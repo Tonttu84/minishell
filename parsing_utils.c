@@ -6,11 +6,13 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:54:24 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/22 17:56:41 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/24 14:16:05 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//Untested 24.2
 
 static int ft_isescapable(char c);
 
@@ -158,6 +160,7 @@ t_sent **create_page(t_list *stack)
 	int i;
 
 	
+	
 	destroy_old_page();
 	page = get_data()->page;
 	if (stack == NULL || stack->first == NULL)
@@ -166,6 +169,8 @@ t_sent **create_page(t_list *stack)
 	i = 0;
 	while (cur)
 	{
+		//TODO create redirection files
+		//HEREDOCS should capture input here
 		page[i] = conv_linked_to_sentence(cur);
 		i++;
 	}
