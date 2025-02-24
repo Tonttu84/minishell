@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:33:26 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/02/21 19:26:52 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:08:08 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ typedef enum e_token
 	OUT_FILE,
 	IN_FILE,
 	CTRL,
-	PIPE
+	PIPE,
+	REDIRECT,
+	HERE_DOCS,
+	APPEND
 	
 }   t_token;
 

@@ -53,19 +53,50 @@ void remove_quotes(t_char *dst, char *src)
 	{
 		if (check_emp_arg(src, i, dst, &k, in_d_quotes, in_s_quotes))
 			i++;
+		/*Heredocs treats the next characters as literals until space, except <<< has a specia meaning
+		cat << EOF
+	This is a $SHELL variable.
+	EOF
+	cat << "EOF"
+This is a $SHELL variable.
+EOF
+	*/
+
+
+		else if (!in_s_quotes && !in_d_quotes && src[i] == src[i + 1] && (src[i] == '>' || src[i] == '<'))
+		{
+			dst[k].c = ' ';
+			k++;
+			dst[k].c = src[i];
+			k++;
+			i++;
+			dst[k].c = src[i];
+			k++;
+			dst[k].c = ' ';
+			k++;
+		}
+		else if (!in_s_quotes &&  !in_d_quotes && src[i + 1] != src[i] && (src[i] == '>' || src[i] == '<'))
+		{
+			dst[k].c = ' ';
+			k++;
+			dst[k].c = src[i];
+			k++;
+			dst[k].c = ' ';
+			k++;
+		}
 		else if (in_s_quotes && src[i] == '\'')
 			in_s_quotes = 0;
 		else if (in_d_quotes && src[i] == '\"')
 		{
 			in_d_quotes = 0;
-		//Seems redunant, comment out if encounter bugs dst[k + 1].blok = 1;
+		//Seems redunant, comment out if encounter bugs: dst[k + 1].blok = 1;
 		}
 		else if (!in_d_quotes && !in_s_quotes && src[i] == '\"')
 			in_d_quotes = 1;
 		else if (!in_d_quotes && !in_s_quotes && src[i] == '\'')
 		{
 			in_s_quotes = 1;
-		//Seems redunant, comment out if encounter bugs	dst[k + 1].blok = 1;
+		//Seems redunant, comment out if encounter bugs: dst[k + 1].blok = 1;
 		}
 		else if (in_s_quotes)
 		{
@@ -143,14 +174,24 @@ void mark_commands(t_char *com_line, t_data *data)
 	{
 		if (i == 0 || com_line[i].esc || com_line[i - 1].esc || com_line[i + 1].c == 0 || com_line[i + 1].esc)
 			;
-	  //  else if (com_line[i - 1].c == '<' && !com_line[i - 2].esc && com_line[i - 2].c == ' ' && com_line[i].c == '<' && com_line[i + 1].c == ' ')
-	   //     com_line[i].com = 1;
+	    else if (com_line[i - 1].c == '<' && !com_line[i - 2].esc && com_line[i - 2].c == ' ' && com_line[i].c == '<' && com_line[i + 1].c == ' ')
+	        {
+				com_line[i].com = 1;
+				com_line[i - 1].com = 1;
+			}
 		else if (com_line[i - 1].c == '>' && !com_line[i - 2].esc && com_line[i - 2].c == ' ' && com_line[i].c == '>' && com_line[i + 1].c == ' ')
-			com_line[i].com = 1;
+			{
+				com_line[i - 1].com = 1;
+				com_line[i].com = 1;
+			}
+
 		else if (com_line[i - 1].c == ' ' && com_line[i].c == '>' && com_line[i + 1].c == '>' && !com_line[i + 2].esc && com_line[i + 2].c == ' ')
-			com_line[i].com = 1;
-   //     else if (com_line[i].c == '<' && com_line[i + 1].c == '<' && com_line[i + 2].c != 0 && (com_line[i + 2].esc == 0 && com_line[i + 2].c != ' '))
-	  //      com_line[i].com = 1;
+			{
+				com_line[i].com = 1;
+				com_line[i + 1].com = 1;
+			}
+        else if (com_line[i].c == '<' && com_line[i + 1].c == '<' && com_line[i + 2].c != 0 && (com_line[i + 2].esc == 0 && com_line[i + 2].c != ' '))
+	        com_line[i].com = 1;
 		else if (com_line[i - 1].c != ' ' || com_line[i + 1].c != ' ')
 			;
 		else if (com_line[i].c == '|' || com_line[i].c == '<' || com_line[i].c == '>')
@@ -265,16 +306,15 @@ t_char *lexify(char *line, t_data *data)
 	(void) data;
 	newline = ft_xcalloc(ft_strlen(line) + 1, sizeof(t_char));
 	remove_quotes(newline, line);
-	 debug_print(newline, data);
+	// debug_print(newline, data);
 	mark_commands(newline, data);
 	printf("PRINT 2:\n\n");
-	 debug_print(newline, data);
+	// debug_print(newline, data);
 	mark_arguments(newline, data);
-	printf("PRINT 3:\n\n");
-	 debug_print(newline, data);
+	// debug_print(newline, data);
 	expand_arguments(expanded, newline, data);
 
-   debug_print(expanded, data);
+ //  debug_print(expanded, data);
 
 	create_list(data, expanded);
 	iterate_list(&data->tokens , print_node);
@@ -290,7 +330,7 @@ char *test_lines[] =
 { 
 
 
-"cat \"$HOME/i\"\"nput.txt\" \'\' \'\'\"\" | echo $US\"\"ER \'\'grep $invalid \"search_pattern\" < \"$HOME/input.txt\" > \"$HOME/error.log\" | sort | uniq |   echo > test.txt \"Found line: \"$line\"\" echo \"Current user: $USER\" | echo \"Non-existent variable: $NONEXISTENTVAR\"",
+"cat \"$HOME/i\"\"nput.txt\"<<outfile.txt \'\' \'\'\"\" | echo $US\"\"ER \'\'grep $invalid \"search_pattern\" < \"$HOME/input.txt\" > \"$HOME/error.log\" | sort | uniq |   echo > test.txt \"Found line: \"$line\"\" echo \"Current user: $USER\" | echo \"Non-existent variable: $NONEXISTENTVAR\"",
 };
 
 	

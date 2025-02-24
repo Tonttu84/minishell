@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:41:58 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/21 11:29:12 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:08:24 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,25 @@
 
 static void set_type(t_list *stack, t_node *new)
 {
+	
 	if (stack->first == new)
 		new->type = CMD;
 	if (new->str == NULL)
 		new ->type = DELIMIT;
+	
 	else if (new->str[0].c == '|' && new->str[0].com)
 		new->type = PIPE;
-	else if (new->prev->prev->str[0].c == '|' && new->prev->prev->str[0].com)
+	else if ((new->str[0].c == '>' || new->str[0].c == '<') && new->str[0].com)
+		new->type = REDIRECT;
+		
+	else if ((new->prev->prev->str[0].c == '|') && new->prev->prev->str[0].com)
 		new->type = CMD;
+	else if (new->prev->prev->str[0].c == '>' && new->prev->prev->str[1].c == '>' && new->prev->prev->str[0].com)
+		new->type = APPEND;
 	else if (new->prev->prev->str[0].c == '>' && new->prev->prev->str[0].com)
 		new->type = OUT_FILE;
+	else if (new->prev->prev->str[0].c == '<' && new->prev->prev->str[1].c == '<' && new->prev->prev->str[0].com)
+		new->type = HERE_DOCS;
 	else if (new->prev->prev->str[0].c == '<' && new->prev->prev->str[0].com)
 		new->type = IN_FILE;
 	else if (new->str[0].com)

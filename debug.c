@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:06:42 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/21 19:16:20 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:10:16 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ const char* token_to_string(t_token token)
 		case IN_FILE: return "IN_FILE";
         case CTRL: return "CTRL";
 		case PIPE: return "PIPE";
+		case REDIRECT: return "REDIRECT";
+		case APPEND: return "APPEND";
+		case HERE_DOCS: return "HERE_DOCS";
         default: return "UNKNOWN";
     }
 }
@@ -35,9 +38,12 @@ const char* token_to_color(t_token token)
 		case IN_FILE: return BRIGHT_BLUE;
         case DELIMIT:     return YELLOW;
         case ARG:         return CYAN;
+		case HERE_DOCS:		return BRIGHT_CYAN;
         case CMD:         return MAGENTA;
         case OUT_FILE:  return WHITE;
+		case APPEND:  return BRIGHT_WHITE;
         case CTRL:        return BLUE;
+		case REDIRECT:        return BLUE;
 		case PIPE:			return BRIGHT_YELLOW;			
         default:          return RESET;
     }

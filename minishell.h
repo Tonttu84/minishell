@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/22 17:40:11 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/22 22:03:45 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,16 @@ const char* token_to_string(t_token token);
 
 //DEBUG
 
+typedef struct s_sent
+{
+	char *array[MAX_SENT_SIZE];
+	bool inpipe;
+	bool outpipe;
+	char *infile;
+	char *outfile;
+
+}	t_sent;
+
 typedef struct s_data
 {
     int     duh;
@@ -71,15 +81,7 @@ typedef struct s_data
 	t_sent *page[MAX_SENT_SIZE];
 }   t_data;
 
-typedef struct s_sent
-{
-	char *array[MAX_SENT_SIZE];
-	bool inpipe;
-	bool outpipe;
-	char *infile;
-	char *outfile;
 
-}	t_sent;
 typedef struct s_point
 {
 	t_node	*node; 
