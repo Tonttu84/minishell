@@ -87,16 +87,16 @@ EOF
 		else if (in_d_quotes && src[i] == '\"')
 		{
 			in_d_quotes = 0;
-			// Seems redunant, comment out if encounter bugs: dst[k
-			dst[k+ 1].blok = 1;
+			// Seems redunant, comment out if encounter bugs: 
+			//dst[k+ 1].blok = 1;
 		}
 		else if (!in_d_quotes && !in_s_quotes && src[i] == '\"')
 			in_d_quotes = 1;
 		else if (!in_d_quotes && !in_s_quotes && src[i] == '\'')
 		{
 			in_s_quotes = 1;
-			// Seems redunant, comment out if encounter bugs: dst[k
-			dst[k+ 1].blok = 1;
+			// Seems redunant, comment out if encounter bugs: 
+			//dst[k+ 1].blok = 1;
 		}
 		else if (in_s_quotes)
 		{

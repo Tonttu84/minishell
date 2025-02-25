@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:54:24 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/24 20:31:25 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/25 11:30:11 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,17 @@ t_sent	*conv_linked_to_sentence(t_node *node)
 	int		i;
 	t_sent	*sentence;
 
+
+/*	//if (HEREDOCS)
+		{
+		free(sentence->heredocs)
+		sentence->heredocs = NULL;
+		free(sentence->infile);
+		sentence->infile = NULL;
+		sentence->heredocs = create_heredoc()
+		}
+*/
+
 	sentence = ft_xcalloc(sizeof(t_node), 1);
 	if (node->type == PIPE)
 	{
@@ -81,9 +92,21 @@ t_sent	*conv_linked_to_sentence(t_node *node)
 	while (node != get_data()->tokens.last && node->type != PIPE)
 	{
 		if (node->next->next->type == IN_FILE)
-				sentence->infile = cnvrt_to_char(node->str);
+				{
+					free(sentence->heredocs);
+					sentence->heredocs = NULL;
+					free(sentence->infile);
+					sentence->infile = NULL;
+					sentence->infile = cnvrt_to_char(node->str);
+
+				}
 		else if (node->next->next->type == OUT_FILE)
+		{
+				free(sentence->outfile);
+				sentence->outfile = NULL;
 				sentence->outfile = cnvrt_to_char(node->str);
+
+		}
 		else if (node->type != DELIMIT)
 		{
 			sentence->array[i] = cnvrt_to_char(node->str);
@@ -136,7 +159,7 @@ void	destroy_old_page(void)
 
 t_sent	**create_page(t_list *stack)
 {
-	t_sent	**page;
+	t_sent	*page;
 	t_node	*cur;
 	int		i;
 
@@ -148,6 +171,8 @@ t_sent	**create_page(t_list *stack)
 	i = 0;
 	while (cur)
 	{
+		
+
 		// TODO create redirection files
 		// HEREDOCS should capture input here
 		//If open fails, abort at this point

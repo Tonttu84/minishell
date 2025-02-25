@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/24 20:03:22 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/25 11:40:01 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,10 @@ typedef struct s_sent
 	char		*array[MAX_SENT_SIZE];
 	bool		inpipe;
 	bool		outpipe;
-	char		*infile;
-	char		*outfile;
+	char		*infile; //change to FD
+	char		*outfile; //change to FD
+	char		*heredocs; //Change to fixed size array
+	bool		here_exists; //If we change to fixed size array we cant set it to NULL so we use a flag instead 
 
 }				t_sent;
 
