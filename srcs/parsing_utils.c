@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:54:24 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/25 11:30:11 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:06:48 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,52 @@ static int	ft_isescapable(char c)
 	return (0);
 }
 
+
+
+
+void create_heredoc(char *terminator)
+{
+	char *tmp;
+	char *result;
+	char *cpy;
+	
+	tmp = NULL;
+	while (tmp == NULL || ft_strncmp(terminator, tmp, ft_strlen(terminator) +1))
+	{
+		
+		if (tmp)
+		{
+			cpy = tmp;
+			tmp = ft_strjoin(tmp, "\n");
+			free(cpy);
+			cpy = NULL;
+			if (result)
+			{
+				cpy = result;
+				result = ft_strjoin(result, tmp);;
+				free(cpy);
+				free(tmp);
+				tmp = NULL;
+				cpy = NULL;
+			}
+			else 
+				result = tmp;
+		}
+		tmp = readline(">");
+	}
+	free (tmp);
+	return (result);
+}
+
+
+
 t_sent	*conv_linked_to_sentence(t_node *node)
 {
 	int		i;
 	t_sent	*sentence;
+
+//Need to handle expansion or non-expansion, doesnt expand if quoted
+
 
 
 /*	//if (HEREDOCS)
@@ -81,6 +123,7 @@ t_sent	*conv_linked_to_sentence(t_node *node)
 */
 
 	sentence = ft_xcalloc(sizeof(t_node), 1);
+	
 	if (node->type == PIPE)
 	{
 		sentence->inpipe = 1;
