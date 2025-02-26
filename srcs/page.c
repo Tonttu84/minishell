@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:20:15 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/26 15:00:25 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:03:00 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_sent	*conv_linked_to_sentence(t_node *node)
 	*/
 		printf("I is %d\n", i);
 			//DEBUG the guard should not be needed
-		if (node->type == IN_FILE || node->type == HERE_DOCS)
+		if (node->type == IN_FILE)
 		{
 			if (sentence)
 				free(sentence->heredocs);
@@ -68,7 +68,7 @@ t_sent	*conv_linked_to_sentence(t_node *node)
 			sentence->infile = NULL;
 			sentence->infile = cnvrt_to_char(node->str);
 		}
-		else if (node->type == OUT_FILE || node->type == APPEND )
+		else if (node->type == OUT_FILE)
 		{
 			free(sentence->outfile);
 			sentence->outfile = NULL;
