@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:20:15 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/26 16:46:35 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:40:20 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_sent	*conv_linked_to_sentence(void)
 		if(node->type == REDIRECT)
 			;
 			//First version treats them the same
-		if(node->type == IN_FILE || node->type == HERE_DOCS)
+		else if(node->type == IN_FILE || node->type == HERE_DOCS)
 		{
 			//free(sentence->infile);
 			sentence->infile = cnvrt_to_char(node->str);
