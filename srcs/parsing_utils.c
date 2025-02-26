@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:54:24 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/26 11:20:07 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:48:52 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*cnvrt_to_char(t_char *line)
 
 	i = 0;
 	k = 0;
-	length = ft_tcharlen(line);
+	length = ft_tcharlen(line) * 2;
 	result = ft_xcalloc((ft_tcharlen(line) * 2) + 1, sizeof(char));
 	while (i < length)
 	{
@@ -50,7 +50,7 @@ char	*cnvrt_to_char(t_char *line)
 		i++;
 		k++;
 	}
-	result[length] = '\0';
+	result[i] = '\0';
 	return (result);
 }
 

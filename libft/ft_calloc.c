@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 16:48:12 by jtuomi            #+#    #+#             */
-/*   Updated: 2024/11/08 14:19:53 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/02/26 14:08:39 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+//The change in calloc explodes something.
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	void	*ptr;

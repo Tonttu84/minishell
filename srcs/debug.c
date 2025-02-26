@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:06:42 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/24 13:10:16 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:43:40 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,12 @@ const char	*token_to_color(t_token token)
 void	print_node(t_list *list, t_node *node)
 {
 	int			i;
-	const char	*color = token_to_color(node->type);
+	const char	*color;
+	
+	if (node) 
+		color = token_to_color(node->type);
+	else 
+		perror("NODE IS NULL");
 
 	(void)list;
 	// Get the color for the node's type
@@ -148,3 +153,39 @@ void	debug_print(t_char *array, t_data *data)
 	}
 	printf("\n");
 }
+
+
+#include <stdio.h>
+
+void print_sentence(t_sent *sentence)
+{
+    int i;
+    
+    printf("Arguments are :");
+    fflush(stdout); 
+    i = 0;    
+	//why does this crash if I try to print into empty?
+    while (sentence->array[i] && i < 6 )
+    {
+        printf("%s \n", sentence->array[i]);
+        fflush(stdout); 
+        i++;
+    }
+    printf("PAST IT");
+    fflush(stdout); 
+    printf("\n");
+    fflush(stdout); 
+    printf("Inpipe is %d, ", sentence->inpipe);
+    fflush(stdout); 
+    printf("outpipe is %d, ", sentence->outpipe);
+    fflush(stdout); 
+    printf("infile is %s, ", sentence->infile);
+    fflush(stdout);
+    printf("outfile is %s, ", sentence->outfile);
+    fflush(stdout); 
+    printf("heredocs is %s and ", sentence->heredocs);
+    fflush(stdout); 
+    printf("here exists is %d\n", sentence->here_exists);
+    fflush(stdout);
+}
+

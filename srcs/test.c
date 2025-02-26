@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:23:16 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/26 11:32:36 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/26 12:59:45 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	test(t_data data[1])
 
 	// Example lines for testing your parsing function
 	char *test_lines[] = {
-		"cat \"$HOME/i\"\"nput.txt\">>>outfile.txt \'\' \'\'\"\" | echo $US\"\"ER \'\'grep $invalid \"search_pattern\" < \"$HOME/input.txt\" > \"$HOME/error.log\" | sort | uniq |   echo > test.txt \"Found line: \"$line\"\" echo \"Current user: $USER\" | echo \"Non-existent variable: $NONEXISTENTVAR\"",
+		"cat \"$HOME/i\"\"nput.txt\">>outfile.txt \'\' \'\'\"\" | echo $US\"\"ER \'\'grep $invalid \"search_pattern\" < \"$HOME/input.txt\" > \"$HOME/error.log\" | sort | uniq |   echo > test.txt \"Found line: \"$line\"\" echo \"Current user: $USER\" | echo \"Non-existent variable: $NONEXISTENTVAR\"",
 	};
 	for (i = 0; (unsigned int)i < sizeof(test_lines)
 		/ sizeof(test_lines[0]); i++)
@@ -30,6 +30,7 @@ void	test(t_data data[1])
 		// create_list(data, result);
 		free(result);
 		result = NULL;
+		create_page(&data->tokens);
 	}
 	/*
 		i = 0;
