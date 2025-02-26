@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:06:42 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/26 14:43:40 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:47:02 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,30 +162,29 @@ void print_sentence(t_sent *sentence)
     int i;
     
     printf("Arguments are :");
-    fflush(stdout); 
+ 
     i = 0;    
 	//why does this crash if I try to print into empty?
     while (sentence->array[i] && i < 6 )
     {
         printf("%s \n", sentence->array[i]);
-        fflush(stdout); 
+
         i++;
     }
-    printf("PAST IT");
-    fflush(stdout); 
+  
     printf("\n");
-    fflush(stdout); 
+
     printf("Inpipe is %d, ", sentence->inpipe);
-    fflush(stdout); 
+
     printf("outpipe is %d, ", sentence->outpipe);
-    fflush(stdout); 
+
     printf("infile is %s, ", sentence->infile);
-    fflush(stdout);
+
     printf("outfile is %s, ", sentence->outfile);
-    fflush(stdout); 
+ 
     printf("heredocs is %s and ", sentence->heredocs);
-    fflush(stdout); 
+
     printf("here exists is %d\n", sentence->here_exists);
-    fflush(stdout);
+
 }
 

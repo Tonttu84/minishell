@@ -6,16 +6,20 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:23:16 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/26 12:59:45 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:29:49 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	test(t_data data[1])
+void	test()
 {
 	t_char	*result;
 	int		i;
+	t_data *data;
+
+	data = get_data();
+	
 
 	// Example lines for testing your parsing function
 	char *test_lines[] = {
@@ -30,6 +34,7 @@ void	test(t_data data[1])
 		// create_list(data, result);
 		free(result);
 		result = NULL;
+		iterate_list(&data->tokens, print_node);
 		create_page(&data->tokens);
 	}
 	/*

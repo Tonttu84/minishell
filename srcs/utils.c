@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:41:05 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/26 13:32:09 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:45:40 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,6 @@ t_node *destroy_node(t_list *list, t_node *node)
     }
 
     cur = node->next;
-
-	printf("Node type is %p \n", get_data()->tokens.first);
-	printf("Next is %p \n", cur->next);
     if (list->first == node && list->last == node)
     {
         list->first = NULL;

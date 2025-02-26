@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:32:12 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/26 11:53:16 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:24:05 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ t_char	*lexify(char *line, t_data *data)
 	expand_arguments(expanded, newline, data);
 	//  debug_print(expanded, data);
 	create_list(data, expanded);
-	iterate_list(&data->tokens, print_node);
+	//iterate_list(&data->tokens, print_node);
 	return (newline);
 }
 
