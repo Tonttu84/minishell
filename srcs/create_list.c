@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:50:42 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/22 16:03:13 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:45:30 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	create_list(t_data *data, t_char *line)
 			i++;
 		strsize = ft_wrdlen(line + i, data);
 		ft_lstadd_back(&data->tokens, create_node(line, i, strsize));
-		// creates a delimiter token
+		// creates a delimiter token which seems to be not necessarily with our current approach
 		ft_lstadd_back(&data->tokens, create_node(NULL, 0, 0));
 		while (line[i].c != 0)
 		{

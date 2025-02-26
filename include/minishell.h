@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/25 11:40:01 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:37:44 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 # define ENV_SIZE 4096
 # ifndef MAX_SENT_SIZE
@@ -108,5 +110,9 @@ void			debug_print(t_char *array, t_data *data);
 void			print_node(t_list *list, t_node *node);
 size_t			ft_tcharlen(t_char *line);
 t_node			*destroy_node(t_list *list, t_node *node);
-
+void	remove_quotes(t_char *dst, char *src);
+int	copy_env_to_tchar(t_char *dst, int i, const char *env);
+char	*cnvrt_to_char(t_char *line);
+int	check_emp_arg(char *src, int i, t_char *dst, int *k, int in_d_quotes, int in_s_quotes);
+t_char	*lexify(char *line, t_data *data);
 #endif
