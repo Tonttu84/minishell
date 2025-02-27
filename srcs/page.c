@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:20:15 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/26 17:40:20 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:03:23 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ t_sent	*conv_linked_to_sentence(void)
 {
 	int		i;
 	t_sent	*sentence;
-	t_node *node;
-	t_data *data;
+	t_node	*node;
+	t_data	*data;
 
 	data = get_data();
 	node = data->tokens.first;
@@ -31,23 +31,22 @@ t_sent	*conv_linked_to_sentence(void)
 	while (node)
 	{
 		node = get_data()->tokens.first;
-		
 		if (node->type == PIPE)
 		{
 			sentence->outpipe = 1;
 			return (sentence);
 		}
-		if(node->type == REDIRECT)
+		if (node->type == REDIRECT)
 			;
-			//First version treats them the same
-		else if(node->type == IN_FILE || node->type == HERE_DOCS)
+			//In_file and here_docs are not yet treated seperately
+		else if (node->type == IN_FILE || node->type == HERE_DOCS)
 		{
-			//free(sentence->infile);
+			free(sentence->infile);
 			sentence->infile = cnvrt_to_char(node->str);
 		}
 		else if (node->type == OUT_FILE || node->type == APPEND)
 		{
-				free(sentence -> outfile);
+			free(sentence -> outfile);
 			sentence -> outfile = cnvrt_to_char(node->str);
 		}
 		else
@@ -95,16 +94,10 @@ t_sent	**create_page(t_list *stack)
 		return (NULL);
 	cur = stack->first;
 	if (!cur)
-		perror("CUR IS NULL"); 
+		perror("CUR IS NULL");
 	i = 0;
 	while (cur)
 	{
-		//iterate_list(&get_data()->tokens, print_node);
-
-		// TODO create redirection files
-		// HEREDOCS should capture input here
-		//If open fails, abort at this point
-		
 		page[i] = conv_linked_to_sentence();
 		cur = stack->first;
 		printf("\n");
@@ -112,6 +105,5 @@ t_sent	**create_page(t_list *stack)
 		printf("\n");
 		i++;
 	}
-	
 	return (page);
 }

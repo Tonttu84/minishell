@@ -6,84 +6,75 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:06:42 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/26 16:47:02 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:27:48 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-const char	*token_to_string(t_token token)
+const char *token_to_string(t_token token)
 {
-	switch (token)
-	{
-	case DELIMIT:
+	if (token == DELIMIT)
 		return ("");
-	case ARG:
+	else if (token == ARG)
 		return ("ARG");
-	case CMD:
+	else if (token == CMD)
 		return ("CMD");
-	case OUT_FILE:
+	else if (token == OUT_FILE)
 		return ("OUT_FILE");
-	case IN_FILE:
+	else if (token == IN_FILE)
 		return ("IN_FILE");
-	case CTRL:
+	else if (token == CTRL)
 		return ("CTRL");
-	case PIPE:
+	else if (token == PIPE)
 		return ("PIPE");
-	case REDIRECT:
+	else if (token == REDIRECT)
 		return ("REDIRECT");
-	case APPEND:
+	else if (token == APPEND)
 		return ("APPEND");
-	case HERE_DOCS:
+	else if (token == HERE_DOCS)
 		return ("HERE_DOCS");
-	default:
+	else
 		return ("UNKNOWN");
-	}
 }
 
-const char	*token_to_color(t_token token)
-
+const char *token_to_color(t_token token)
 {
-	switch (token)
-	{
-	case IN_FILE:
+	if (token == IN_FILE)
 		return (BRIGHT_BLUE);
-	case DELIMIT:
+	else if (token == DELIMIT)
 		return (YELLOW);
-	case ARG:
+	else if (token == ARG)
 		return (CYAN);
-	case HERE_DOCS:
+	else if (token == HERE_DOCS)
 		return (BRIGHT_CYAN);
-	case CMD:
+	else if (token == CMD)
 		return (MAGENTA);
-	case OUT_FILE:
-		return WHITE;
-	case APPEND:
-		return BRIGHT_WHITE;
-	case CTRL:
-		return BLUE;
-	case REDIRECT:
-		return BLUE;
-	case PIPE:
-		return BRIGHT_YELLOW;
-	default:
-		return RESET;
-	}
+	else if (token == OUT_FILE)
+		return (WHITE);
+	else if (token == APPEND)
+		return (BRIGHT_WHITE);
+	else if (token == CTRL)
+		return (BLUE);
+	else if (token == REDIRECT)
+		return (BLUE);
+	else if (token == PIPE)
+		return (BRIGHT_YELLOW);
+	else
+		return (RESET);
 }
+
 
 void	print_node(t_list *list, t_node *node)
 {
 	int			i;
 	const char	*color;
-	
-	if (node) 
-		color = token_to_color(node->type);
-	else 
-		perror("NODE IS NULL");
 
+	if (node)
+		color = token_to_color(node->type);
+	else
+		perror("NODE IS NULL");
 	(void)list;
-	// Get the color for the node's type
-	// Print the node's type in its corresponding color
 	printf("{%s%s%s", color, token_to_string(node->type), RESET);
 	if (node->type != DELIMIT)
 		printf(" ");
@@ -113,6 +104,7 @@ void	print_node(t_list *list, t_node *node)
 	}
 	printf("}");
 }
+
 void	debug_print(t_char *array, t_data *data)
 {
 	int	i;
@@ -121,70 +113,43 @@ void	debug_print(t_char *array, t_data *data)
 	while (array[i].c)
 	{
 		if (array[i].esc && array[i].c == ' ')
-		{
 			printf("%s_%s", RED, RESET);
-		}
 		else if (array[i].esc)
-		{
 			printf("%s%c%s", RED, array[i].c, RESET);
-		}
 		else if (array[i].com)
-		{
 			printf("%s%c%s", BLUE, array[i].c, RESET);
-		}
 		else if (array[i].c == '$' && array[i].var)
 		{
 			printf("%s%s%s", YELLOW, find_env(array + i, data), RESET);
 			printf("%s%c%s", GREEN, array[i].c, RESET);
 		}
 		else if (array[i].var)
-		{
 			printf("%s%c%s", GREEN, array[i].c, RESET);
-		}
 		else if (array[i].c == ' ' && array[i].ghost)
-		{
 			printf("[G]");
-		}
 		else
-		{
 			printf("%c", array[i].c);
-		}
 		i++;
 	}
 	printf("\n");
 }
 
-
-#include <stdio.h>
-
-void print_sentence(t_sent *sentence)
+void	print_sentence(t_sent *sentence)
 {
-    int i;
-    
-    printf("Arguments are :");
- 
-    i = 0;    
-	//why does this crash if I try to print into empty?
-    while (sentence->array[i] && i < 6 )
-    {
-        printf("%s \n", sentence->array[i]);
+	int	i;
 
-        i++;
-    }
-  
-    printf("\n");
-
-    printf("Inpipe is %d, ", sentence->inpipe);
-
-    printf("outpipe is %d, ", sentence->outpipe);
-
-    printf("infile is %s, ", sentence->infile);
-
-    printf("outfile is %s, ", sentence->outfile);
- 
-    printf("heredocs is %s and ", sentence->heredocs);
-
-    printf("here exists is %d\n", sentence->here_exists);
-
+	printf("Arguments are :\n");
+	i = 0;
+	while (sentence->array[i] && i < 6)
+	{
+		printf("%s \n", sentence->array[i]);
+		i++;
+	}
+	printf("\n");
+	printf("Inpipe is %d, ", sentence->inpipe);
+	printf("outpipe is %d, ", sentence->outpipe);
+	printf("infile is %s, ", sentence->infile);
+	printf("outfile is %s, ", sentence->outfile);
+	printf("heredocs is %s and ", sentence->heredocs);
+	printf("here exists is %d\n", sentence->here_exists);
 }
-

@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/26 13:42:35 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:25:57 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,7 @@
 # define BRIGHT_WHITE "\x1b[97m"
 # define RESET "\x1b[0m"
 
-// ghost variable marks removed quotes that only act as delimiter for $expansion
-// DEBUG ILLEGAL SWITCH
-
 const char		*token_to_string(t_token token);
-
-// DEBUG
 
 typedef struct s_sent
 {
@@ -72,7 +67,6 @@ typedef struct s_sent
 	char		*outfile; //change to FD
 	char		*heredocs; //Change to fixed size array
 	bool		here_exists; //If we change to fixed size array we cant set it to NULL so we use a flag instead 
-
 }				t_sent;
 
 typedef struct s_data
@@ -93,7 +87,7 @@ typedef struct s_point
 	int			end;
 }				t_point;
 
-void			test(t_data data[]);
+void			test(void);
 typedef void	(*node_func)(t_list *list, t_node *node);
 void			ft_exit(t_data *data, char *message, int exit_code);
 void			*ft_xcalloc(size_t nmemb, size_t size);
@@ -110,11 +104,11 @@ void			debug_print(t_char *array, t_data *data);
 void			print_node(t_list *list, t_node *node);
 size_t			ft_tcharlen(t_char *line);
 t_node			*destroy_node(t_list *list, t_node *node);
-void	remove_quotes(t_char *dst, char *src);
-int	copy_env_to_tchar(t_char *dst, int i, const char *env);
-char	*cnvrt_to_char(t_char *line);
-int	check_emp_arg(char *src, int i, t_char *dst, int *k, int in_d_quotes, int in_s_quotes);
-t_char	*lexify(char *line, t_data *data);
-t_sent	**create_page(t_list *stack);
-void  print_sentence(t_sent *sentence);
+void			remove_quotes(t_char *dst, char *src);
+int				copy_env_to_tchar(t_char *dst, int i, const char *env);
+char			*cnvrt_to_char(t_char *line);
+int				check_emp_arg(char *src, int i, t_char *dst, int *k, int in_d_quotes, int in_s_quotes);
+t_char			*lexify(char *line, t_data *data);
+t_sent			**create_page(t_list *stack);
+void			print_sentence(t_sent *sentence);
 #endif

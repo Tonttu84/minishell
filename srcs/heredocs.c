@@ -6,25 +6,26 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:18:56 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/26 11:39:51 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:30:27 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-char *expand_heredocs(char *result);
 
+char	*expand_heredocs(char *result);
 
-char *expand_heredocs(char *result)
+char	*expand_heredocs(char *result)
 {
-	return result;
+	return (result);
 }
+
 //Missing expansion support
-char 	*create_heredoc(char *terminator, int expansion)
+char	*create_heredoc(char *terminator, int expansion)
 {
 	char	*tmp;
 	char	*result;
 	char	*cpy;
-	
+
 	tmp = NULL;
 	result = NULL;
 	cpy = NULL;
@@ -39,13 +40,13 @@ char 	*create_heredoc(char *terminator, int expansion)
 			if (result)
 			{
 				cpy = result;
-				result = ft_strjoin(result, tmp);;
+				result = ft_strjoin(result, tmp);
 				free(cpy);
 				free(tmp);
 				tmp = NULL;
 				cpy = NULL;
 			}
-			else 
+			else
 				result = tmp;
 		}
 		tmp = readline(">");

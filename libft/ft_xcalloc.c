@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:01:06 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/22 16:01:51 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:14:37 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 void	*ft_xcalloc(size_t nmemb, size_t size)
 {
 	void	*ptr;
-	t_data *data;
-	
+	t_data	*data;
+
 	data = get_data();
 	if (nmemb == 0 || size == 0)
 	{

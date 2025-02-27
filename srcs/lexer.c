@@ -6,33 +6,15 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:32:12 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/26 16:24:05 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:06:15 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../include/minishell.h"
-
-/*
-jrimpila@c3r5p5:~/Git/minishell$ export GHOST=tadaa<<ta
-> $GHOST
->
-*/
 
 int		check_emp_arg(char *src, int i, t_char *dst, int *k, int in_d_quotes,
 			int in_s_quotes);
 
-// checks if the next meaningful character is a delimiter
-
-
-// real << should not have a space on the right side,
-//	I will have to check what is the correct behavior
-// It seems to require non whitespace character
-
-// Should get caught if it is surrounded by spaces but give error
-
-///>test is also legal
-///> needs to be unscaped
 void	mark_commands(t_char *com_line, t_data *data)
 {
 	int	i;
@@ -41,35 +23,34 @@ void	mark_commands(t_char *com_line, t_data *data)
 	i = 0;
 	while (com_line[i].c != 0)
 	{
-		if (i == 0 || com_line[i].esc || com_line[i - 1].esc || com_line[i
-			+ 1].c == 0 || com_line[i + 1].esc)
+		if (i == 0 || com_line[i].esc || com_line[i - 1].esc || com_line[i \
+		+ 1].c == 0 || com_line[i + 1].esc)
 			;
-		else if (com_line[i - 1].c == '<' && !com_line[i - 2].esc && com_line[i
-			- 2].c == ' ' && com_line[i].c == '<' && com_line[i + 1].c == ' ')
+		else if (com_line[i - 1].c == '<' && !com_line[i - 2].esc && com_line[i \
+		- 2].c == ' ' && com_line[i].c == '<' && com_line[i + 1].c == ' ')
 		{
 			com_line[i].com = 1;
 			com_line[i - 1].com = 1;
 		}
-		else if (com_line[i - 1].c == '>' && !com_line[i - 2].esc && com_line[i
-			- 2].c == ' ' && com_line[i].c == '>' && com_line[i + 1].c == ' ')
+		else if (com_line[i - 1].c == '>' && !com_line[i - 2].esc && com_line[i \
+		- 2].c == ' ' && com_line[i].c == '>' && com_line[i + 1].c == ' ')
 		{
 			com_line[i - 1].com = 1;
 			com_line[i].com = 1;
 		}
-		else if (com_line[i - 1].c == ' ' && com_line[i].c == '>' && com_line[i
-			+ 1].c == '>' && !com_line[i + 2].esc && com_line[i + 2].c == ' ')
+		else if (com_line[i - 1].c == ' ' && com_line[i].c == '>' && com_line[i \
+		+ 1].c == '>' && !com_line[i + 2].esc && com_line[i + 2].c == ' ')
 		{
 			com_line[i].com = 1;
 			com_line[i + 1].com = 1;
 		}
-		else if (com_line[i].c == '<' && com_line[i + 1].c == '<' && com_line[i
-			+ 2].c != 0 && (com_line[i + 2].esc == 0 && com_line[i
-				+ 2].c != ' '))
+		else if (com_line[i].c == '<' && com_line[i + 1].c == '<' && com_line[i \
+		+ 2].c != 0 && (com_line[i + 2].esc == 0 && com_line[i + 2].c != ' '))
 			com_line[i].com = 1;
 		else if (com_line[i - 1].c != ' ' || com_line[i + 1].c != ' ')
 			;
-		else if (com_line[i].c == '|' || com_line[i].c == '<'
-			|| com_line[i].c == '>')
+		else if (com_line[i].c == '|' || com_line[i].c == '<' \
+		|| com_line[i].c == '>')
 			com_line[i].com = 1;
 		i++;
 	}
@@ -117,8 +98,6 @@ void	mark_arguments(t_char *newline, t_data *data)
 		i++;
 	}
 }
-
-
 
 void	expand_arguments(t_char *dst, t_char *src, t_data *data)
 {
@@ -169,5 +148,3 @@ t_char	*lexify(char *line, t_data *data)
 	//iterate_list(&data->tokens, print_node);
 	return (newline);
 }
-
-

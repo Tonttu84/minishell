@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:41:05 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/26 16:45:40 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/27 10:59:17 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,12 @@ void	iterate_list(t_list *list, node_func func)
 		func(list, current);
 		current = current->next;
 	}
-	// Apply the function to the last node
 	if (current && current == list->last)
 	{
 		func(list, current);
 	}
 }
 
-// Im discounting empty quotes
 size_t	ft_wrdlen(t_char *str, t_data *data)
 {
 	size_t	i;
@@ -51,7 +49,7 @@ size_t	ft_wrdlen(t_char *str, t_data *data)
 	}
 	return (count_i++);
 }
-/*
+
 t_node	*destroy_node(t_list *list, t_node *node)
 {
 	t_node	*cur;
@@ -74,43 +72,4 @@ t_node	*destroy_node(t_list *list, t_node *node)
 	free(node);
 	node = NULL;
 	return (cur);
-}
-*/
-t_node *destroy_node(t_list *list, t_node *node)
-{
-    t_node *cur;
-	
-    if (!list || !node) {
-        perror("DEBUG: Invalid list or node");
-        return NULL;
-    }
-
-    cur = node->next;
-    if (list->first == node && list->last == node)
-    {
-        list->first = NULL;
-        cur = NULL;
-        list->last = NULL;
-    }
-    else
-    {
-        if (list->first == node)
-        {
-            list->first = node->next;
-        }
-        if (list->last == node)
-        {
-            list->last = node->prev;
-        }
-
-        node->next->prev = node->prev;
-        node->prev->next = node->next;
-    }
-
-    free(node->str);
-    node->str = NULL;
-    free(node);
-    node = NULL;
-
-    return cur;
 }

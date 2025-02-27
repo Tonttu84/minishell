@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:54:24 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/26 14:48:52 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/27 10:53:28 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*cnvrt_to_char(t_char *line)
 	k = 0;
 	length = ft_tcharlen(line) * 2;
 	result = ft_xcalloc((ft_tcharlen(line) * 2) + 1, sizeof(char));
-	while (i < length)
+	while (i < length && line[k].c)
 	{
 		if (line[k].esc && ft_isescapable(line[k].c))
 		{
@@ -63,11 +63,4 @@ static int	ft_isescapable(char c)
 		return (1);
 	return (0);
 }
-
-
-
-
-
-
-
 
