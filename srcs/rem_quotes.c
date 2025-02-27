@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:27:03 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/27 10:50:03 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/27 19:37:44 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ EOF
 			in_s_quotes = 0;
 		else if (in_d_quotes && src[i] == '\"')
 		{
+			if (exp == 1)
+				exp = 0;
 			in_d_quotes = 0;
 			dst[k+ 1].blok = 1;
 		}
@@ -118,7 +120,7 @@ EOF
 					dst[k + 1].blok = 1;
 				}
 			}
-			if (exp == 0)
+			if (exp == 0 && src[i])
 				dst[k].esc = 1;
 			k++;
 		}

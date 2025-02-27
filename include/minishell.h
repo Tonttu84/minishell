@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/27 13:23:13 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/27 19:33:39 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <fcntl.h>
+# include <stdlib.h>
 
 # define ENV_SIZE 4096
 # ifndef MAX_SENT_SIZE
@@ -112,4 +114,6 @@ t_char			*lexify(char *line, t_data *data);
 t_sent			**create_page(t_list *stack);
 void			print_sentence(t_sent *sentence);
 char			*create_heredoc(t_char *terminator);
+char *test_infile(t_char *raw_path);
+char *test_outfile(t_char *raw_path);
 #endif

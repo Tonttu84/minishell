@@ -6,11 +6,17 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:20:15 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/27 13:24:48 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/27 19:33:13 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+char *test_infile(t_char *raw_path)
+{
+	(void) raw_path;
+	return NULL;
+}
 
 t_sent	*conv_linked_to_sentence(void)
 {
@@ -53,12 +59,14 @@ t_sent	*conv_linked_to_sentence(void)
 			sentence ->here_exists = 0;
 			sentence->here_exists = NULL;
 			free(sentence->infile);
-			sentence->infile = cnvrt_to_char(node->str);
+			sentence->infile = (test_infile(node->str));
+			if (sentence->infile == NULL)
+				perror("Not a valid infile, throw error");
 		}
 		else if (node->type == OUT_FILE || node->type == APPEND)
 		{
 			free(sentence -> outfile);
-			sentence -> outfile = cnvrt_to_char(node->str);
+			sentence -> outfile = (test_outfile(node->str));;
 		}
 		else
 		{
