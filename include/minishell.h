@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/27 11:25:57 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/27 13:23:13 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,4 +111,5 @@ int				check_emp_arg(char *src, int i, t_char *dst, int *k, int in_d_quotes, int
 t_char			*lexify(char *line, t_data *data);
 t_sent			**create_page(t_list *stack);
 void			print_sentence(t_sent *sentence);
+char			*create_heredoc(t_char *terminator);
 #endif

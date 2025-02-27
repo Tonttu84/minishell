@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:18:56 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/27 11:30:27 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/27 13:35:30 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,29 @@ char	*expand_heredocs(char *result)
 	return (result);
 }
 
-//Missing expansion support
-char	*create_heredoc(char *terminator, int expansion)
+int	t_compare(t_char *str, char *str2)
+{
+	int	i;
+
+	if (!str)
+		perror("Heredocs delimiter should not be NULL\n");
+	if (!str2)
+		return (1);
+	i = 0;
+	while (str[i].c && str2[i])
+	{
+		if (str[i].c != str2[i])
+			return (1);
+		i++;
+	}
+	if (str[i].c != str2[i])
+			return (1);
+	return (0);
+}
+
+//Missing expansion support <<"tad"aa delimiter is tadaa expansion doesnt happen
+//Currently heredocs that is instantly terminated returns a NULL terminator but we need to test it what format is required
+char	*create_heredoc(t_char *terminator)
 {
 	char	*tmp;
 	char	*result;
@@ -29,7 +50,7 @@ char	*create_heredoc(char *terminator, int expansion)
 	tmp = NULL;
 	result = NULL;
 	cpy = NULL;
-	while (tmp == NULL || ft_strncmp(terminator, tmp, ft_strlen(terminator) +1))
+	while (t_compare(terminator, tmp))
 	{
 		if (tmp)
 		{
@@ -52,7 +73,7 @@ char	*create_heredoc(char *terminator, int expansion)
 		tmp = readline(">");
 	}
 	free (tmp);
-	if (expansion)
+	if (terminator[0].esc)
 		return (expand_heredocs(result));
 	return (result);
 }
