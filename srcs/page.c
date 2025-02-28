@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:20:15 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/27 19:33:13 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:02:13 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,25 @@ t_sent	*conv_linked_to_sentence(void)
 			free(sentence->infile);
 			sentence->infile = (test_infile(node->str));
 			if (sentence->infile == NULL)
-				perror("Not a valid infile, throw error");
+				{
+					sentence -> error = 1;
+				perror("Not a valid infile, throw error, stop creatin of this file");
+			//	return (sentence);
+				}
 		}
 		else if (node->type == OUT_FILE || node->type == APPEND)
 		{
 			free(sentence -> outfile);
-			sentence -> outfile = (test_outfile(node->str));;
+			if (node->type == APPEND)
+			{
+				sentence -> append = 1;
+				sentence -> outfile = (test_append(node->str));
+			}
+			else 
+			{
+				sentence -> append = 0;
+				sentence -> outfile = (test_outfile(node->str));
+			}
 		}
 		else
 		{
@@ -74,6 +87,12 @@ t_sent	*conv_linked_to_sentence(void)
 			i++;
 		}
 		node = destroy_node(&get_data()->tokens, node);
+		if (sentence->outfile == NULL)
+			{
+				perror("Need to throw error here and stop processing this sentenc");
+				sentence -> error = 1;
+				//return (sentence);
+			}
 	}
 	return (sentence);
 }

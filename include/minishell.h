@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/27 19:33:39 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:07:10 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,11 @@ typedef struct s_sent
 {
 	char		*array[MAX_SENT_SIZE];
 	bool		inpipe;
+	bool		append;
 	bool		outpipe;
-	char		*infile; //change to FD
-	char		*outfile; //change to FD
+	int			error; 			//error code here
+	char		*infile; 
+	char		*outfile; 
 	char		*heredocs; //Change to fixed size array
 	bool		here_exists; //If we change to fixed size array we cant set it to NULL so we use a flag instead 
 }				t_sent;
@@ -114,6 +116,9 @@ t_char			*lexify(char *line, t_data *data);
 t_sent			**create_page(t_list *stack);
 void			print_sentence(t_sent *sentence);
 char			*create_heredoc(t_char *terminator);
-char *test_infile(t_char *raw_path);
-char *test_outfile(t_char *raw_path);
+char 			*test_infile(t_char *raw_path);
+char 			*test_outfile(t_char *raw_path);
+char 			*test_append(t_char *raw_path);
+void 			prompt_input(void);
+
 #endif

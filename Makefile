@@ -6,7 +6,7 @@
 #    By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/14 13:14:15 by jtuomi            #+#    #+#              #
-#    Updated: 2025/02/27 19:31:27 by jrimpila         ###   ########.fr        #
+#    Updated: 2025/02/28 11:12:44 by jrimpila         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ INCLUDE_DIRS = libft
 CFLAGS = -Wall -Wextra -Werror -g2 
 SRC = lexer.c	ft_xcalloc.c parsing_utils.c heredocs.c init_utils.c\
 	exit.c	env.c utils.c page.c rem_quotes.c test.c open.c \
-	main.c create_list.c ft_lstaddback.c debug.c
+	main.c create_list.c ft_lstaddback.c debug.c	input.c
 SRC := $(addprefix srcs/, $(SRC))
 OBJ := $(SRC:%.c=%.o)
 MAKE = make -C
