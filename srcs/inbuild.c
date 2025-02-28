@@ -6,11 +6,11 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:05:36 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/24 20:20:58 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/28 13:19:32 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 int	test_inbuilds(t_node *cmd)
 {
@@ -41,4 +41,114 @@ int	test_inbuilds(t_node *cmd)
 		return (7);
 	else
 		return (0);
+}
+
+int pwd(void)
+{
+	char cwd[PATH_MAX];
+	
+	if (getcwd(cwd, sizeof(cwd)))
+		printf("%s\n", cwd);
+	else
+		perror("getcwd() error");
+
+	return (0);
+	
+}
+
+//TODO handle -1
+int cd(int argc, char *argv[])
+{
+	char *cur;
+	char cwd[PATH_MAX];
+
+	if (argv[2] != NULL)
+	{
+		printf("cd: too many arguments\n");
+		return (1);
+	}
+	cur = ft_strjoin("OLDPWD=", getcwd(cwd, PATH_MAX));
+	if (is_valid_cd(argv[1]) == 0)
+		set_variable(data, "OLDPWD", getcwd(cwd, PATH_MAX));
+	
+	
+	//problem if chdir fails
+	if (tokens[1] == NULL || tokens[1] == 0)
+		chdir(get_own_env(data, "HOME"));
+	else if (ft_strncmp(tokens[1], "-", 2))
+		chdir(get_own_env(data, "HOME"));
+	else 
+		chdir(tokens[1]);
+	set_variable(data, "PWD", getcwd(cwd, PATH_MAX));
+
+	//set the real cwd to be the new pwd
+	return (0);
+}
+
+int unset_env(const char *var, t_data *data)
+{
+	int	tar_i;
+	int	i;
+
+	i = 0;
+	tar_i = find_env(var, data);
+	if (tar_i == -1)
+		return (-1);
+	else 
+		{
+			while (i < MAX_LENGTH)
+			{
+				data->env[tar_i][i] = 0;
+				i++;
+			}
+		}
+	return (0);
+}
+
+int	echo_check_opt(char *str)
+{
+	int i;
+	int isvalid;
+
+	i = 0;
+	isvalid = 0;
+	if (str[i] != '-')
+		return (isvalid);
+	i++;
+	while (str[i])
+	{
+		if (str[i] == 'n')
+			{
+				isvalid = 1;
+				i++;
+			}
+		else 
+			{
+				isvalid = 0;
+				break ;
+			}
+	}
+	return (isvalid);
+}
+
+
+//Argument expansion should already be done here so we can print everything as it is?
+int echo (int argc, char *argv[])
+{
+	int	i;
+	int opt;
+	
+	opt = 0;
+	if (argc > 1)
+		opt = echo_check_opt(argv[1]);
+	i = 2;
+	while (opt && echo_check_opt(argv[i]) && i < argc)
+		i++;
+	while(i < argc)
+	{
+		printf("%s", argv[i]);
+		i++;
+	}
+	if (opt)
+		printf("\n"); 
 }

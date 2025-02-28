@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:32:26 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/21 19:33:19 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/28 13:22:34 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	match_env_argument(t_char *source, char *env_var)
 	return (0);
 }
 
+//IF not valid what do we return?
 const char	*ft_get_env(const char *target)
 {
 	int	i;

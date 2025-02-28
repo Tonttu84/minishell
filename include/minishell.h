@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/28 12:07:10 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:42:38 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@
 # include <readline/history.h>
 # include <fcntl.h>
 # include <stdlib.h>
-
+# ifndef PATH_MAX
+#  define PATH_MAX (500)
+# endif
 # define ENV_SIZE 4096
 # ifndef MAX_SENT_SIZE
 #  define MAX_SENT_SIZE (200)
