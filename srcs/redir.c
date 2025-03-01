@@ -11,14 +11,13 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-//Double check that the struct keeps the t_dir alive even after this returns
-void  add_redirection(t_node *node, t_sent *sentence, int i)
+
+// Double check that the struct keeps the t_dir alive even after this returns
+void	add_redirection(t_node *node, t_sent *sentence, int i)
 {
-	
 	if (node->str)
 		sentence->redirs[i].path = cnvrt_to_char(node->str);
-	else 
+	else
 		sentence->redirs[i].path = ft_strdup("\0");
 	sentence->redirs[i].type = node->type;
-
 }

@@ -6,45 +6,42 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:11:31 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/28 11:19:21 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/01 20:48:42 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-
-void process(char *line)
+void	process(char *line)
 {
-	t_data *data;
-	t_char *result;
+	t_data	*data;
+	t_char	*result;
 
-	data = get_data(); 
+	data = get_data();
 	result = lexify(line, data);
-		printf("\n");
-		free(result);
-		result = NULL;
-		iterate_list(&data->tokens, print_node);
-		create_page(&data->tokens);
+	printf("\n");
+	free(result);
+	result = NULL;
+	iterate_list(&data->tokens, print_node);
+	create_page(&data->tokens);
 }
 
-
-void prompt_input(void)
+void	prompt_input(void)
 {
-	char *line;
+	char	*line;
 
 	while (1)
 	{
 		line = readline("minishell> ");
 		if (line == NULL)
-			break;
+			break ;
 		if (line[0] == '\0')
 		{
 			free(line);
-			continue;
+			continue ;
 		}
-		
 		add_history(line);
 		process(line);
-		free(line); // Free the allocated memory
+		free(line);
 	}
 }

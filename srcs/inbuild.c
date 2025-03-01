@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:05:36 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/01 15:07:44 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/01 20:51:27 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,24 +43,22 @@ int	test_inbuilds(t_node *cmd)
 		return (0);
 }
 
-int pwd(void)
+int	pwd(void)
 {
-	char cwd[PATH_MAX];
-	
+	char	cwd[PATH_MAX];
+
 	if (getcwd(cwd, sizeof(cwd)))
 		printf("%s\n", cwd);
 	else
 		perror("getcwd() error");
-
 	return (0);
-	
 }
 
-//TODO handle -1
-int cd(int argc, char *argv[])
+// TODO handle -1 Has some issues, needs debugging
+int	cd(int argc, char *argv[])
 {
-	char *cur;
-	char cwd[PATH_MAX];
+	char	*cur;
+	char	cwd[PATH_MAX];
 
 	if (argv[2] != NULL)
 	{
@@ -70,22 +68,17 @@ int cd(int argc, char *argv[])
 	cur = ft_strjoin("OLDPWD=", getcwd(cwd, PATH_MAX));
 	if (is_valid_cd(argv[1]) == 0)
 		set_variable(get_data(), "OLDPWD", getcwd(cwd, PATH_MAX));
-	
-	
-	//problem if chdir fails
 	if (argv[1] == NULL || argv[1] == 0)
 		chdir(get_own_env(get_data(), "HOME"));
 	else if (ft_strncmp(argv[1], "-", 2))
 		chdir(get_own_env(get_data(), "HOME"));
-	else 
+	else
 		chdir(argv[1]);
 	set_variable(get_data(), "PWD", getcwd(cwd, PATH_MAX));
-
-	//set the real cwd to be the new pwd
 	return (0);
 }
 
-int unset_env(const char *var, t_data *data)
+int	unset_env(const char *var, t_data *data)
 {
 	int	tar_i;
 	int	i;
@@ -94,21 +87,21 @@ int unset_env(const char *var, t_data *data)
 	tar_i = find_env(var, data);
 	if (tar_i == -1)
 		return (-1);
-	else 
+	else
+	{
+		while (i < MAX_LENGTH)
 		{
-			while (i < MAX_LENGTH)
-			{
-				data->env[tar_i][i] = 0;
-				i++;
-			}
+			data->env[tar_i][i] = 0;
+			i++;
 		}
+	}
 	return (0);
 }
 
 int	echo_check_opt(char *str)
 {
-	int i;
-	int isvalid;
+	int	i;
+	int	isvalid;
 
 	i = 0;
 	isvalid = 0;
@@ -118,37 +111,36 @@ int	echo_check_opt(char *str)
 	while (str[i])
 	{
 		if (str[i] == 'n')
-			{
-				isvalid = 1;
-				i++;
-			}
-		else 
-			{
-				isvalid = 0;
-				break ;
-			}
+		{
+			isvalid = 1;
+			i++;
+		}
+		else
+		{
+			isvalid = 0;
+			break ;
+		}
 	}
 	return (isvalid);
 }
 
-
-//Argument expansion should already be done here so we can print everything as it is?
-int echo (int argc, char *argv[])
+// Argument expansion should already be done here so we can print everything as it is?
+int	echo(int argc, char *argv[])
 {
 	int	i;
-	int opt;
-	
+	int	opt;
+
 	opt = 0;
 	if (argc > 1)
 		opt = echo_check_opt(argv[1]);
 	i = 2;
 	while (opt && echo_check_opt(argv[i]) && i < argc)
 		i++;
-	while(i < argc)
+	while (i < argc)
 	{
 		printf("%s", argv[i]);
 		i++;
 	}
 	if (opt)
-		printf("\n"); 
+		printf("\n");
 }

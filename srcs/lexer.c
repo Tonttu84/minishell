@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:32:12 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/01 18:48:15 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/01 20:50:55 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void	mark_commands(t_char *com_line, t_data *data)
 			com_line[i].com = 1;
 		else if (com_line[i - 1].c != ' ' || com_line[i + 1].c != ' ')
 			;
-		else if (com_line[i].c == '|' || com_line[i].c == '<' \
-		|| com_line[i].c == '>')
+		else if (com_line[i].c == '|' || com_line[i].c == '<'
+			|| com_line[i].c == '>')
 			com_line[i].com = 1;
 		i++;
 	}
@@ -125,17 +125,12 @@ void	expand_arguments(t_char *dst, t_char *src, t_data *data)
 	}
 	dst[di].c = 0;
 }
-
-
-
+	// dynamic memory is problematic
 t_char	*lexify(char *line, t_data *data)
 {
 	t_char			*newline;
 	static t_char	expanded[1000];
 
-
-	
-	//dynamic memory is problematic due to possible ghosts 
 	newline = ft_xcalloc(ft_strlen(line) * 2 + 1, sizeof(t_char));
 	remove_quotes(newline, line, 0, 0);
 	debug_print(newline, data);
@@ -145,11 +140,10 @@ t_char	*lexify(char *line, t_data *data)
 	printf("\n");
 	mark_arguments(newline, data);
 	debug_print(newline, data);
-printf("\n");
+	printf("\n");
 	expand_arguments(expanded, newline, data);
 	debug_print(expanded, data);
 	printf("\n");
 	create_list(data, expanded);
-	//iterate_list(&data->tokens, print_node);
 	return (newline);
 }

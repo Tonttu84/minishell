@@ -6,13 +6,14 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:32:26 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/28 13:22:34 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/01 20:47:01 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-/*get_env can have special characters
+/*
+get_env can have special characters
 
 ! is not a valid variable
 
@@ -20,12 +21,11 @@ export SPECIAL_VAR=1@#$%^&*()_!3+{}|:"<>?-=ta[]\;d,./`~
 export SPECIAL_VAR=1@#$%^&*()_cd ..+{}|:"<>?-=ta[]\;d,./`~
 bash: syntax error near unexpected token `_cd'
 
-
 jrimpila@c1r1p11:~/Hiveprojects/philo5.3$ export SPECIAL_VAR=1!@#$%^&*()_3+{}|:"<>?-=ta[]\;d,./`~
 bash: !@#: event not found
-*/
 
-// returns 1 for match, 0 for no match.
+
+ returns 1 for match, 0 for no match.*/
 int	match_env_argument(t_char *source, char *env_var)
 {
 	int	i;
@@ -47,7 +47,7 @@ int	match_env_argument(t_char *source, char *env_var)
 	return (0);
 }
 
-//IF not valid what do we return?
+// IF not valid what do we return?
 const char	*ft_get_env(const char *target)
 {
 	int	i;

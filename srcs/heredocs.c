@@ -35,12 +35,12 @@ int	t_compare(t_char *str, char *str2)
 		i++;
 	}
 	if (str[i].c != str2[i])
-			return (1);
+		return (1);
 	return (0);
 }
 
-//Missing expansion support <<"tad"aa delimiter is tadaa expansion doesnt happen
-//Currently heredocs that is instantly terminated returns a NULL terminator but we need to test it what format is required
+// Missing expansion support <<"tad"aa delimiter is tadaa expansion doesnt happen
+// Currently heredocs that is instantly terminated returns a NULL terminator but we need to test it what format is required
 char	*create_heredoc(t_char *terminator)
 {
 	char	*tmp;
@@ -72,7 +72,7 @@ char	*create_heredoc(t_char *terminator)
 		}
 		tmp = readline(">");
 	}
-	free (tmp);
+	free(tmp);
 	if (terminator[0].esc)
 		return (expand_heredocs(result));
 	return (result);

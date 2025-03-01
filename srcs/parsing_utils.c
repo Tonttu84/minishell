@@ -63,4 +63,3 @@ static int	ft_isescapable(char c)
 		return (1);
 	return (0);
 }
-

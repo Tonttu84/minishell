@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:41:58 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/27 11:10:46 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/01 20:47:26 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,20 @@ static void	set_type(t_node *new)
 		new->type = PIPE;
 		args = 0;
 	}
-	else if (((new->str && new->str[0].c == '>') || (new->str && new->str[0].c \
-	== '<' && new->str[0].com)))
+	else if (((new->str && new->str[0].c == '>') || (new->str
+				&&new->str[0].c == '<' && new->str[0].com)))
 		new->type = REDIRECT;
 	else if (new->prev->str && new->prev->str[0].c == '>'
 		&& new->prev->str[1].c == '>' && new->prev->str[0].com)
 		new->type = APPEND;
-	else if (new->prev->str && new->prev->str[0].c == '>' && \
-	new->prev->str[0].com)
+	else if (new->prev->str && new->prev->str[0].c == '>'
+		&& new->prev->str[0].com)
 		new->type = OUT_FILE;
 	else if (new->prev->str && new->prev->str[0].c == '<'
 		&& new->prev->str[1].c == '<' && new->prev->str[0].com)
 		new->type = HERE_DOCS;
-	else if (new->prev->str && new->prev->str[0].c == '<' && \
-	new->prev->str[0].com)
+	else if (new->prev->str && new->prev->str[0].c == '<'
+		&& new->prev->str[0].com)
 		new->type = IN_FILE;
 	else if (new->str && new->str[0].com)
 		new->type = CTRL;

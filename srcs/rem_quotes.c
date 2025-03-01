@@ -12,7 +12,6 @@
 
 #include "../include/minishell.h"
 
-
 int	next_is_delim(char *str, int i, t_char *dst, int k)
 {
 	if (dst[k - 1].added)
@@ -36,49 +35,48 @@ int	next_is_delim(char *str, int i, t_char *dst, int k)
 	return (1);
 }
 
-
-int mark_redir(char *src, int *i, t_char *dst, int *k)
+int	mark_redir(char *src, int *i, t_char *dst, int *k)
 {
-		if (src[*i] == src[(*i) + 1] && (src[*i] == '>' || src[*i] == '<'))
-		{
-			dst[*k].c = ' ';
-			(*k)++;
-			dst[*k].c = src[*i];
-			(*k)++;
-			(*i)++;
-			dst[*k].c = src[*i];
-			(*k)++;
-			dst[*k].c = ' ';
-			(*k)++;
-			return (1);
-		}
-		else if (src[(*i) + 1] != src[*i] && (src[*i] == '>' || src[*i] == '<'))
-		{
-			dst[*k].c = ' ';
-			(*k)++;
-			dst[*k].c = src[*i];
-			(*k)++;
-			dst[*k].c = ' ';
-			(*k)++;
-			return (1);
-		}
-		return (0);
+	if (src[*i] == src[(*i) + 1] && (src[*i] == '>' || src[*i] == '<'))
+	{
+		dst[*k].c = ' ';
+		(*k)++;
+		dst[*k].c = src[*i];
+		(*k)++;
+		(*i)++;
+		dst[*k].c = src[*i];
+		(*k)++;
+		dst[*k].c = ' ';
+		(*k)++;
+		return (1);
+	}
+	else if (src[(*i) + 1] != src[*i] && (src[*i] == '>' || src[*i] == '<'))
+	{
+		dst[*k].c = ' ';
+		(*k)++;
+		dst[*k].c = src[*i];
+		(*k)++;
+		dst[*k].c = ' ';
+		(*k)++;
+		return (1);
+	}
+	return (0);
 }
 
-int handle_s_quotes(char *src, t_char *dst, int i, int *k)
+int	handle_s_quotes(char *src, t_char *dst, int i, int *k)
 {
 	if (src[i] == '\'')
 		return (0);
-	else 
+	else
 	{
 		dst[*k].c = src[i];
-			dst[*k].esc = 1;
-			(*k)++;
+		dst[*k].esc = 1;
+		(*k)++;
 		return (1);
 	}
 }
 
-int handle_d_quotes(char *src, t_char *dst, int i, int *k, int *exp)
+int	handle_d_quotes(char *src, t_char *dst, int i, int *k, int *exp)
 {
 	if (src[i] == '\"')
 	{
@@ -107,7 +105,7 @@ int handle_d_quotes(char *src, t_char *dst, int i, int *k, int *exp)
 	}
 }
 
-int handle_rest(char *src, t_char *dst, int i, int *k)
+int	handle_rest(char *src, t_char *dst, int i, int *k)
 {
 	if (src[i] == '\'')
 	{
@@ -122,8 +120,7 @@ int handle_rest(char *src, t_char *dst, int i, int *k)
 	return (0);
 }
 
-
-//i and k are set to zero
+// i and k are set to zero
 void	remove_quotes(t_char *dst, char *src, int i, int k)
 {
 	int	in_s_quotes;
@@ -135,7 +132,7 @@ void	remove_quotes(t_char *dst, char *src, int i, int k)
 	exp = 0;
 	while (src && src[i])
 	{
-		if (in_s_quotes )
+		if (in_s_quotes)
 			in_s_quotes = handle_s_quotes(src, dst, i, &k);
 		else if (in_d_quotes)
 			in_d_quotes = handle_d_quotes(src, dst, i, &k, &exp);
@@ -144,7 +141,7 @@ void	remove_quotes(t_char *dst, char *src, int i, int k)
 		else if (src[i] == '\"')
 			in_d_quotes = 1;
 		else if (mark_redir(src, &i, dst, &k))
-				;
+			;
 		else
 			in_s_quotes = handle_rest(src, dst, i, &k);
 		i++;
@@ -152,12 +149,10 @@ void	remove_quotes(t_char *dst, char *src, int i, int k)
 	dst[i].c = '\0';
 }
 
-
 // I will later refactor to remove the i and just pass the pointer to (src + i);
 int	check_emp_arg(char *src, int i, t_char *dst, int *k)
 {
-	if (src[i] == '\'' && src[i + 1] == '\''
-		&& next_is_delim(src, i, dst, *k))
+	if (src[i] == '\'' && src[i + 1] == '\'' && next_is_delim(src, i, dst, *k))
 	{
 		dst[*k].ghost = 1;
 		dst[*k].c = 'G';
@@ -166,8 +161,8 @@ int	check_emp_arg(char *src, int i, t_char *dst, int *k)
 		*k += 2;
 		return (1);
 	}
-	else if (src[i] == '\"' && src[i
-		+ 1] == '\"' && next_is_delim(src, i, dst, *k))
+	else if (src[i] == '\"' && src[i + 1] == '\"' && next_is_delim(src, i, dst,
+			*k))
 	{
 		dst[*k].ghost = 1;
 		dst[*k].c = 'G';
