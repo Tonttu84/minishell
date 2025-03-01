@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:27:03 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/28 11:32:18 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/01 18:46:02 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,76 +36,73 @@ int	next_is_delim(char *str, int i, t_char *dst, int k)
 	return (1);
 }
 
-void	remove_quotes(t_char *dst, char *src)
+
+int mark_redir(char *src, int i, t_char *dst, int k)
 {
-	int	i;
+		if (src[i] == src[i + 1] && (src[i] == '>' || src[i] == '<'))
+		{
+			dst[k].c = ' ';
+			k++;
+			dst[k].c = src[i];
+			k++;
+			i++;
+			dst[k].c = src[i];
+			k++;
+			dst[k].c = ' ';
+			k++;
+			return (1);
+		}
+		else if (src[i + 1] != src[i] && (src[i] == '>' || src[i] == '<'))
+		{
+			dst[k].c = ' ';
+			k++;
+			dst[k].c = src[i];
+			k++;
+			dst[k].c = ' ';
+			k++;
+			return (1);
+		}
+		return (0);
+}
+
+int handle_s_quotes(char *src, t_char *dst, int i, int k)
+{
+	if (src[i] == '\'')
+		return (0);
+	else 
+	{
+		dst[k].c = src[i];
+			dst[k].esc = 1;
+			k++;
+		return (1);
+	}
+	
+}
+
+//i and k are set to zero
+void	remove_quotes(t_char *dst, char *src, int i, int k)
+{
 	int	in_s_quotes;
 	int	in_d_quotes;
-	int	k;
 	int	exp;
 
-	i = 0;
 	in_s_quotes = 0;
 	in_d_quotes = 0;
-	k = 0;
 	exp = 0;
 	while (src && src[i] != 0)
 	{
-		if (check_emp_arg(src, i, dst, &k, in_d_quotes, in_s_quotes))
+		if (!in_d_quotes && !in_s_quotes && check_emp_arg(src, i, dst, &k))
 			i++;
-		/*Heredocs treats the next characters as literals until space,
-			except <<< has a specia meaning
-		cat << EOF
-	This is a $SHELL variable.
-	EOF
-	cat << "EOF"
-This is a $SHELL variable.
-EOF
-	*/
-		else if (!in_s_quotes && !in_d_quotes && src[i] == src[i + 1]
-			&& (src[i] == '>' || src[i] == '<'))
-		{
-			dst[k].c = ' ';
-			k++;
-			dst[k].c = src[i];
-			k++;
-			i++;
-			dst[k].c = src[i];
-			k++;
-			dst[k].c = ' ';
-			k++;
-		}
-		else if (!in_s_quotes && !in_d_quotes && src[i + 1] != src[i]
-			&& (src[i] == '>' || src[i] == '<'))
-		{
-			dst[k].c = ' ';
-			k++;
-			dst[k].c = src[i];
-			k++;
-			dst[k].c = ' ';
-			k++;
-		}
+		else if (!in_s_quotes && !in_d_quotes && mark_redir(src, i, dst, k))
+				;
 		else if (in_s_quotes && src[i] == '\'')
-			in_s_quotes = 0;
+			in_s_quotes = handle_s_quotes(src, dst, i, k);
 		else if (in_d_quotes && src[i] == '\"')
 		{
 			if (exp == 1)
 				exp = 0;
 			in_d_quotes = 0;
 			dst[k+ 1].blok = 1;
-		}
-		else if (!in_d_quotes && !in_s_quotes && src[i] == '\"')
-			in_d_quotes = 1;
-		else if (!in_d_quotes && !in_s_quotes && src[i] == '\'')
-		{
-			in_s_quotes = 1;
-			dst[k+ 1].blok = 1;
-		}
-		else if (in_s_quotes)
-		{
-			dst[k].c = src[i];
-			dst[k].esc = 1;
-			k++;
 		}
 		else if (in_d_quotes)
 		{
@@ -124,22 +121,24 @@ EOF
 				dst[k].esc = 1;
 			k++;
 		}
-		else
+		else if (!in_d_quotes && !in_s_quotes && src[i] == '\"')
+			in_d_quotes = 1;
+		else if (!in_d_quotes && !in_s_quotes && src[i] == '\'')
 		{
-			dst[k].c = src[i];
-			k++;
+			in_s_quotes = 1;
+			dst[k+ 1].blok = 1;
 		}
+		else
+			dst[k++].c = src[i];
 		i++;
-
 	}
 	dst[i].c = '\0';
 }
 
 // I will later refactor to remove the i and just pass the pointer to (src + i);
-int	check_emp_arg(char *src, int i, t_char *dst, int *k, int in_d_quotes,
-		int in_s_quotes)
+int	check_emp_arg(char *src, int i, t_char *dst, int *k)
 {
-	if (!in_d_quotes && !in_s_quotes && src[i] == '\'' && src[i + 1] == '\''
+	if (src[i] == '\'' && src[i + 1] == '\''
 		&& next_is_delim(src, i, dst, *k))
 	{
 		dst[*k].ghost = 1;
@@ -149,7 +148,7 @@ int	check_emp_arg(char *src, int i, t_char *dst, int *k, int in_d_quotes,
 		*k += 2;
 		return (1);
 	}
-	else if (!in_d_quotes && !in_s_quotes && src[i] == '\"' && src[i
+	else if (src[i] == '\"' && src[i
 		+ 1] == '\"' && next_is_delim(src, i, dst, *k))
 	{
 		dst[*k].ghost = 1;

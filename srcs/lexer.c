@@ -6,14 +6,11 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:32:12 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/01 15:18:32 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/01 18:48:15 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int		check_emp_arg(char *src, int i, t_char *dst, int *k, int in_d_quotes,
-			int in_s_quotes);
 
 void	mark_commands(t_char *com_line, t_data *data)
 {
@@ -140,7 +137,7 @@ t_char	*lexify(char *line, t_data *data)
 	
 	//dynamic memory is problematic due to possible ghosts 
 	newline = ft_xcalloc(ft_strlen(line) * 2 + 1, sizeof(t_char));
-	remove_quotes(newline, line);
+	remove_quotes(newline, line, 0, 0);
 	debug_print(newline, data);
 	printf("\n");
 	mark_commands(newline, data);

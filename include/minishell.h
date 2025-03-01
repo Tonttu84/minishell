@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/01 16:33:14 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/01 18:47:24 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,8 @@ void			debug_print(t_char *array, t_data *data);
 void			print_node(t_list *list, t_node *node);
 size_t			ft_tcharlen(t_char *line);
 t_node			*destroy_node(t_list *list, t_node *node);
-void			remove_quotes(t_char *dst, char *src);
 int				copy_env_to_tchar(t_char *dst, int i, const char *env);
 char			*cnvrt_to_char(t_char *line);
-int				check_emp_arg(char *src, int i, t_char *dst, int *k, int in_d_quotes, int in_s_quotes);
 t_char			*lexify(char *line, t_data *data);
 t_sent			**create_page(t_list *stack);
 void			print_sentence(t_sent *sentence);
@@ -128,4 +126,6 @@ char 			*test_append(t_char *raw_path);
 void 			prompt_input(void);
 void  add_redirection(t_node *node, t_sent *sentence, int i);
 t_sent	*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence);
+int	check_emp_arg(char *src, int i, t_char *dst, int *k);
+void	remove_quotes(t_char *dst, char *src, int i, int k);
 #endif
