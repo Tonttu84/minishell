@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/01 16:13:35 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/01 16:33:14 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,4 +127,5 @@ char 			*test_outfile(t_char *raw_path);
 char 			*test_append(t_char *raw_path);
 void 			prompt_input(void);
 void  add_redirection(t_node *node, t_sent *sentence, int i);
+t_sent	*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence);
 #endif

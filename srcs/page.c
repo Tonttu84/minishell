@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:20:15 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/01 16:13:51 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/01 16:37:05 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,15 @@ char *test_infile(t_char *raw_path)
 	return NULL;
 }
 
-t_sent	*conv_linked_to_sentence(void)
-{
-	int		i;
-	t_sent	*sentence;
-	t_node	*node;
-	t_data	*data;
-	int k;
 
-	k = 0;
-	data = get_data();
-	node = data->tokens.first;
-	sentence = ft_xcalloc(sizeof(t_sent), 1);
+// i is 0, k is 0, sentence is calloced, node is pulled from data 
+t_sent	*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence)
+{
 	if (node && node->type == PIPE)
 	{
 		sentence ->inpipe = 1;
 		node = destroy_node(&get_data()->tokens, node);
 	}
-	i = 0;
 	while (node)
 	{
 		node = get_data()->tokens.first;
@@ -47,15 +38,9 @@ t_sent	*conv_linked_to_sentence(void)
 		if (node->type == REDIRECT)
 			;
 		else if (node->type == IN_FILE || node->type == OUT_FILE || node->type == APPEND || node->type == HERE_DOCS)
-		{
-			add_redirection(node, sentence, k);
-			k++;	
-		}
+			add_redirection(node, sentence, k++);
 		else
-		{
-			sentence->array[i] = cnvrt_to_char(node->str);
-			i++;
-		}
+			sentence->array[i++] = cnvrt_to_char(node->str);
 		node = destroy_node(&get_data()->tokens, node);
 	}
 	return (sentence);
@@ -100,7 +85,7 @@ t_sent	**create_page(t_list *stack)
 	i = 0;
 	while (cur)
 	{
-		page[i] = conv_linked_to_sentence();
+		page[i] = conv_linked_to_sentence(0, 0, get_data()->tokens.first, ft_xcalloc(sizeof(t_sent), 1));
 		cur = stack->first;
 		printf("\n");
 		print_sentence(page[i]);
