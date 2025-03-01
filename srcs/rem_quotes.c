@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:27:03 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/01 19:27:40 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/01 20:07:15 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,51 @@ int handle_s_quotes(char *src, t_char *dst, int i, int *k)
 	}
 }
 
+int handle_d_quotes(char *src, t_char *dst, int i, int *k, int *exp)
+{
+	if (src[i] == '\"')
+	{
+		if (*exp == 1)
+			*exp = 0;
+		dst[*k + 1].blok = 1;
+		return (0);
+	}
+	else
+	{
+		dst[*k].c = src[i];
+		if (src[i] == '$')
+			*exp = 1;
+		else if (*exp == 1)
+		{
+			if (ft_isalnum(src[i]) == 0 && src[i] != '_')
+			{
+				*exp = 0;
+				dst[*k + 1].blok = 1;
+			}
+		}
+		if (*exp == 0 && src[i])
+			dst[*k].esc = 1;
+		(*k)++;
+		return (1);
+	}
+}
+
+int handle_rest(char *src, t_char *dst, int i, int *k)
+{
+	if (src[i] == '\'')
+	{
+		dst[(*k) + 1].blok = 1;
+		return (1);
+	}
+	else
+	{
+		dst[*k].c = src[i];
+		(*k)++;
+	}
+	return (0);
+}
+
+
 //i and k are set to zero
 void	remove_quotes(t_char *dst, char *src, int i, int k)
 {
@@ -88,51 +133,25 @@ void	remove_quotes(t_char *dst, char *src, int i, int k)
 	in_s_quotes = 0;
 	in_d_quotes = 0;
 	exp = 0;
-	while (src && src[i] != 0)
+	while (src && src[i])
 	{
-		if (!in_d_quotes && !in_s_quotes && check_emp_arg(src, i, dst, &k))
-			i++;
-		else if (!in_s_quotes && !in_d_quotes && mark_redir(src, &i, dst, &k))
-				;
-		else if (in_s_quotes && src[i] == '\'')
+		if (in_s_quotes )
 			in_s_quotes = handle_s_quotes(src, dst, i, &k);
-		else if (in_d_quotes && src[i] == '\"')
-		{
-			if (exp == 1)
-				exp = 0;
-			in_d_quotes = 0;
-			dst[k+ 1].blok = 1;
-		}
 		else if (in_d_quotes)
-		{
-			dst[k].c = src[i];
-			if (src[i] == '$')
-				exp = 1;
-			else if (exp == 1)
-			{
-				if (ft_isalnum(src[i]) == 0 && src[i] != '_')
-				{
-					exp = 0;
-					dst[k + 1].blok = 1;
-				}
-			}
-			if (exp == 0 && src[i])
-				dst[k].esc = 1;
-			k++;
-		}
-		else if (!in_d_quotes && !in_s_quotes && src[i] == '\"')
+			in_d_quotes = handle_d_quotes(src, dst, i, &k, &exp);
+		else if (check_emp_arg(src, i, dst, &k))
+			i++;
+		else if (src[i] == '\"')
 			in_d_quotes = 1;
-		else if (!in_d_quotes && !in_s_quotes && src[i] == '\'')
-		{
-			in_s_quotes = 1;
-			dst[k+ 1].blok = 1;
-		}
+		else if (mark_redir(src, &i, dst, &k))
+				;
 		else
-			dst[k++].c = src[i];
+			in_s_quotes = handle_rest(src, dst, i, &k);
 		i++;
 	}
 	dst[i].c = '\0';
 }
+
 
 // I will later refactor to remove the i and just pass the pointer to (src + i);
 int	check_emp_arg(char *src, int i, t_char *dst, int *k)
