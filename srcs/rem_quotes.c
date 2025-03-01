@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:27:03 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/01 20:07:15 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/01 21:00:56 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ int	handle_s_quotes(char *src, t_char *dst, int i, int *k)
 	}
 }
 
-int	handle_d_quotes(char *src, t_char *dst, int i, int *k, int *exp)
+int	handle_d_quotes(char *src, t_char *dst, int *k, int *exp)
 {
-	if (src[i] == '\"')
+	if (*src == '\"')
 	{
 		if (*exp == 1)
 			*exp = 0;
@@ -87,18 +87,18 @@ int	handle_d_quotes(char *src, t_char *dst, int i, int *k, int *exp)
 	}
 	else
 	{
-		dst[*k].c = src[i];
-		if (src[i] == '$')
+		dst[*k].c = *src;
+		if (*src == '$')
 			*exp = 1;
 		else if (*exp == 1)
 		{
-			if (ft_isalnum(src[i]) == 0 && src[i] != '_')
+			if (ft_isalnum(*src) == 0 && *src != '_')
 			{
 				*exp = 0;
 				dst[*k + 1].blok = 1;
 			}
 		}
-		if (*exp == 0 && src[i])
+		if (*exp == 0 && *src)
 			dst[*k].esc = 1;
 		(*k)++;
 		return (1);
@@ -135,7 +135,7 @@ void	remove_quotes(t_char *dst, char *src, int i, int k)
 		if (in_s_quotes)
 			in_s_quotes = handle_s_quotes(src, dst, i, &k);
 		else if (in_d_quotes)
-			in_d_quotes = handle_d_quotes(src, dst, i, &k, &exp);
+			in_d_quotes = handle_d_quotes(src + i, dst, &k, &exp);
 		else if (check_emp_arg(src, i, dst, &k))
 			i++;
 		else if (src[i] == '\"')
