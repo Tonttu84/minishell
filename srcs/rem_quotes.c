@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:27:03 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/01 18:46:02 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/01 19:27:40 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,46 +37,45 @@ int	next_is_delim(char *str, int i, t_char *dst, int k)
 }
 
 
-int mark_redir(char *src, int i, t_char *dst, int k)
+int mark_redir(char *src, int *i, t_char *dst, int *k)
 {
-		if (src[i] == src[i + 1] && (src[i] == '>' || src[i] == '<'))
+		if (src[*i] == src[(*i) + 1] && (src[*i] == '>' || src[*i] == '<'))
 		{
-			dst[k].c = ' ';
-			k++;
-			dst[k].c = src[i];
-			k++;
-			i++;
-			dst[k].c = src[i];
-			k++;
-			dst[k].c = ' ';
-			k++;
+			dst[*k].c = ' ';
+			(*k)++;
+			dst[*k].c = src[*i];
+			(*k)++;
+			(*i)++;
+			dst[*k].c = src[*i];
+			(*k)++;
+			dst[*k].c = ' ';
+			(*k)++;
 			return (1);
 		}
-		else if (src[i + 1] != src[i] && (src[i] == '>' || src[i] == '<'))
+		else if (src[(*i) + 1] != src[*i] && (src[*i] == '>' || src[*i] == '<'))
 		{
-			dst[k].c = ' ';
-			k++;
-			dst[k].c = src[i];
-			k++;
-			dst[k].c = ' ';
-			k++;
+			dst[*k].c = ' ';
+			(*k)++;
+			dst[*k].c = src[*i];
+			(*k)++;
+			dst[*k].c = ' ';
+			(*k)++;
 			return (1);
 		}
 		return (0);
 }
 
-int handle_s_quotes(char *src, t_char *dst, int i, int k)
+int handle_s_quotes(char *src, t_char *dst, int i, int *k)
 {
 	if (src[i] == '\'')
 		return (0);
 	else 
 	{
-		dst[k].c = src[i];
-			dst[k].esc = 1;
-			k++;
+		dst[*k].c = src[i];
+			dst[*k].esc = 1;
+			(*k)++;
 		return (1);
 	}
-	
 }
 
 //i and k are set to zero
@@ -93,10 +92,10 @@ void	remove_quotes(t_char *dst, char *src, int i, int k)
 	{
 		if (!in_d_quotes && !in_s_quotes && check_emp_arg(src, i, dst, &k))
 			i++;
-		else if (!in_s_quotes && !in_d_quotes && mark_redir(src, i, dst, k))
+		else if (!in_s_quotes && !in_d_quotes && mark_redir(src, &i, dst, &k))
 				;
 		else if (in_s_quotes && src[i] == '\'')
-			in_s_quotes = handle_s_quotes(src, dst, i, k);
+			in_s_quotes = handle_s_quotes(src, dst, i, &k);
 		else if (in_d_quotes && src[i] == '\"')
 		{
 			if (exp == 1)
