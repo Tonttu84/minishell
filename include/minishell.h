@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/28 12:42:38 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/01 09:31:48 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct s_data
 	int			duh;
 	char		**history;
 	int			his_i;
-	char		env[MAX_VARS + 1][MAX_LENGTH + 1];
+	char		env[ENV_SIZE + 1][MAX_LENGTH + 1];
 	int			env_count;
 	t_list		tokens;
 	t_sent		*page[MAX_SENT_SIZE];
