@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:06:42 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/27 11:27:48 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/01 16:18:27 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,11 +145,18 @@ void	print_sentence(t_sent *sentence)
 		printf("%s \n", sentence->array[i]);
 		i++;
 	}
+	i = 0;
+	printf("Redirections are :\n");
+	while (i < 20 && sentence->redirs[i].path)
+    {
+        const char *color = token_to_color(sentence->redirs[i].type);
+        const char *token_str = token_to_string(sentence->redirs[i].type);
+        
+        printf("%s%s: %s%s\n", color, token_str, sentence->redirs[i].path, RESET);
+        i++;
+    }
 	printf("\n");
 	printf("Inpipe is %d, ", sentence->inpipe);
 	printf("outpipe is %d, ", sentence->outpipe);
-	printf("infile is %s, ", sentence->infile);
-	printf("outfile is %s, ", sentence->outfile);
-	printf("heredocs is %s and ", sentence->heredocs);
-	printf("here exists is %d\n", sentence->here_exists);
+	
 }

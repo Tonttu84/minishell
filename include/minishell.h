@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/01 09:31:48 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/01 16:13:35 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,21 @@
 
 const char		*token_to_string(t_token token);
 
+
+typedef struct s_dir
+{
+	char 		*path;
+	t_token		type;
+	
+}	t_dir;
+
 typedef struct s_sent
 {
 	char		*array[MAX_SENT_SIZE];
 	bool		inpipe;
-	bool		append;
+	t_dir		redirs[20];
 	bool		outpipe;
 	int			error; 			//error code here
-	char		*infile; 
-	char		*outfile; 
-	char		*heredocs; //Change to fixed size array
-	bool		here_exists; //If we change to fixed size array we cant set it to NULL so we use a flag instead 
 }				t_sent;
 
 typedef struct s_data
@@ -122,5 +126,5 @@ char 			*test_infile(t_char *raw_path);
 char 			*test_outfile(t_char *raw_path);
 char 			*test_append(t_char *raw_path);
 void 			prompt_input(void);
-
+void  add_redirection(t_node *node, t_sent *sentence, int i);
 #endif

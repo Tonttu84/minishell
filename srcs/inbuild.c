@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:05:36 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/28 13:19:32 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/01 15:07:44 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,17 @@ int cd(int argc, char *argv[])
 	}
 	cur = ft_strjoin("OLDPWD=", getcwd(cwd, PATH_MAX));
 	if (is_valid_cd(argv[1]) == 0)
-		set_variable(data, "OLDPWD", getcwd(cwd, PATH_MAX));
+		set_variable(get_data(), "OLDPWD", getcwd(cwd, PATH_MAX));
 	
 	
 	//problem if chdir fails
-	if (tokens[1] == NULL || tokens[1] == 0)
-		chdir(get_own_env(data, "HOME"));
-	else if (ft_strncmp(tokens[1], "-", 2))
-		chdir(get_own_env(data, "HOME"));
+	if (argv[1] == NULL || argv[1] == 0)
+		chdir(get_own_env(get_data(), "HOME"));
+	else if (ft_strncmp(argv[1], "-", 2))
+		chdir(get_own_env(get_data(), "HOME"));
 	else 
-		chdir(tokens[1]);
-	set_variable(data, "PWD", getcwd(cwd, PATH_MAX));
+		chdir(argv[1]);
+	set_variable(get_data(), "PWD", getcwd(cwd, PATH_MAX));
 
 	//set the real cwd to be the new pwd
 	return (0);

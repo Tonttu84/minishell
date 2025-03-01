@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:32:12 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/28 12:36:21 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/01 15:18:32 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,17 +141,17 @@ t_char	*lexify(char *line, t_data *data)
 	//dynamic memory is problematic due to possible ghosts 
 	newline = ft_xcalloc(ft_strlen(line) * 2 + 1, sizeof(t_char));
 	remove_quotes(newline, line);
-	//debug_print(newline, data);
-//	printf("\n");
+	debug_print(newline, data);
+	printf("\n");
 	mark_commands(newline, data);
-	//debug_print(newline, data);
-	//printf("\n");
+	debug_print(newline, data);
+	printf("\n");
 	mark_arguments(newline, data);
-	//debug_print(newline, data);
-//	printf("\n");
+	debug_print(newline, data);
+printf("\n");
 	expand_arguments(expanded, newline, data);
-	//debug_print(expanded, data);
-	//printf("\n");
+	debug_print(expanded, data);
+	printf("\n");
 	create_list(data, expanded);
 	//iterate_list(&data->tokens, print_node);
 	return (newline);

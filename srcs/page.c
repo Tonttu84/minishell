@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:20:15 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/28 11:02:13 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/01 16:13:51 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ t_sent	*conv_linked_to_sentence(void)
 	t_sent	*sentence;
 	t_node	*node;
 	t_data	*data;
+	int k;
 
+	k = 0;
 	data = get_data();
 	node = data->tokens.first;
 	sentence = ft_xcalloc(sizeof(t_sent), 1);
@@ -44,42 +46,10 @@ t_sent	*conv_linked_to_sentence(void)
 		}
 		if (node->type == REDIRECT)
 			;
-			//In_file and here_docs are not yet treated seperately
-		else if (node->type == HERE_DOCS)
+		else if (node->type == IN_FILE || node->type == OUT_FILE || node->type == APPEND || node->type == HERE_DOCS)
 		{
-			free(sentence->heredocs);
-			sentence ->here_exists = 1;
-			free(sentence->infile);
-			sentence->infile = NULL;
-			sentence->heredocs = create_heredoc(node->str);
-		}
-		else if (node->type == IN_FILE)
-		{
-			free(sentence->heredocs);
-			sentence ->here_exists = 0;
-			sentence->here_exists = NULL;
-			free(sentence->infile);
-			sentence->infile = (test_infile(node->str));
-			if (sentence->infile == NULL)
-				{
-					sentence -> error = 1;
-				perror("Not a valid infile, throw error, stop creatin of this file");
-			//	return (sentence);
-				}
-		}
-		else if (node->type == OUT_FILE || node->type == APPEND)
-		{
-			free(sentence -> outfile);
-			if (node->type == APPEND)
-			{
-				sentence -> append = 1;
-				sentence -> outfile = (test_append(node->str));
-			}
-			else 
-			{
-				sentence -> append = 0;
-				sentence -> outfile = (test_outfile(node->str));
-			}
+			add_redirection(node, sentence, k);
+			k++;	
 		}
 		else
 		{
@@ -87,12 +57,6 @@ t_sent	*conv_linked_to_sentence(void)
 			i++;
 		}
 		node = destroy_node(&get_data()->tokens, node);
-		if (sentence->outfile == NULL)
-			{
-				perror("Need to throw error here and stop processing this sentenc");
-				sentence -> error = 1;
-				//return (sentence);
-			}
 	}
 	return (sentence);
 }
