@@ -6,7 +6,7 @@
 /*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 13:25:30 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/02 15:09:03 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/02 16:52:11 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,20 @@ static void handle_infile(char *sent, int fd)
     close(fd);
 }
 
-static void handle_heredoc(char *sent)
+static void handle_heredoc(char *sent, int fd)
 {
-    //TODO: how?
+    sent = create_heredoc(sent, 0);
+    write(fd, sent, ft_strlen(sent));
 }
 
-void handle_redirection(char *sentence, enum e_token type)
+void handle_redirection(char *sentence, enum e_token type, int fd)
 {
     if (type == APPEND)
-        handle_append(sentence, -1);
+        handle_append(sentence, fd);
     else if (type == OUT_FILE)
-        handle_outfile(sentence, -1);
+        handle_outfile(sentence, fd);
     else if (type == IN_FILE)
-        handle_infile(sentence, -1);
+        handle_infile(sentence, fd);
     else
-        handle_heredoc(sentence);
+        handle_heredoc(sentence, fd);
 }

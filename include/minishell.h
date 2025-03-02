@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/02 13:54:27 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/02 16:55:21 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ char			*cnvrt_to_char(t_char *line);
 t_char			*lexify(char *line, t_data *data);
 t_sent			**create_page(t_list *stack);
 void			print_sentence(t_sent *sentence);
-char			*create_heredoc(t_char *terminator);
+char			*create_heredoc(char *terminator, int expand);
 char 			*test_infile(t_char *raw_path);
 char 			*test_outfile(t_char *raw_path);
 char 			*test_append(t_char *raw_path);
@@ -130,4 +130,5 @@ void  add_redirection(t_node *node, t_sent *sentence, int i);
 t_sent	*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence);
 int	check_emp_arg(char *src, int i, t_char *dst, int *k);
 void	remove_quotes(t_char *dst, char *src, int i, int k);
+int execute(t_sent *sentence, int pfd[2], pid_t my_child);
 #endif

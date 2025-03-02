@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:36:25 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/28 11:20:02 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:22:39 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	init(char env_cpy[MAX_VARS + 1][MAX_LENGTH + 1], char **orig)
 	}
 	get_data()->env_count = i;
 }
+
 
 int	main(int argc, char **argv, char *envp[])
 {
