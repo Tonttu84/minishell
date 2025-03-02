@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:18:56 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/27 13:35:30 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/02 15:52:39 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	t_compare(t_char *str, char *str2)
 
 // Missing expansion support <<"tad"aa delimiter is tadaa expansion doesnt happen
 // Currently heredocs that is instantly terminated returns a NULL terminator but we need to test it what format is required
-char	*create_heredoc(t_char *terminator)
+char	*create_heredoc(char *terminator, int expand)
 {
 	char	*tmp;
 	char	*result;
@@ -50,7 +50,7 @@ char	*create_heredoc(t_char *terminator)
 	tmp = NULL;
 	result = NULL;
 	cpy = NULL;
-	while (t_compare(terminator, tmp))
+	while (ft_strncmp(terminator, tmp, ft_strlen(terminator + 1)))
 	{
 		if (tmp)
 		{
@@ -73,7 +73,7 @@ char	*create_heredoc(t_char *terminator)
 		tmp = readline(">");
 	}
 	free(tmp);
-	if (terminator[0].esc)
+	if (expand)
 		return (expand_heredocs(result));
 	return (result);
 }

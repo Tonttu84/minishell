@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:33:26 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/01 20:43:51 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/02 15:47:38 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ typedef enum e_token
 	PIPE,
 	REDIRECT,
 	HERE_DOCS,
-	APPEND
+	APPEND,
+	HERE_QUOTE
 }	t_token;
 
 typedef struct s_ldiv
