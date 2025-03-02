@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:32:26 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/01 20:47:01 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/02 16:07:14 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	match_env_argument(t_char *source, char *env_var)
 	return (0);
 }
 
-// IF not valid what do we return?
+//retrns a pointer to the start of env variable if you have the 
 const char	*ft_get_env(const char *target)
 {
 	int	i;

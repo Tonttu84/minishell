@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/02 13:54:27 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/02 16:56:47 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,6 @@ typedef struct s_sent
 
 typedef struct s_data
 {
-	int			duh;
-	char		**history;
-	int			his_i;
 	char		env[ENV_SIZE + 1][MAX_LENGTH + 1];
 	int			env_count;
 	t_list		tokens;
@@ -121,7 +118,7 @@ char			*cnvrt_to_char(t_char *line);
 t_char			*lexify(char *line, t_data *data);
 t_sent			**create_page(t_list *stack);
 void			print_sentence(t_sent *sentence);
-char			*create_heredoc(t_char *terminator);
+char	*create_heredoc(char *terminator, int expand);
 char 			*test_infile(t_char *raw_path);
 char 			*test_outfile(t_char *raw_path);
 char 			*test_append(t_char *raw_path);
