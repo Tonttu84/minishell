@@ -64,17 +64,21 @@
 
 const char		*token_to_string(t_token token);
 
+
+typedef struct s_dir
+{
+	char 		*path;
+	t_token		type;
+	
+}	t_dir;
+
 typedef struct s_sent
 {
 	char		*array[MAX_SENT_SIZE];
 	bool		inpipe;
-	bool		append;
+	t_dir		redirs[20];
 	bool		outpipe;
 	int			error; 			//error code here
-	char		*infile; 
-	char		*outfile; 
-	char		*heredocs; //Change to fixed size array
-	bool		here_exists; //If we change to fixed size array we cant set it to NULL so we use a flag instead 
 }				t_sent;
 
 typedef struct s_data
@@ -82,7 +86,7 @@ typedef struct s_data
 	int			duh;
 	char		**history;
 	int			his_i;
-	char		env[MAX_VARS + 1][MAX_LENGTH + 1];
+	char		env[ENV_SIZE + 1][MAX_LENGTH + 1];
 	int			env_count;
 	t_list		tokens;
 	t_sent		*page[MAX_SENT_SIZE];
@@ -112,10 +116,8 @@ void			debug_print(t_char *array, t_data *data);
 void			print_node(t_list *list, t_node *node);
 size_t			ft_tcharlen(t_char *line);
 t_node			*destroy_node(t_list *list, t_node *node);
-void			remove_quotes(t_char *dst, char *src);
 int				copy_env_to_tchar(t_char *dst, int i, const char *env);
 char			*cnvrt_to_char(t_char *line);
-int				check_emp_arg(char *src, int i, t_char *dst, int *k, int in_d_quotes, int in_s_quotes);
 t_char			*lexify(char *line, t_data *data);
 t_sent			**create_page(t_list *stack);
 void			print_sentence(t_sent *sentence);
@@ -124,5 +126,8 @@ char 			*test_infile(t_char *raw_path);
 char 			*test_outfile(t_char *raw_path);
 char 			*test_append(t_char *raw_path);
 void 			prompt_input(void);
-
+void  add_redirection(t_node *node, t_sent *sentence, int i);
+t_sent	*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence);
+int	check_emp_arg(char *src, int i, t_char *dst, int *k);
+void	remove_quotes(t_char *dst, char *src, int i, int k);
 #endif

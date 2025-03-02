@@ -30,7 +30,6 @@ void	init(char env_cpy[MAX_VARS + 1][MAX_LENGTH + 1], char **orig)
 
 int	main(int argc, char **argv, char *envp[])
 {
-
 	(void)argv;
 	if (argc != 1)
 	{

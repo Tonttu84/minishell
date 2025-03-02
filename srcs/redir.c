@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 16:55:05 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/01 20:59:15 by jrimpila         ###   ########.fr       */
+/*   Created: 2025/03/01 15:39:47 by jrimpila          #+#    #+#             */
+/*   Updated: 2025/03/01 16:12:58 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_exit(t_data *data, char *message, int exit_code)
+// Double check that the struct keeps the t_dir alive even after this returns
+void	add_redirection(t_node *node, t_sent *sentence, int i)
 {
-	// free everything
-	(void)data;
-	perror(message);
-	exit(exit_code);
+	if (node->str)
+		sentence->redirs[i].path = cnvrt_to_char(node->str);
+	else
+		sentence->redirs[i].path = ft_strdup("\0");
+	sentence->redirs[i].type = node->type;
 }
-
-void	deallocate(void);

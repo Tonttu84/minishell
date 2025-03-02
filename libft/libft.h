@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:33:26 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/02/24 13:08:08 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/01 20:43:51 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,16 @@
 # include <unistd.h>
 # include <stdbool.h>
 
-
 typedef struct s_char
 {
-    char c;        
-    bool esc;
-	bool com;
-	bool var;
-	bool blok;
-	bool ghost;
-	bool added;
-} t_char;
-
+	char	c;
+	bool	esc;
+	bool	com;
+	bool	var;
+	bool	blok;
+	bool	ghost;
+	bool	added;
+}	t_char;
 
 typedef enum e_token
 {
@@ -45,8 +43,7 @@ typedef enum e_token
 	REDIRECT,
 	HERE_DOCS,
 	APPEND
-	
-}   t_token;
+}	t_token;
 
 typedef struct s_ldiv
 {
@@ -67,8 +64,6 @@ typedef struct s_list
 	t_node	*first;
 	t_node	*last;
 }	t_list;
-
-
 
 char				*ft_ltostr(long val, unsigned int base);
 char				*ft_strtrim(char const *s1, char const *set);
@@ -114,7 +109,7 @@ void				ft_putnbr_fd(int n, int fd);
 void				ft_putendl_fd(char *s, int fd);
 
 void				ft_lstadd_front(t_list **lst, t_list *new);
-void			ft_lstadd_back(t_list *stack, t_node *new);
+void				ft_lstadd_back(t_list *stack, t_node *new);
 void				ft_lstdelone(t_list *lst, void (*del)(void *));
 void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));

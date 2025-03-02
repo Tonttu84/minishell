@@ -6,50 +6,45 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:32:40 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/28 16:49:25 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/01 20:41:59 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../include/minishell.h"
 
-int	unset(char *envvar)
+int	unset(char **env, char *envvar)
 {
-	int i;
+	int	i;
 	int	len;
-	int k;
-	char **env;
+	int	k;
 
-	env = get_data()->env;
 	k = 0;
-	len = ft_strlen(envvar);
+	len = strlen(envvar);
 	i = 0;
-	while(i < ENV_SIZE)
+	while (env[i] != NULL)
 	{
-		if (ft_strncmp(env[i], envvar, len) == 0)
+		if (strncmp(env[i], envvar, len) == 0)
 		{
 			if (env[i][len] == '=' || env[i][len] == '\0')
 			{
-				while (k < MAX_LENGTH)
-					{
-						env[i][k] = '\0';
-						k++;
-					}
+				while (env[i][k] != '\0')
+				{
+					env[i][k] = '\0';
+					k++;
+				}
 				return (0);
 			}
 		}
-		
+		i++;
 	}
 	return (1);
 }
 
-int set_envvar(char *envvar, char *value, int free_slot)
+int	set_envvar(char **env, char *envvar, char *value, int free_slot)
 {
-	int i;
-	int k;
-	char **env;
+	int	i;
+	int	k;
 
-	env = get_data()->env;
 	i = 0;
 	while (envvar[i] && i < MAX_LENGTH)
 	{
@@ -61,7 +56,7 @@ int set_envvar(char *envvar, char *value, int free_slot)
 	if (value && i < MAX_LENGTH)
 	{
 		env[free_slot][i] = '=';
-		i++;	
+		i++;
 	}
 	k = 0;
 	while (value && value[k] && i < MAX_LENGTH)
@@ -74,48 +69,41 @@ int set_envvar(char *envvar, char *value, int free_slot)
 		return (perror("Env max exceeded\n"), 1);
 	return (0);
 }
-//Value van be NULL or \0, if NULL then dont set the =
-int add_envvar(char *envvar, char *value)
+
+// Value van be NULL or \0, if NULL then dont set the =
+int	add_envvar(char **env, char *envvar, char *value)
 {
-	char **env;
-	int i;
-	
-	env = get_data()->env;
-	unset(envvar);
+	int	i;
+
+	unset(env, envvar);
 	i = 0;
 	while (i < ENV_SIZE)
 	{
-		if (env[i] == NULL)
-			i++;
-		else
-		{
-			return (set_envvar(envvar, value, i));
-		}
+		if (env[i] == NULL || env[i][0] == '\0')
+			return (set_envvar(env, envvar, value, i));
+		i++;
 	}
 	perror("Env variables full\n");
 	return (231);
 }
-
-
-void sort_cpy(char **cpy)
+// Not sure if Im sorting alphabetically or counter alphabetically;
+void	sort_cpy(char **cpy)
 {
 	int		i;
 	char	*tmp;
+	int		k;
 
-	int k;
 	k = 0;
-	while (k < MAX_VARS && cpy[k])
+	while (k < ENV_SIZE && cpy[k])
 	{
 		i = 0;
-		while(i < MAX_VARS && cpy[i])
+		while (i < ENV_SIZE && cpy[i])
 		{
-		//Not sure if Im sorting alphabetically or counter alphabetically;
-			if (cpy [i + 1] && ft_strncmp(cpy[i], cpy[i + 1], MAX_LENGTH))
-			{			
+			if (cpy[i + 1] && ft_strncmp(cpy[i], cpy[i + 1], MAX_LENGTH))
+			{
 				tmp = cpy[i];
-				cpy[i] = cpy [i + 1];
+				cpy[i] = cpy[i + 1];
 				cpy[i + 1] = tmp;
-				
 			}
 		}
 		k++;
@@ -127,101 +115,103 @@ void	final_print(char **env)
 	int	i;
 
 	i = 0;
-	while (i < MAX_VARS && env[i])
+	while (i < ENV_SIZE && env[i])
 	{
 		printf("declare -x %s\n", env[i]);
 		i++;
 	}
 }
 
-
-int print_alphabetically(void)
+int	print_alphabetically(char **env)
 {
-	char	*env[MAX_VARS];
-	char	**orig;
+	char	*cpy[ENV_SIZE + 1];
 	int		i;
 	int		k;
-	
+
 	i = 0;
 	k = 0;
-	orig = get_data()->env;
-	while (k < MAX_VARS)
+	while (env[k] != NULL)
 	{
-		if (orig[k])
+		if (env[k][0] != '\0')
 		{
-			env[i] = orig[k];
+			cpy[i] = env[k];
 			i++;
 		}
 		k++;
 	}
-	while (i < MAX_VARS)
-	{
-		env[i] = NULL;
-		i++;
-	}
-	sort_cpy(env);
-	final_print(env);
+	cpy[i] = NULL;
+	sort_cpy(cpy);
+	final_print(cpy);
 	return (0);
-
 }
 
+// Not sure what the valid env variable values can be
+int	errorcheck_expand(char *var)
+{
+	int	i;
 
-void	process_new_envvarr(char *var)
+	i = 0;
+	if (!var || (var[i] != '_' && ft_isalpha(var[i]) == 0))
+	{
+		perror("Not a valid variable");
+		return (-1);
+	}
+	while (ft_isalnum(var[i]) || var[i] == '_')
+		i++;
+	if (var[i] != 0 && var[i] != '=')
+	{
+		perror("Not a valid variable");
+		return (-1);
+	}
+	return (0);
+}
+
+void	process_new_envvarr(char **env, char *var)
 {
 	char	name[MAX_LENGTH + 1];
 	char	value[MAX_LENGTH + 1];
 	int		i;
 	int		k;
-	
+
 	i = 0;
 	k = 0;
-	while (k < MAX_LENGTH + 1)
+	while (k < MAX_LENGTH + 1 && var[i] != '=' && var[i] != '\0')
 	{
-		while (var[i] != 0 && var[i] != '=')
-		{
-			name[k] = var[i];
-			i++;
-			k++;
-		}  
-		name[k] = 0;
+		name[k] = var[i];
+		i++;
 		k++;
 	}
+	name[k] = '\0';
+	if (var[i] == '=')
+		i++;
 	k = 0;
-	while (k < MAX_LENGTH + 1)
+	while (k < MAX_LENGTH + 1 && var[i] != '\0')
 	{
-		while (var[i] != 0)
-		{
-			value[k] = var[i];
-			k++;
-			i++;
-		}
-		value[k] = 0;
+		value[k] = var[i];
 		k++;
+		i++;
 	}
-	add_envvar(name, value);
+	value[k] = '\0';
+	add_envvar(env, name, value);
 }
 
-int export(int argc, char *argv[])
+int	export(int argc, char *argv[], char **env)
 {
 	int	i;
-	
+
 	if (argc == 1)
-		return(print_alphabetically());
-	i = 1;
-	while (i < argc)
+		return (print_alphabetically(env));
+	for (i = 1; i < argc; i++)
 	{
-		if (errorcheck(argv[i]))
+		if (errorcheck_expand(argv[i]))
 		{
-			perror ("Print error, set errno and so on");
+			perror("Print error, set errno and so on");
 			return (-1);
 		}
-		i++;
 	}
-	i = 1;
-	while (i < argc)
+	for (i = 1; i < argc; i++)
 	{
-		process_new_envvarr(argv[i]);
-		i++;
-	}	
+		process_new_envvarr(env, argv[i]);
+	}
 	return (0);
 }
