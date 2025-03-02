@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:27:03 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/01 21:00:56 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/02 13:15:13 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,13 +140,15 @@ void	remove_quotes(t_char *dst, char *src, int i, int k)
 			i++;
 		else if (src[i] == '\"')
 			in_d_quotes = 1;
-		else if (mark_redir(src, &i, dst, &k))
-			;
-		else
+		else if (mark_redir(src, &i, dst, &k) == 0)
 			in_s_quotes = handle_rest(src, dst, i, &k);
 		i++;
 	}
 	dst[i].c = '\0';
+	if (in_d_quotes || in_s_quotes)
+	{
+		perror("Quotes not closed");
+	}
 }
 
 // I will later refactor to remove the i and just pass the pointer to (src + i);
