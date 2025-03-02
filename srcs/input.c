@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:11:31 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/02 17:16:35 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:43:45 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ void	process(char *line)
 void	prompt_input(void)
 {
 	char	*line;
+	int pfd[2];
 
+	pipe(pfd);
 	while (1)
 	{
 		line = readline("minishell> ");
@@ -42,6 +44,7 @@ void	prompt_input(void)
 		}
 		add_history(line);
 		process(line);
+		execute(get_data()->page[0], pfd, 1);
 		free(line);
 	}
 }

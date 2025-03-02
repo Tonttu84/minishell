@@ -6,7 +6,7 @@
 #    By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/14 13:14:15 by jtuomi            #+#    #+#              #
-#    Updated: 2025/03/01 20:38:29 by jrimpila         ###   ########.fr        #
+#    Updated: 2025/03/02 16:53:05 by jtuomi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ INCLUDE_DIRS = libft
 CFLAGS = -Wall -Wextra -Werror -g2 
 SRC = lexer.c	ft_xcalloc.c parsing_utils.c heredocs.c init_utils.c\
 	exit.c	env.c utils.c page.c rem_quotes.c test.c open.c \
-	main.c create_list.c ft_lstaddback.c	input.c	export.c redir.c
+	main.c create_list.c ft_lstaddback.c	input.c	export.c redir.c \
+	redirect.c exec.c
 SRC := $(addprefix srcs/, $(SRC))
 DEBUG = debug.c
 DEBUG := $(addprefix srcs/debug/, $(DEBUG))
@@ -41,6 +42,5 @@ fclean: clean
 	rm -f $(NAME)
 re: fclean all
 debug: $(DEBUG_OBJ)
-	
 .PHONY:
 	all, libft, clean, flean, re, debug
