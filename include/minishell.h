@@ -32,6 +32,8 @@
 # include <readline/history.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include <sys/wait.h>
+# include <sys/types.h>
 # ifndef PATH_MAX
 #  define PATH_MAX (500)
 # endif
