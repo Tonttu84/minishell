@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/28 12:42:38 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/01 19:39:07 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # include <readline/history.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include <sys/wait.h>
+# include <sys/types.h>
 # ifndef PATH_MAX
 #  define PATH_MAX (500)
 # endif
