@@ -6,12 +6,13 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:23:16 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/03 16:02:12 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/03 18:29:47 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+// TODO: HERE_DOC with support for 16 depth
 void	test(void)
 {
 	t_char *result;
