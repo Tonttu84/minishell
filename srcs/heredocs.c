@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:18:56 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/02 16:55:50 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/03 14:06:46 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ char	*expand_heredocs(char *unexpanded)
 	{
 		
 	}
+	return
 }
 
 int	t_compare(t_char *str, char *str2)
