@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:32:12 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/01 20:50:55 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:52:06 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	expand_arguments(t_char *dst, t_char *src, t_data *data)
 	}
 	dst[di].c = 0;
 }
-	// dynamic memory is problematic
+	// dynamic memory is problematic due to unknown sizes, last few characters are missing sometimes
 t_char	*lexify(char *line, t_data *data)
 {
 	t_char			*newline;
