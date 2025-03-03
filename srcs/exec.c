@@ -6,7 +6,7 @@
 /*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 19:21:45 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/03 14:57:21 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/03 15:41:53 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void deal_with_sentence(t_sent *sentence, int i, int pfd[2])
             handle_redirection(sentence->redirs[i].path, HERE_DOCS, pfd[0]);
     if (sentence->inpipe)
         dup2(pfd[STDIN_FILENO], STDIN_FILENO);
-    else if (sentence->outpipe)
+    if (sentence->outpipe)
         dup2(pfd[STDOUT_FILENO], STDOUT_FILENO);
     close(pfd[STDIN_FILENO]);
     close(pfd[STDOUT_FILENO]);
