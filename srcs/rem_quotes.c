@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:27:03 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/02 13:15:13 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:17:08 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void	remove_quotes(t_char *dst, char *src, int i, int k)
 			in_s_quotes = handle_rest(src, dst, i, &k);
 		i++;
 	}
-	dst[i].c = '\0';
+	dst[k].c = '\0';
 	if (in_d_quotes || in_s_quotes)
 	{
 		perror("Quotes not closed");

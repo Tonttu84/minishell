@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:23:16 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/03 15:15:52 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/03 16:02:12 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void	test(void)
 	// Example lines for testing your parsing function
 	char *test_lines[] =
 	{
-		
+		"<< EOF",	
 		//"ls -la | cat > out.txt <test.c | echo $blaa?"
 		"cat ",
 		"/usr/bin/cat ",
 		"which cat ",
 		"/usr/bin/which cat ",
-		"cat \"$HOME/i\"\"nput.txt\">>outfile.txt \'\' \'\'\"\" | echo $US\"\"ER \'\'grep $invalid \"search_pattern\" < \"$HOME/input.txt\" <<EOF > \"$HOME/error.log\" | sort | uniq |   echo > test.txt \"Found line: \"$line\"\" | echo \"Current user: $USER\" | echo \"Non-existent variable: $NONEXISTENTVAR\" ",
+		"cat \"$HOME/i\"\"nput.txt\">>outfile.txt \'\' \'\'\"\" | echo $US\"\"ER \'\'grep $invalid \"search_pattern\" <<EOF < \"$HOME/input.txt\" <<EOF > \"$HOME/error.log\" | sort | uniq |   echo > test.txt \"Found line: \"$line\"\" | echo \"Current user: $USER\" | echo \"Non-existent variable: $NONEXISTENTVAR\" ",
 	};
 	for (i = 0; (unsigned int)i < sizeof(test_lines)
 		/ sizeof(test_lines[0]); i++)

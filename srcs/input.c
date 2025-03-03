@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:11:31 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/02 17:43:45 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:55:57 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	prompt_input(void)
 			free(line);
 			continue ;
 		}
+		printf("%s\n", line);
 		add_history(line);
 		process(line);
 		execute(get_data()->page[0], pfd, 1);
