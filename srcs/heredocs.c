@@ -6,23 +6,96 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:18:56 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/03 14:06:46 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/03 14:09:04 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*expand_heredocs(char *result);
+
+int	match_env_argument_char(char *source, char *env_var)
+{
+	int	i;
+
+	i = 0;
+	if (env_var == NULL || env_var[0] == '\0')
+		return (0);
+	if (source[0] != '$' || (ft_isalnum(source[1]) == 0
+			&& source[1] != '_'))
+		perror("DEBUG iffy input to match_env_argument\n");
+	i = 1;
+	while (ft_isalnum(source[i]) || source[i] == '_')
+	{
+		if (source[i] == env_var[i - 1])
+			i++;
+	}
+	if (source[i] == 0 || source[i] == '=')
+		return (1);
+	return (0);
+}
+
+const char	*find_env_char(char *source, t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->env_count)
+	{
+		if (match_env_argument_char(source, data->env[i]))
+			return (((const char *)data->env + i));
+		i++;
+	}
+	return (NULL);
+}
+
+// I have a pointer to the start of the env variable
+void	expand_envvar(char *unexp, char *exp, int *i, int *k)
+{
+	const char *ptr_envvar;
+	int j;
+
+	ptr_envvar = find_env_char(unexp + *i, get_data());
+	j = 0;
+	while (ptr_envvar && ptr_envvar[j] && ptr_envvar[j] != '=')
+		j++;
+	while (ptr_envvar && ptr_envvar[j])
+	{
+		exp[*k] = ptr_envvar[j];
+		(*k)++;
+		j++;
+	}
+	if (unexp[*i] == '$')
+		(*i)++;
+	else
+		perror("DEBUG, something seems wrong");
+	while(ft_isalnum(unexp[*i]) ||unexp[*i] == '_')
+		(*i)++;
+	
+}
+
+
 
 char	*expand_heredocs(char *unexpanded)
 {
+	int	i;
+	int	k;
 	char *expanded;
 
+	i = 0;
+	k = 0;
 	expanded = ft_xcalloc(65000, 1);
+	while (unexpanded[i])
 	{
-		
+		if (unexpanded[i] == '$')
+		{
+			expand_envvar(unexpanded, expanded, &i, &k);
+		}
+		expanded[k]=unexpanded[i];
+		i++;
+		k++;
 	}
-	return
+	free(unexpanded);
+	return (expanded);
 }
 
 int	t_compare(t_char *str, char *str2)

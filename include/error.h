@@ -6,9 +6,12 @@
 /*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:51:41 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/03 14:06:45 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/03 14:57:22 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef ERROR_H
+#define ERROR_H
 
 typedef enum e_error
 {
@@ -21,7 +24,7 @@ COMMAND_NOT_FOUND = 127,
 struct s_message
 {
     int code;
-    char *message;
+    const char *message;
 } s_message[] = {
 {SUCCESS, ""},
 {FAILURE, "minishell: "},
@@ -30,3 +33,4 @@ struct s_message
 };
 
 typedef struct s_message t_message;
+#endif

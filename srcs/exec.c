@@ -6,13 +6,11 @@
 /*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 19:21:45 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/02 17:33:27 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/03 14:57:21 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <stdlib.h>
-#include <unistd.h>
 
 void handle_redirection(char *sentence, enum e_token type, int fd);
 void print_error_and_exit(char *error_msg, int error_nbr);
@@ -30,8 +28,8 @@ int execute(t_sent *sentence, int pfd[2], pid_t my_child)
     int state;
 
     state = 0;
-    if (my_child > 0 && get_data()->page[++i])
-        execute(get_data()->page[i - 1], pfd, fork());
+    if (my_child > 0 && get_data()->page[i])
+        execute(get_data()->page[i++], pfd, fork());
     if (!my_child)
     {
         deal_with_sentence(sentence, -1, pfd);

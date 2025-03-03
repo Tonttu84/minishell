@@ -6,7 +6,7 @@
 /*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 13:25:30 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/02 16:52:11 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/03 15:12:14 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void handle_append(char *sent, int fd)
 
 static void handle_outfile(char *sent, int fd)
 {
-     fd = open(sent, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    fd = open(sent, O_WRONLY | O_CREAT | O_TRUNC, 0644);
     if (-1 == fd)
         print_error_and_exit(sent, errno);
     dup2(fd, STDOUT_FILENO);
