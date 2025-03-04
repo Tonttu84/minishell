@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 19:21:10 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/03 20:52:06 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/04 10:53:31 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	util_parse_args(t_data *data, int i, void *ptr, bool flag)
 	}
 	while (data->page[i]->array[0])
 	{
-        if (ft_strnstr(data->page[i]->array[0], "/", 100)
+        if (ft_strnstr(data->page[i]->array[0], "/", 100))
 			 ;
         else if (command_in_path(ptr, i, NULL, 0))
 			command_not_found(i);
@@ -81,6 +81,7 @@ bool	command_in_path(char *path, int nbr, char *cmd_p, int i)
 	char	*tmp;
     char    *full_path_cmd;
 
+	(void) i;
     cmd_p = ft_strjoin("/", get_data()->page[nbr]->array[0]);
 	while (path)
 	{

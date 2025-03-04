@@ -6,13 +6,13 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:18:56 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/03 14:09:04 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/04 17:11:02 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-
+//Did the final check while tired, check the logic while fresh
 int	match_env_argument_char(char *source, char *env_var)
 {
 	int	i;
@@ -29,7 +29,7 @@ int	match_env_argument_char(char *source, char *env_var)
 		if (source[i] == env_var[i - 1])
 			i++;
 	}
-	if (source[i] == 0 || source[i] == '=')
+	if ((env_var[i - 1] == 0 ||env_var[i - 1] == '=') && !ft_isalnum(source[i]) && source[i] != '_')
 		return (1);
 	return (0);
 }
