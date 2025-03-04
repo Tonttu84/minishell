@@ -6,7 +6,7 @@
 #    By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/14 13:14:15 by jtuomi            #+#    #+#              #
-#    Updated: 2025/03/02 16:53:05 by jtuomi           ###   ########.fr        #
+#    Updated: 2025/03/03 17:15:37 by jrimpila         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CFLAGS = -Wall -Wextra -Werror -g2
 SRC = lexer.c	ft_xcalloc.c parsing_utils.c heredocs.c init_utils.c\
 	exit.c	env.c utils.c page.c rem_quotes.c test.c open.c \
 	main.c create_list.c ft_lstaddback.c	input.c	export.c redir.c \
-	redirect.c exec.c
+	redirect.c exec.c path.c
 SRC := $(addprefix srcs/, $(SRC))
 DEBUG = debug.c
 DEBUG := $(addprefix srcs/debug/, $(DEBUG))

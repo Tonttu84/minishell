@@ -6,11 +6,16 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:23:16 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/03 16:02:12 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:23:51 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+/*jrimpila@c1r4p7:~/Git/minishell$ export GHOST=ls >input2
+jrimpila@c1r4p7:~/Git/minishell$ $GHOST
+include  input	input2	libft  Makefile  minishell  srcs*/
+
 
 void	test(void)
 {
