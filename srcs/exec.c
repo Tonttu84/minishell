@@ -6,7 +6,7 @@
 /*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 19:21:45 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/03 15:41:53 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/03 18:18:32 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int execute(t_sent *sentence, int pfd[2], pid_t my_child)
         print_error_return_control();
     free_and_close();
     waitpid(my_child, &state, 0);
+    while (--i)
+        waitpid(0, NULL, 0);
     if (WIFEXITED(state))
         return (WEXITSTATUS(state));
     return (EXIT_SUCCESS);

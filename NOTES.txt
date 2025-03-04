@@ -1,0 +1,3 @@
+MAX_NBR_HERE_DOC = 16
+Suojaa splitti tapaukselta PATH=::
+
