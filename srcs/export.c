@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:32:40 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/05 12:28:35 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/05 16:29:57 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,9 +212,11 @@ int	export(int argc, char *argv[], char **env)
 		}
 		i++;
 	}
-	for (i = 1; i < argc; i++)
+	i = 1;
+	while (i < argc)
 	{
 		process_new_envvarr(env, argv[i]);
+		i++;
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:36:25 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/03 14:13:54 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/05 16:36:36 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 
-// Creates a copy of env variables
+
 void	init(char env_cpy[MAX_VARS + 1][MAX_LENGTH + 1], char **orig)
 {
 	int	i;
 
-	i = 0;
 	while (i < MAX_VARS && orig[i])
 	{
 		ft_strlcpy(env_cpy[i], orig[i], MAX_LENGTH);
@@ -36,7 +35,7 @@ int	main(int argc, char **argv, char *envp[])
 	{
 		return (-1);
 	}
-
+	printf("%p\n", envp);
 	init(get_data()->env, envp);
 	test();
 	prompt_input();

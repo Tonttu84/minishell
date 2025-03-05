@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:07:43 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/05 14:18:53 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/05 16:27:09 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,18 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-static char	**is_path_in_env(t_data *data, char *s, char *s1, int i)
+//old is static char	**is_path_in_env(t_data *data, char *s, char *s1, int i)
+static char	*is_path_in_env(t_data *data, char *s, char *s1, int i)
 {
 	while (data->env[i])
 	{
 		s1 = ft_strnstr(data->env[i], s, 5);
 		if (s1)
-			return (ft_split(&data->env[i][5], ':'));
+			{
+				//return (ft_split(&data->env[i][5], ':'));
+				return (data->env + i);
+			}
+			
 		i++;
 	}
 	return (NULL);
@@ -66,24 +71,29 @@ static void	command_not_found(t_data *data, int nbr)
 */
 void	util_parse_args(t_data *data, int i)
 {
+	char *temp;
+	
 	if (data->env[0])
 	{
-		data->path = is_path_in_env(data, "PATH=", NULL, 0);
-
+		temp = is_path_in_env(data, "PATH=", NULL, 0);
+		data->path = ft_split(temp[5], ':');
+		//data->path = is_path_in_env(data, "PATH=", NULL, 0);
 	}
-	while (pipex->cmd[i])
+	while (data->page[i]->array[0])
 	{
-		if (!pipex->envp[0])
+		/* Currently this is checking if the first slot is empty which doesnt seem to be what is intended
+		if (!data->env[0])
 		{
 			if (path_is_abs_or_rel(pipex, i))
 				return ;
 			command_not_found(pipex, i);
 			return ;
 		}
-		if (path_is_abs_or_rel(pipex, i))
+		*/
+		if (path_is_abs_or_rel(data, i))
 			;
-		else if (command_in_path(pipex, i, NULL, 0))
-			command_not_found(pipex, i);
+		else if (command_in_path(data, i, NULL, 0))
+			command_not_found(data, i);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:33:26 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/02 15:47:38 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/05 14:52:17 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,5 +130,6 @@ int					handle_dec(va_list ap);
 int					handle_udec(va_list ap);
 int					handle_hex_lf(va_list ap);
 int					handle_hex_uf(va_list ap);
+void				*ft_xcalloc(size_t nmemb, size_t size);
 
 #endif
