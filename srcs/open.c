@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:59:49 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/01 20:49:11 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:17:58 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,11 @@ char	*test_append(t_char *raw_path)
 	if (fd == -1)
 		return (NULL);
 	return (proc_path);
+}
+
+void temp_heredocs(char *)
+{
+	int fd;
+
+	
 }

@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/05 13:48:36 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:14:43 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_dir
 {
 	char 		*path;
 	t_token		type;
+	int			here_fd;
 	
 }	t_dir;
 
