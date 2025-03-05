@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:32:40 by jtuomi            #+#    #+#             */
-/*   Updated: 2024/11/06 14:21:47 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/05 14:14:36 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strdup(const char *s)
 	size_t	i;
 
 	i = ft_strlen(s);
-	str = ft_calloc(i + 1, sizeof "");
+	str = ft_xcalloc(i + 1, sizeof "");
 	if (!str)
 		return (NULL);
 	ft_strlcpy(str, s, i + 1);

@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/02 17:44:10 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:48:36 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <sys/types.h>
-# ifndef PATH_MAX
+# ifndef PATH_MAX			///Max path lenght
 #  define PATH_MAX (500)
 # endif
 # define ENV_SIZE 4096
@@ -83,6 +83,7 @@ typedef struct s_sent
 
 typedef struct s_data
 {
+	char		**path;
 	char		env[ENV_SIZE + 1][MAX_LENGTH + 1];
 	int			env_count;
 	t_list		tokens;

@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 11:39:24 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/02/27 11:13:57 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/05 14:19:36 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*ft_ltostr(long n, unsigned int base)
 
 	nbr = n;
 	len = get_len(nbr, base);
-	number = ft_calloc(len + 1, sizeof "");
+	number = ft_xcalloc(len + 1, sizeof "");
 	if (!number)
 		return (NULL);
 	if (nbr == 0)

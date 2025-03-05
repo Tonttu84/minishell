@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:32:40 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/01 20:41:59 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:28:35 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	unset(char **env, char *envvar)
 	}
 	return (1);
 }
-
+//Gets the variable name , value and location of the free slot as input and writes the value there
 int	set_envvar(char **env, char *envvar, char *value, int free_slot)
 {
 	int	i;
@@ -70,7 +70,7 @@ int	set_envvar(char **env, char *envvar, char *value, int free_slot)
 	return (0);
 }
 
-// Value van be NULL or \0, if NULL then dont set the =
+//First it unsets the variable, then it adds it with a new value
 int	add_envvar(char **env, char *envvar, char *value)
 {
 	int	i;
@@ -109,7 +109,7 @@ void	sort_cpy(char **cpy)
 		k++;
 	}
 }
-
+//Checks that the enviromental variable has a value then prints it
 void	final_print(char **env)
 {
 	int	i;
@@ -117,11 +117,12 @@ void	final_print(char **env)
 	i = 0;
 	while (i < ENV_SIZE && env[i])
 	{
-		printf("declare -x %s\n", env[i]);
+		if (ft_strchr(env[i], '='))
+			printf("declare -x %s\n", env[i]);
 		i++;
 	}
 }
-
+//Creates an array of pointers that are later sorted and printed
 int	print_alphabetically(char **env)
 {
 	char	*cpy[ENV_SIZE + 1];
@@ -201,13 +202,15 @@ int	export(int argc, char *argv[], char **env)
 
 	if (argc == 1)
 		return (print_alphabetically(env));
-	for (i = 1; i < argc; i++)
+	i = 1;
+	while (i < argc)
 	{
 		if (errorcheck_expand(argv[i]))
 		{
 			perror("Print error, set errno and so on");
 			return (-1);
 		}
+		i++;
 	}
 	for (i = 1; i < argc; i++)
 	{

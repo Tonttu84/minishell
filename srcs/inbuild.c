@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:05:36 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/01 20:58:59 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:32:10 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	echo_check_opt(char *str)
 		else
 		{
 			isvalid = 0;
-			break ;
+			return (isvalid);
 		}
 	}
 	return (isvalid);

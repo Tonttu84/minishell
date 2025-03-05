@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:41:12 by jtuomi            #+#    #+#             */
-/*   Updated: 2024/11/09 18:20:25 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/05 14:19:03 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	strs = str_count((char *)s, c);
-	arr = ft_calloc(strs + 1, sizeof(char *));
+	arr = ft_xcalloc(strs + 1, sizeof(char *));
 	if (!arr)
 		return (NULL);
 	split(arr, s, c, strs);
