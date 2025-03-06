@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:07:43 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/05 16:27:09 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/06 11:54:31 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ bool	command_in_path(t_data *data, int nbr, char *cmd_p, int i)
 			free(cmd_p);
 		i++;
 	}
-	if (!access(data->page[nbr]->array[0], X_OK) && path_is_abs_or_rel(pipex,
+	if (!access(data->page[nbr]->array[0], X_OK) && path_is_abs_or_rel(data,
 			nbr))
 		return (false);
 	return (true);
