@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:23:16 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/04 10:49:48 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/06 18:49:40 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ include  input	input2	libft  Makefile  minishell  srcs*/
 
 void	test(void)
 {
-	t_char *result;
+	/*t_char *result;
 	int i;
 	t_data *data;
 
@@ -46,13 +46,12 @@ void	test(void)
 		iterate_list(&data->tokens, print_node);
 		create_page(&data->tokens);
 	}
-	/*
+
 		i = 0;
 		while (i < MAX_VARS)
 		{
 			if (data->env[i][0])
 				printf("%s\n", data->env[i]);
 			i++;
-		}
- */
+		}*/
 }

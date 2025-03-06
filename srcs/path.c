@@ -3,28 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/03 19:21:10 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/06 12:01:39 by jrimpila         ###   ########.fr       */
+/*   Created: 2025/03/06 18:45:11 by jtuomi            #+#    #+#             */
+/*   Updated: 2025/03/06 18:48:06 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static char	*is_path_in_env(void)
-{
-    t_data *data;
-    int i;
-    char *s1;
 
-    data = get_data();
-    i = 0;
-    while (data->env[i])
+//old is static char	**is_path_in_env(t_data *data, char *s, char *s1, int i)
+static char	*is_path_in_env(t_data *data, char *s, char *s1, int i)
+{
+	while (data->env[i])
 	{
-		s1 = ft_strnstr(data->env[i], "PATH=", 5);
+		s1 = ft_strnstr(data->env[i], s, 5);
 		if (s1)
-			return (&data->env[i][5]);
+			return (data->env[i]);
 		i++;
 	}
 	return (NULL);
@@ -35,67 +31,97 @@ static char	*is_path_in_env(void)
 ** later to be executed by /usr/lib/command-not-found to offer suggestions
 ** how to install or fix a typo etc.
 */
-static void	command_not_found(int nbr)
-{
-    t_data *data;
-    char *s;
 
-    data = get_data();
-    s = "/usr/lib/command-not-found";
-    ft_memmove(data->page[nbr]->array[1], data->page[nbr]->array[0], \
-               ft_strlen(data->page[nbr]->array[1]));
-	ft_memmove(data->page[nbr]->array[0], s, ft_strlen(s) + 1);
-}
 
-bool   command_in_path(char *path, int nbr, char *cmd_p, int i);
-/*
-** this seeks path, check what kind of command we're dealing with and
-** calls the other functions accordingly.
-*/
-void	util_parse_args(t_data *data, int i, void *ptr, bool flag)
+//Check if arrays are malloced;
+static void	command_not_found(t_data *data, int nbr)
 {
-	(void) flag;
-	if (data->env[0])
-	{
-		ptr = is_path_in_env();
+	int		i;
 	
-	}
-	while (data->page[i]->array[0])
-	{
-        if (ft_strnstr(data->page[i]->array[0], "/", 100))
-			 ;
-        else if (command_in_path(ptr, i, NULL, 0))
-			command_not_found(i);
-		i++;
-	}
+	free(data->page[nbr]->array[1]);
+	data->page[nbr]->array[1] = data->page[nbr]->array[0];
+	data->page[nbr]->array[0] = ft_strdup("/usr/lib/command-not-found");
+	i = 2;
+	while (data->page[nbr]->array[i])
+		{
+			free(data->page[nbr]->array[i]);
+			data->page[nbr]->array[i]= NULL;
+			i++;
+		}
 }
 
-void print_error_and_exit(char *error_msg, int error_nbr);
+/*
+** if there is a / in any command it is just executed like in bash.
+** checks just for that case.
+*/
+bool	path_is_abs_or_rel(t_data *data, int nbr)
+{
+	return (ft_strchr(data->page[nbr]->array[0], '/'));
+}
 /*
 ** this join / to end of every file in path and that to command
 ** then checks with access if file exists and tries to see
 ** whether that file is also executable (has those rights).
 */
-bool	command_in_path(char *path, int nbr, char *cmd_p, int i)
+bool	command_in_path(t_data *data, int nbr, char *cmd_p, int i)
 {
 	char	*tmp;
-    char    *full_path_cmd;
 
-	(void) i;
-    cmd_p = ft_strjoin("/", get_data()->page[nbr]->array[0]);
-	while (path)
+	while (data->path[i])
 	{
-        tmp = path;
-        path = ft_strchr(path, ':');
-        tmp = ft_substr(tmp, 1, path - tmp - 1);
-        if (!tmp)
-            print_error_and_exit("malloc", ENOMEM);
-        full_path_cmd =  ft_strjoin(tmp, cmd_p);
-        if (!full_path_cmd)
-            print_error_and_exit("malloc", ENOMEM);
-        free(tmp);
-        if (!access(full_path_cmd, X_OK))
-            break;
+		tmp = ft_strjoin(data->path[i], "/");
+		if (!tmp)
+			ft_exit(data, "malloc", errno);
+		cmd_p = ft_strjoin(tmp, data->page[nbr]->array[0]);
+		if (!cmd_p)
+			ft_exit(data, "malloc", errno);
+		free(tmp);
+		if (0 == access(cmd_p, X_OK))
+		{
+			free(data->page[nbr]->array[0]);
+			data->page[nbr]->array[0] = cmd_p;
+			break ;
+		}
+		else
+			free(cmd_p);
+		i++;
 	}
+	if (!access(data->page[nbr]->array[0], X_OK) && path_is_abs_or_rel(data,
+			nbr))
+		return (false);
 	return (true);
 }
+
+/*
+** this seeks path, check what kind of command we're dealing with and
+** calls the other functions accordingly.
+*/
+void	util_parse_args(t_data *data, int i)
+{
+	char *temp;
+	
+	if (data->env[0])
+	{
+		temp = is_path_in_env(data, "PATH=", NULL, 0);
+		data->path = ft_split(&temp[5], ':');
+		//data->path = is_path_in_env(data, "PATH=", NULL, 0);
+	}
+	while (data->page[i])
+	{
+		/* Currently this is checking if the first slot is empty which doesnt seem to be what is intended
+		if (!data->env[0])
+		{
+			if (path_is_abs_or_rel(pipex, i))
+				return ;
+			command_not_found(pipex, i);
+			return ;
+		}
+		*/
+		if (path_is_abs_or_rel(data, i))
+			;
+		else if (command_in_path(data, i, NULL, 0))
+			command_not_found(data, i);
+		i++;
+	}
+}
+
