@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 19:21:10 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/04 10:53:31 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/06 12:01:39 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ bool   command_in_path(char *path, int nbr, char *cmd_p, int i);
 */
 void	util_parse_args(t_data *data, int i, void *ptr, bool flag)
 {
+	(void) flag;
 	if (data->env[0])
 	{
 		ptr = is_path_in_env();
-		if (!ptr)
-			flag = false;
+	
 	}
 	while (data->page[i]->array[0])
 	{
