@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:18:56 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/06 10:55:06 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/06 11:24:00 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,8 @@ char	*create_heredoc(char *terminator, int expand)
 		}
 		tmp = readline(">");
 	}
+	if (result == NULL)
+		result = ft_strdup("");
 	free(tmp);
 	if (expand)
 		return (expand_heredocs(result));
