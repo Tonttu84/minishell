@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/06 08:56:58 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/06 09:06:29 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_sent
 	t_dir		redirs[20];
 	bool		outpipe;
 	int			error; 			//error code here
+	int			heredocs;
 }				t_sent;
 
 typedef struct s_data

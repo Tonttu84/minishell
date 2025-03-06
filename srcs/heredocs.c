@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:18:56 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/04 17:11:02 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/06 10:55:06 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ const char	*find_env_char(char *source, t_data *data)
 	while (i < data->env_count)
 	{
 		if (match_env_argument_char(source, data->env[i]))
-			return (((const char *)data->env + i));
+			return (((const char *)data->env[i]));
 		i++;
 	}
 	return (NULL);
@@ -57,6 +57,8 @@ void	expand_envvar(char *unexp, char *exp, int *i, int *k)
 	ptr_envvar = find_env_char(unexp + *i, get_data());
 	j = 0;
 	while (ptr_envvar && ptr_envvar[j] && ptr_envvar[j] != '=')
+		j++;
+	if (ptr_envvar[j] == '=')
 		j++;
 	while (ptr_envvar && ptr_envvar[j])
 	{

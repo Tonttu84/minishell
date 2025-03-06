@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:20:15 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/06 09:02:01 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/06 09:55:29 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ char	*test_infile(t_char *raw_path)
 // i is 0, k is 0, sentence is calloced, node is pulled from data
 t_sent	*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence)
 {
+	int heredocs;
+
+	heredocs = 0;
 	if (node && node->type == PIPE)
 	{
 		sentence->inpipe = 1;
@@ -37,12 +40,24 @@ t_sent	*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence)
 		if (node->type == REDIRECT)
 			;
 		else if (node->type == IN_FILE || node->type == OUT_FILE || node->type == APPEND || node->type == HERE_DOCS ||  node->type == HERE_QUOTE)
-			add_redirection(node, sentence, k++);
+			{
+				if (node->type == HERE_DOCS ||  node->type == HERE_QUOTE)
+					heredocs++;
+				if (heredocs > 16)
+				{
+					perror("minishell: maximum here-document count exceeded");
+					//free everything
+					exit(2);
+				}
+				add_redirection(node, sentence, k++);
+			}
 		else
 			sentence->array[i++] = cnvrt_to_char(node->str);
 		node = destroy_node(&get_data()->tokens, node);
 	}
+	
 	return (sentence);
+	
 }
 
 void	destroy_old_page(void)
