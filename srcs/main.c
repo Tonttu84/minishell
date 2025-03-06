@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:36:25 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/05 16:36:36 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/06 09:03:13 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	init(char env_cpy[MAX_VARS + 1][MAX_LENGTH + 1], char **orig)
 {
 	int	i;
 
+	i = 0;
 	while (i < MAX_VARS && orig[i])
 	{
 		ft_strlcpy(env_cpy[i], orig[i], MAX_LENGTH);
