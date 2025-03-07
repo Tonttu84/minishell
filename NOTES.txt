@@ -1,3 +1,6 @@
 MAX_NBR_HERE_DOC = 16
 Suojaa splitti tapaukselta PATH=::
+awk ei toimi (liikaa escape charactereja?)
+tiedostot ei toimi komentojen ja putkien kanssa
+
 
