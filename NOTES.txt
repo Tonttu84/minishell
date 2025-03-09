@@ -3,4 +3,6 @@ Suojaa splitti tapaukselta PATH=::
 awk ei toimi (liikaa escape charactereja?)
 tiedostot ei toimi komentojen ja putkien kanssa
 
+Ilmeisesti escape characterit voi poistaa kun argumentteja passataan ohjelmille. 
 
+Eli awk {print $1} on mita pitaisi menna ohjelmalle. Poistin escape characterien lisailyn ja vaikuttaisi toimivan

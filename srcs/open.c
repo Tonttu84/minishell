@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:59:49 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/06 08:55:52 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/06 12:25:47 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	open_temp_heredocs(t_node *node, int expand)
 	char *txt;
 	
 	
-	fd = open("/tmp", O_WRONLY | O_CREAT | O_EXCL | __O_TMPFILE, 0600);
+	fd = open("/tmp", O_WRONLY | O_CREAT | O_EXCL | __O_TMPFILE, 0640);
 	if (-1 == fd)
 		return (fd);
 	eof = cnvrt_to_char(node->str);

@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:36:25 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/06 09:03:13 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:39:01 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ int	main(int argc, char **argv, char *envp[])
 	{
 		return (-1);
 	}
-	printf("%p\n", envp);
 	init(get_data()->env, envp);
-	test();
+	//test();
 	prompt_input();
 }

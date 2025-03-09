@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:54:24 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/02/27 10:53:28 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:28:43 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // Untested 24.2
 
-static int	ft_isescapable(char c);
+//static int	ft_isescapable(char c);
 
 size_t	ft_tcharlen(t_char *line)
 {
@@ -41,11 +41,11 @@ char	*cnvrt_to_char(t_char *line)
 	result = ft_xcalloc((ft_tcharlen(line) * 2) + 1, sizeof(char));
 	while (i < length && line[k].c)
 	{
-		if (line[k].esc && ft_isescapable(line[k].c))
-		{
-			result[i] = '\\';
-			i++;
-		}
+	//	if (line[k].esc && ft_isescapable(line[k].c))
+	//	{
+	//		result[i] = '\\';
+	//		i++;
+	//	}
 		result[i] = line[k].c;
 		i++;
 		k++;
@@ -53,7 +53,7 @@ char	*cnvrt_to_char(t_char *line)
 	result[i] = '\0';
 	return (result);
 }
-
+/*
 static int	ft_isescapable(char c)
 {
 	if (c == '*' || c == '?' || c == '[' || c == ']' || c == '{' || c == '}'
@@ -63,3 +63,4 @@ static int	ft_isescapable(char c)
 		return (1);
 	return (0);
 }
+*/
