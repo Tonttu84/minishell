@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:20:15 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/06 09:55:29 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:54:09 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ t_sent	*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence)
 			;
 		else if (node->type == IN_FILE || node->type == OUT_FILE || node->type == APPEND || node->type == HERE_DOCS ||  node->type == HERE_QUOTE)
 			{
+				
 				if (node->type == HERE_DOCS ||  node->type == HERE_QUOTE)
 					heredocs++;
 				if (heredocs > 16)

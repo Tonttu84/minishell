@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:59:49 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/09 16:45:20 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/09 17:03:41 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,15 @@ int	open_temp_heredocs(t_node *node, int expand)
 	char *txt;
 	
 	
-	fd = open("/tmp", O_WRONLY | O_CREAT | O_EXCL | __O_TMPFILE, 0640);
+	fd = open("/tmp", O_WRONLY | __O_TMPFILE, 0640);
+	printf("tmp file opened file descriptors is %d \n", fd);
 	if (-1 == fd)
-		return (fd);
+		{
+			perror("Failed to create a tmp file\n");
+			return (fd);
+		}
 	eof = cnvrt_to_char(node->str);
-	
+	printf("%s\n", eof);
 	txt = create_heredoc(eof, expand);
 	free(eof);
 	eof = NULL;
