@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:59:49 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/06 12:25:47 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:45:20 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,10 @@ int	open_temp_heredocs(t_node *node, int expand)
 	if (-1 == fd)
 		return (fd);
 	eof = cnvrt_to_char(node->str);
+	
+	txt = create_heredoc(eof, expand);
 	free(eof);
 	eof = NULL;
-	txt = create_heredoc(eof, expand);
 	if (0 > write(fd, txt, ft_strlen(txt)))
 	{
 		perror("Write error, what to do");
