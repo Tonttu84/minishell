@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:18:56 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/06 11:24:00 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/09 18:01:48 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ char	*create_heredoc(char *terminator, int expand)
 	tmp = NULL;
 	result = NULL;
 	cpy = NULL;
-	while (ft_strncmp(terminator, tmp, ft_strlen(terminator + 1)))
+	while (tmp == NULL || ft_strncmp(terminator, tmp, ft_strlen(terminator + 1)))
 	{
 		if (tmp)
 		{
