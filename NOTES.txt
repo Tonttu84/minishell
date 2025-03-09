@@ -2,7 +2,9 @@ MAX_NBR_HERE_DOC = 16
 Suojaa splitti tapaukselta PATH=::
 awk ei toimi (liikaa escape charactereja?)
 tiedostot ei toimi komentojen ja putkien kanssa
+<<EOF < > ottaa syntax errorit todella oudossa kohtaa
 
 Ilmeisesti escape characterit voi poistaa kun argumentteja passataan ohjelmille. 
 
-Eli awk {print $1} on mita pitaisi menna ohjelmalle. Poistin escape characterien lisailyn ja vaikuttaisi toimivan
+
+
