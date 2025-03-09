@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/07 14:15:03 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/09 18:15:35 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct s_data
 	int			env_count;
 	t_list		tokens;
 	t_sent		*page[MAX_SENT_SIZE];
+	int			herecount;
 }				t_data;
 
 typedef struct s_point

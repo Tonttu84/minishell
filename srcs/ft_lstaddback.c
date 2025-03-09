@@ -6,12 +6,14 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:41:58 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/01 20:47:26 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/09 18:17:08 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+
+//heredocs needs to be counted at this point
 static void	set_type(t_node *new)
 {
 	static int	args = 0;
@@ -22,6 +24,7 @@ static void	set_type(t_node *new)
 	{
 		new->type = PIPE;
 		args = 0;
+		get_data()->herecount = 0;
 	}
 	else if (((new->str && new->str[0].c == '>') || (new->str
 				&&new->str[0].c == '<' && new->str[0].com)))
@@ -34,7 +37,15 @@ static void	set_type(t_node *new)
 		new->type = OUT_FILE;
 	else if (new->prev->str && new->prev->str[0].c == '<'
 		&& new->prev->str[1].c == '<' && new->prev->str[0].com)
-		new->type = HERE_DOCS;
+		{
+			new->type = HERE_DOCS;
+			get_data()->herecount++;
+			if (get_data()->herecount >= 17)
+			{
+				perror("Maximum amount of heredocs is 16");
+				exit (2);
+			}
+		}
 	else if (new->prev->str && new->prev->str[0].c == '<'
 		&& new->prev->str[0].com)
 		new->type = IN_FILE;
