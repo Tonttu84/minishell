@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:11:31 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/10 14:09:39 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:55:28 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	prompt_input(void)
 	while (1)
 	{
 		line = rl_gets();
+		rl_on_new_line();
 		if (line == NULL)
 			break ;
 		if (line[0] == '\0')
