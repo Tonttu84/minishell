@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 15:39:47 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/09 18:28:00 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/10 15:03:27 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	add_redirection(t_node *node, t_sent *sentence, int i)
 	if (sentence->redirs[i].type == HERE_DOCS)
 {
 	
-	sentence->redirs[i].here_fd = open_temp_heredocs(node, 0);
+	sentence->redirs[i].here_fd = open_temp_heredocs(node, 0, sentence);
 }
 	else if (sentence->redirs[i].type == HERE_QUOTE)
 		{
-			sentence->redirs[i].here_fd = open_temp_heredocs(node, 1);
+			sentence->redirs[i].here_fd = open_temp_heredocs(node, 1, sentence);
 		}
 	else if (node->str)
 		sentence->redirs[i].path = cnvrt_to_char(node->str);
