@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:32:12 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/03 15:22:59 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/10 17:31:29 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,14 +133,14 @@ t_char	*lexify(char *line, t_data *data)
 
 	newline = ft_xcalloc(ft_strlen(line) * 3 + 10, sizeof(t_char));
 	remove_quotes(newline, line, 0, 0);
-	debug_print(newline, data);
-	printf("\n");
+//	debug_print(newline, data);
+//	printf("\n");
 	mark_commands(newline, data);
-	debug_print(newline, data);
-	printf("\n");
+	//debug_print(newline, data);
+//	printf("\n");
 	mark_arguments(newline, data);
-	debug_print(newline, data);
-	printf("\n");
+//	debug_print(newline, data);
+//	printf("\n");
 	expand_arguments(expanded, newline, data);
 	debug_print(expanded, data);
 	printf("\n");

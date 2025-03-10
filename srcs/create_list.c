@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:50:42 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/01 20:44:41 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/10 17:33:29 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	create_list(t_data *data, t_char *line)
 	{
 		while (line[i].c != 0 && line[i].c == ' ' && line[i].esc == 0)
 			i++;
+		if (line[i].c == 0)
+			break; 
 		strsize = ft_wrdlen(line + i, data);
 		ft_lstadd_back(&data->tokens, create_node(line, i, strsize));
 		while (line[i].c != 0)
