@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:42:12 by jtuomi            #+#    #+#             */
-/*   Updated: 2024/11/06 12:38:12 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/10 18:35:52 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,30 @@
 
 static int	all_isspace(char *nptr);
 
+
+int  overflow_check(long ret, int sign, int addition)
+{
+	if (ret == 922337203685477580 && addition > 7)
+	{
+			perror("Overflow happens");
+			return (2);
+	}
+	if (ret >= 922337203685477581)
+	{
+			perror("Overflow happens");
+			return (2);
+	}
+	if (ret == 922337203685477580 && addition > 8 && sign == -1)
+	{
+			perror("Overflow happens");
+			return (2);
+	}
+	return (0);
+}
+
 int	ft_atoi(const char *nptr)
 {
-	int	ret;
+	long	ret;
 	int	sign;
 	int	i;
 
@@ -32,6 +53,8 @@ int	ft_atoi(const char *nptr)
 		i++;
 	while (ft_isdigit(nptr[i]))
 	{
+		if (overflow_check(ret, sign, (nptr[i] - '0')))
+			return (2);
 		ret *= 10;
 		ret += nptr[i] - '0';
 		i++;
