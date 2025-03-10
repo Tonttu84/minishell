@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:20:15 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/09 18:42:31 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/09 19:06:09 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,15 @@ t_sent	*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence)
 	if (node && node->type == PIPE)
 	{
 		sentence->inpipe = 1;
+		//check if the pipe is the last is not currently working i dont know why. The pipe should point to itself in any case and result in an error
+		if (get_data()->tokens.last == node || node->next->type == PIPE)
+		{
+			perror("Pipe cannot be empty");
+				exit (1); //should not exit but instead give control to minishell so likely set an error flag somewhere and delete all nodes
+		}
 		node = destroy_node(&get_data()->tokens, node);
+
+		
 	}
 	while (node)
 	{
@@ -40,7 +48,8 @@ t_sent	*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence)
 				if (node->next->type == REDIRECT || node->next->type == PIPE || get_data()->tokens.last == node)
 				{
 					perror("syntax error near unexpected token `newline'\n");
-					exit (1); //should not exit but instead give control to minishell
+					exit (1); //should not exit but instead give control to minishell so likely set an error flag somewhere and delete all nodes
+				
 				}
 			}
 		else if (node->type == IN_FILE || node->type == OUT_FILE || node->type == APPEND || node->type == HERE_DOCS ||  node->type == HERE_QUOTE)
