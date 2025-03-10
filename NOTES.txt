@@ -2,6 +2,7 @@ MAX_NBR_HERE_DOC = 16
 Suojaa splitti tapaukselta PATH=::
 awk ei toimi (liikaa escape charactereja?)
 tiedostot ei toimi komentojen ja putkien kanssa
+<<EOF < > ottaa syntax errorit todella oudossa kohtaa
 
 Ilmeisesti escape characterit voi poistaa kun argumentteja passataan ohjelmille. 
 
@@ -14,3 +15,5 @@ Builtin:
 	export: ilman argumenttia tulostaa envin. muuten asettaa muuttujan arvon. ei validi tulostaa virheen. pa: 1.
 	echo: tulostaa ilman argumentteja putkesta ja argumenteilla annetun tekstin. -n optiolla ilman \n, muuten kanssa.
 	unset: poistaa env:sta annetun arvon.
+
+
