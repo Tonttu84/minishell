@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:59:49 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/10 15:03:59 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/10 15:19:55 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*test_append(t_char *raw_path)
 }
 
 //O_EXCL prevents the file from being linked to filesystem when used together with __)
-int	open_temp_heredocs(t_node *node, int expand, t_sent *sentence)
+int	open_temp_heredocs(t_node *node, int expand)
 {
 	int	fd;
 	char *eof;
@@ -49,7 +49,6 @@ int	open_temp_heredocs(t_node *node, int expand, t_sent *sentence)
 	
 	
 	fd = open("/tmp", O_WRONLY | __O_TMPFILE, 0640);
-	sentence->heredocs = fd;
 	if (-1 == fd)
 		{
 			perror("Failed to create a tmp file\n");
