@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/10 15:20:41 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:52:13 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,17 @@ typedef struct s_point
 	int			start;
 	int			end;
 }				t_point;
+
+/*
+** BUILT' INS
+ */
+int builtin_cd(char *path);
+void builtin_echo(char *str);
+void builtin_pwd(void);
+void builtin_exit(char *arg);
+void builtin_env(t_data *data);
+void builtin_export(t_data *data);
+
 
 void			test(void);
 typedef void	(*node_func)(t_list *list, t_node *node);
