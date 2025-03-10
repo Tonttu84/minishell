@@ -6,5 +6,7 @@ tiedostot ei toimi komentojen ja putkien kanssa
 
 Ilmeisesti escape characterit voi poistaa kun argumentteja passataan ohjelmille. 
 
+"cat Makefile " ilman quoteja jattaa tyhjan argumentin
+
 
 
