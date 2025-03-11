@@ -20,3 +20,4 @@ Builtin:
 	unset: poistaa env:sta annetun arvon.
 
 
+SHLVL inkrementointi kun minishell ajetaan minishellin kautta.

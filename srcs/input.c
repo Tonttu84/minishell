@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:11:31 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/10 14:57:55 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:34:08 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	process(char *line)
 
 	data = get_data();
 	result = lexify(line, data);
-	write(1, "\n", 1);
+//	write(1, "\n", 1);
 	free(result);
 	result = NULL;
 	iterate_list(&data->tokens, print_node);

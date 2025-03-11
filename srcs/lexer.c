@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:32:12 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/10 17:31:29 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:51:35 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,8 @@ t_char	*lexify(char *line, t_data *data)
 //	debug_print(newline, data);
 //	printf("\n");
 	expand_arguments(expanded, newline, data);
-	debug_print(expanded, data);
-	printf("\n");
+//	debug_print(expanded, data);
+//	printf("\n");
 	create_list(data, expanded);
 	return (newline);
 }

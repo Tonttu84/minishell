@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/10 17:37:54 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:27:53 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 # ifndef MAX_SENTENCES
 #  define MAX_SENTENCES (50)
 # endif
-# define PROMPT "minishell > "
+# define PROMPT GREEN"minishell $"RESET
 
 # define RED "\x1b[31m"
 # define GREEN "\x1b[32m" // Used for variable expansion

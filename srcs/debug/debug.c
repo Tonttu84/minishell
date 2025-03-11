@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:06:42 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/01 20:39:29 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:56:01 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ const char	*token_to_color(t_token token)
 
 void	print_node(t_list *list, t_node *node)
 {
+	(void)node;
+	(void)list;/*
 	int			i;
 	const char	*color;
 
@@ -100,11 +102,13 @@ void	print_node(t_list *list, t_node *node)
 			i++;
 		}
 	}
-	printf("}");
+	printf("}");*/
 }
 
 void	debug_print(t_char *array, t_data *data)
 {
+	(void)array;
+	(void)data;/*
 	int	i;
 
 	i = 0;
@@ -129,11 +133,12 @@ void	debug_print(t_char *array, t_data *data)
 			printf("%c", array[i].c);
 		i++;
 	}
-	printf("\n");
+	printf("\n");*/
 }
 
 void	print_sentence(t_sent *sentence)
 {
+	(void)sentence;/*
 	int	i;
 	i = 0;
 	//const char *color = token_to_color(sentence->redirs[i].type);
@@ -156,5 +161,5 @@ void	print_sentence(t_sent *sentence)
 	}
 	printf("\n");
 	printf("Inpipe is %d, ", sentence->inpipe);
-	printf("outpipe is %d, ", sentence->outpipe);
+	printf("outpipe is %d, ", sentence->outpipe);*/
 }

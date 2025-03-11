@@ -43,4 +43,4 @@ fclean: clean
 re: fclean all
 debug: $(DEBUG_OBJ)
 .PHONY:
-	all, libft, clean, flean, re, debug
+	all, libft, clean, fclean, re, debug
