@@ -6,7 +6,7 @@
 /*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 19:21:45 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/11 16:52:32 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/11 17:19:38 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void handle_redirection(char *sentence, enum e_token type, int fd);
 void print_error_and_exit(char *error_msg, int error_nbr);
 static void print_error_return_control(void);
 static void free_and_close(void);
-static bool deal_with_sentence(t_sent *sentence, int i, int pfd[2], bool flags);
+static void deal_with_sentence(t_sent *sentence, int i, int pfd[2]);
 
 /*
 ** this is called recursively as long as there are new commands to
@@ -29,9 +29,8 @@ int execute(t_sent *sentence, int pfd[2], pid_t my_child, int state) {
   if (my_child > 0 && get_data()->page[i]->array[0])
     return execute(get_data()->page[i++], pfd, fork(), 0);
   if (!my_child) {
-    if (false == deal_with_sentence(sentence, -1, pfd, false))
-      print_error_and_exit(sentence->array[0], errno);
-    if (-1 == execve(sentence->array[0], sentence->array, NULL))
+    deal_with_sentence(sentence, -1, pfd);
+    if (-1 == execve(sentence->array[0], sentence->array, __environ))
       print_error_and_exit(sentence->array[0], errno);
   } else if (my_child == -1)
     print_error_return_control();
@@ -42,7 +41,11 @@ int execute(t_sent *sentence, int pfd[2], pid_t my_child, int state) {
   return (EXIT_SUCCESS);
 }
 
-bool deal_with_sentence(t_sent *sentence, int i, int pfd[2], bool flag) {
+/*
+** take from sentence the out and infiles plus here docs and dup2 them to
+** stdin or out.
+ */
+void deal_with_sentence(t_sent *sentence, int i, int pfd[2]) {
   while (sentence->redirs[++i].path)
     if (sentence->redirs[i].type == APPEND)
       handle_redirection(sentence->redirs[i].path, APPEND, -1);
@@ -52,17 +55,17 @@ bool deal_with_sentence(t_sent *sentence, int i, int pfd[2], bool flag) {
       handle_redirection(sentence->redirs[i].path, IN_FILE, -1);
     else if (sentence->redirs[i].type == HERE_DOCS)
       handle_redirection(sentence->redirs[i].path, HERE_DOCS, pfd[0]);
-    else if (sentence->redirs[i].type == CMD || sentence->redirs[i].type == ARG)
-      flag = true;
   if (sentence->inpipe)
     dup2(pfd[STDIN_FILENO], STDIN_FILENO);
   if (sentence->outpipe)
     dup2(pfd[STDOUT_FILENO], STDOUT_FILENO);
   close(pfd[STDIN_FILENO]);
   close(pfd[STDOUT_FILENO]);
-  return (flag);
 }
 
+/*
+** let's see if this one makes it 'til end
+ */
 void print_error_and_exit(char *error_msg, int error_nbr) {
   ft_putstr_fd("minishell: ", 2);
   ft_putstr_fd(error_msg, 2);

@@ -6,14 +6,13 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:36:25 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/10 12:45:07 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:13:26 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
-
 
 void	init(char env_cpy[MAX_VARS + 1][MAX_LENGTH + 1], char **orig)
 {
