@@ -6,7 +6,7 @@
 /*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 18:45:11 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/06 18:48:06 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/11 16:48:01 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	util_parse_args(t_data *data, int i)
 		data->path = ft_split(&temp[5], ':');
 		//data->path = is_path_in_env(data, "PATH=", NULL, 0);
 	}
-	while (data->page[i])
+	while (data->page[i]->array[0])
 	{
 		/* Currently this is checking if the first slot is empty which doesnt seem to be what is intended
 		if (!data->env[0])
