@@ -6,7 +6,7 @@
 /*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 19:21:45 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/11 17:19:38 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/11 17:24:56 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ static void deal_with_sentence(t_sent *sentence, int i, int pfd[2]);
 int execute(t_sent *sentence, int pfd[2], pid_t my_child, int state) {
   static int i;
 
-  if (my_child > 0 && get_data()->page[i]->array[0])
+  if (my_child > 0 && get_data()->page[i])
     return execute(get_data()->page[i++], pfd, fork(), 0);
   if (!my_child) {
     deal_with_sentence(sentence, -1, pfd);
+    if (!sentence->array[0])
+      exit(0);
     if (-1 == execve(sentence->array[0], sentence->array, __environ))
       print_error_and_exit(sentence->array[0], errno);
   } else if (my_child == -1)
