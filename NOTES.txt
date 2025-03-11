@@ -9,6 +9,8 @@ testaa miten bash suhtautuu liian moneen argumenttiin builtineissa
 
 identify builtins
 
+check how we can send our env variable to children
+
 Eli awk {print $1} on mita pitaisi menna ohjelmalle. Poistin escape characterien lisailyn ja vaikuttaisi toimivan
 
 Builtin:
