@@ -6,13 +6,21 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:11:31 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/11 18:34:08 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/11 19:38:10 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include <readline/history.h>
 #include <readline/readline.h>
+
+int	cwd(void)
+{
+	
+
+	getcwd(get_data()->cwd, sizeof(get_data()->cwd));
+	return (0);
+}
 
 void	process(char *line)
 {
@@ -31,13 +39,22 @@ void	process(char *line)
 static char *rl_gets(void)
 {
 	static char *line = NULL;
+	static char *strcwd;
+	static char *tmp;
 
+	cwd();
+	
+	tmp = ft_strjoin(PROMPT, get_data()->cwd);
+	strcwd = ft_strjoin(tmp, "$>");
+	free(tmp);
+	tmp = NULL;
 	if (line)
 	{
 		free (line);
 		line = NULL;
 	}
-	line = readline(PROMPT);
+	line = readline(strcwd);
+	free(strcwd);
 	if (line && *line)
 		add_history(line);
 	return line;

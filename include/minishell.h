@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/11 18:27:53 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/11 19:34:50 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,12 @@
 # ifndef MAX_SENTENCES
 #  define MAX_SENTENCES (50)
 # endif
-# define PROMPT GREEN"minishell $"RESET
+
+# ifndef USER
+#  define USER minishell
+# endif
+
+# define PROMPT GREEN USER":"RESET
 
 # define RED "\x1b[31m"
 # define GREEN "\x1b[32m" // Used for variable expansion
@@ -92,6 +97,7 @@ typedef struct s_data
 	t_list		tokens;
 	t_sent		*page[MAX_SENT_SIZE];
 	int			herecount;
+	char		cwd[200];
 }				t_data;
 
 typedef struct s_point
@@ -146,4 +152,5 @@ void			remove_quotes(t_char *dst, char *src, int i, int k);
 int 			execute(t_sent *sentence, int pfd[2], pid_t my_child, int state);
 int				open_temp_heredocs(t_node *node, int expand);
 void 			util_parse_args(t_data *data, int i);
+int				cwd(void);
 #endif

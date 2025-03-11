@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:05:36 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/11 16:49:16 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/11 19:32:20 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ int run_builtin(int argc, char *argv[], char *env[])
 	return (1);
 		
 }
+
+
+
+
 
 int	pwd(void)
 {
