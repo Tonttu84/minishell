@@ -5,7 +5,9 @@ tiedostot ei toimi komentojen ja putkien kanssa
 
 Ilmeisesti escape characterit voi poistaa kun argumentteja passataan ohjelmille. 
 
+testaa miten bash suhtautuu liian moneen argumenttiin builtineissa
 
+identify builtins
 
 Eli awk {print $1} on mita pitaisi menna ohjelmalle. Poistin escape characterien lisailyn ja vaikuttaisi toimivan
 
