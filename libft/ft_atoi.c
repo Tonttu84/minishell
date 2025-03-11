@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:42:12 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/10 18:35:52 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/11 10:19:37 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,11 @@ int	ft_atoi(const char *nptr)
 		ret *= 10;
 		ret += nptr[i] - '0';
 		i++;
+	}
+	if (nptr[i] != 0)
+	{
+		perror("numeric argument required");
+		return (2);
 	}
 	return (ret * sign);
 }
