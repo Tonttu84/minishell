@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/11 19:34:50 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:09:46 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,4 +153,12 @@ int 			execute(t_sent *sentence, int pfd[2], pid_t my_child, int state);
 int				open_temp_heredocs(t_node *node, int expand);
 void 			util_parse_args(t_data *data, int i);
 int				cwd(void);
+/*
+** SIGNALS
+ */
+void block_signals_in_parent(void);
+void set_signals(void);
+void signal_handler(int sig_nbr);
+void void_signal(int sig_nbr);
+void unset_signals(void);
 #endif
