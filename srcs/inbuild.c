@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:05:36 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/11 19:32:20 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:47:49 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int run_builtin(int argc, char *argv[], char *env[])
 
 
 
-
+//ignore arguments
 int	pwd(void)
 {
 	char	cwd[PATH_MAX];
@@ -52,6 +52,7 @@ int	pwd(void)
 	return (0);
 }
 
+//Only takes 1 argument, throws error otherwise
 // TODO handle -1 Has some issues, needs debugging
 int	cd(int argc, char *argv[])
 {
@@ -76,6 +77,8 @@ int	cd(int argc, char *argv[])
 	return (0);
 }
 
+
+//unset can take multiple arguments
 int	unset_env(const char *var, t_data *data)
 {
 	int	tar_i;
@@ -121,7 +124,7 @@ int	echo_check_opt(char *str)
 	}
 	return (isvalid);
 }
-
+//can take multiple arguments
 // Argument expansion should already be done here so we can print everything as it is?
 int	echo(int argc, char *argv[])
 {
