@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 19:21:45 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/12 19:02:14 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/12 19:46:32 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static void deal_with_sentence(t_sent *sentence, int i, int pfd[2]);
 ** this is called recursively as long as there are new commands to
 ** execute, with fork going to execve. then we wait for all pids to return.
 */
-int execute(t_sent *sentence, int pfd[2], pid_t my_child, int state) {
+int execute(t_sent *sentence, int pfd[2], pid_t my_child, int state)
+{
   static int i;
 
   if (my_child > 0 && get_data()->page[i])
@@ -48,8 +49,10 @@ int execute(t_sent *sentence, int pfd[2], pid_t my_child, int state) {
 ** take from sentence the out and infiles plus here docs and dup2 them to
 ** stdin or out.
  */
-void deal_with_sentence(t_sent *sentence, int i, int pfd[2]) {
+void deal_with_sentence(t_sent *sentence, int i, int pfd[2])
+{
   while (sentence->redirs[++i].path)
+  {
     if (sentence->redirs[i].type == APPEND)
       handle_redirection(sentence->redirs[i].path, APPEND, -1);
     else if (sentence->redirs[i].type == OUT_FILE)
@@ -58,6 +61,7 @@ void deal_with_sentence(t_sent *sentence, int i, int pfd[2]) {
       handle_redirection(sentence->redirs[i].path, IN_FILE, -1);
     else if (sentence->redirs[i].type == HERE_DOCS)
       handle_redirection(sentence->redirs[i].path, HERE_DOCS, pfd[0]);
+	}
   if (sentence->inpipe)
     dup2(pfd[STDIN_FILENO], STDIN_FILENO);
   if (sentence->outpipe)
@@ -69,7 +73,8 @@ void deal_with_sentence(t_sent *sentence, int i, int pfd[2]) {
 /*
 ** let's see if this one makes it 'til end
  */
-void print_error_and_exit(char *error_msg, int error_nbr) {
+void print_error_and_exit(char *error_msg, int error_nbr)
+{
   ft_putstr_fd("minishell: ", 2);
   ft_putstr_fd(error_msg, 2);
   ft_putstr_fd(": ", 2);

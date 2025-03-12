@@ -6,12 +6,13 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:32:40 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/05 16:29:57 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:30:29 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+//unset can take multiple argumetns
 int	unset(char **env, char *envvar)
 {
 	int	i;
@@ -195,7 +196,7 @@ void	process_new_envvarr(char **env, char *var)
 	value[k] = '\0';
 	add_envvar(env, name, value);
 }
-
+//Can take multiple arguments no idea what it does with them
 int	export(int argc, char *argv[], char **env)
 {
 	int	i;

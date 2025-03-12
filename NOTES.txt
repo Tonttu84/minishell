@@ -21,3 +21,13 @@ Builtin:
 
 
 SHLVL inkrementointi kun minishell ajetaan minishellin kautta.
+
+<Makefile cat | awk '{print $1}'
+
+message of the day; 
+
+cowsay fortune;
+
+When you launch it, print a shell?
+
+<<""EOF apparenty tells the heredocs not to expand env variables inside heredocs
