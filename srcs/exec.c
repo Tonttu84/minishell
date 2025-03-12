@@ -6,7 +6,7 @@
 /*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 19:21:45 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/11 17:32:47 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/12 19:02:14 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int execute(t_sent *sentence, int pfd[2], pid_t my_child, int state) {
   if (my_child > 0 && get_data()->page[i])
     return execute(get_data()->page[i++], pfd, fork(), 0);
   if (!my_child) {
+    unset_signals();
     deal_with_sentence(sentence, -1, pfd);
     if (!sentence->array[0])
       exit(0);
