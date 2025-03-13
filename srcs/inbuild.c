@@ -6,42 +6,74 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:05:36 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/12 10:47:49 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:14:00 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int run_builtin(int argc, char *argv[], char *env[])
+int	bi_exit(int argc, char *argv[])
+{
+	(void) argc;
+	(void) argv;
+
+	return (0);
+}
+
+int run_builtin(int argc, char *argv[])
 {
 	//Not sure if I can take input like this to function withot counting variables?
 	if (argc == 0)
 		return (1);
 	if (ft_strncmp("cd", argv[0], 3 == 0 ))
-			cd(argc, argv, env);
+		bi_cd(argc, argv);
 	else if (ft_strncmp("pwd", argv[0], 4 == 0 ))
-		pwd(argc, argv, env);
+		bi_pwd();
 	else if (ft_strncmp("echo", argv[0], 5 == 0 ))
-		echo(argc, argv, env);
+		bi_echo(argc, argv);
 	else if (ft_strncmp("env", argv[0], 4 == 0 ))
-		env(argc, argv, env);
+		bi_env(get_data());
 	else if (ft_strncmp("export", argv[0], 7 == 0 ))
-		export(argc, argv, env);
+		bi_export(argc, argv);
 	else if (ft_strncmp("unset", argv[0], 6 == 0 ))
-		unset(argc, argv, env);
+		bi_unset(argc, argv);
 	else if (ft_strncmp("exit", argv[0], 5 == 0 ))
-		exit(argc, argv, env);
-	else if
+		bi_exit(argc, argv);
+	else if (1)
 		return (0);
 	return (1);
 		
 }
 
 
+int is_builtin(char *cmd)
+{
+    if (cmd == NULL)
+        return 0;
+    if (ft_strncmp("cd", cmd, 3) == 0)
+        return (1);
+    else if (ft_strncmp("pwd", cmd, 4) == 0)
+        return (2);
+    else if (ft_strncmp("echo", cmd, 5) == 0)
+        return (3);
+    else if (ft_strncmp("env", cmd, 4) == 0)
+        return (4);
+    else if (ft_strncmp("export", cmd, 7) == 0)
+        return (5);
+    else if (ft_strncmp("unset", cmd, 6) == 0)
+        return (6); 
+    else if (ft_strncmp("exit", cmd, 5) == 0)
+        return (7); 
+
+    return (0); 
+}
+
+
+
 
 
 //ignore arguments
-int	pwd(void)
+int	bi_pwd(void)
 {
 	char	cwd[PATH_MAX];
 
@@ -54,50 +86,37 @@ int	pwd(void)
 
 //Only takes 1 argument, throws error otherwise
 // TODO handle -1 Has some issues, needs debugging
-int	cd(int argc, char *argv[])
+
+int is_valid_cd(char *dir)
+{
+	(void) dir;
+	return (0);
+}
+
+int	bi_cd(int argc, char *argv[])
 {
 	char	*cur;
 	char	cwd[PATH_MAX];
 
-	if (argv[2] != NULL)
+	if (argc > 2)
 	{
+		(void) argv;
 		printf("cd: too many arguments\n");
 		return (1);
 	}
 	cur = ft_strjoin("OLDPWD=", getcwd(cwd, PATH_MAX));
 	if (is_valid_cd(argv[1]) == 0)
-		set_variable(get_data(), "OLDPWD", getcwd(cwd, PATH_MAX));
+		add_envvar(get_data()->env, "OLDPWD", getcwd(cwd, PATH_MAX));
 	if (argv[1] == NULL || argv[1] == 0)
-		chdir(get_own_env(get_data(), "HOME"));
+		chdir(ft_get_env("HOME"));
 	else if (ft_strncmp(argv[1], "-", 2))
-		chdir(get_own_env(get_data(), "HOME"));
+		chdir(ft_get_env("OLDPWD"));
 	else
 		chdir(argv[1]);
-	set_variable(get_data(), "PWD", getcwd(cwd, PATH_MAX));
+	add_envvar(get_data()->env, "PWD", getcwd(cwd, PATH_MAX));
 	return (0);
 }
 
-
-//unset can take multiple arguments
-int	unset_env(const char *var, t_data *data)
-{
-	int	tar_i;
-	int	i;
-
-	i = 0;
-	tar_i = find_env(var, data);
-	if (tar_i == -1)
-		return (-1);
-	else
-	{
-		while (i < MAX_LENGTH)
-		{
-			data->env[tar_i][i] = 0;
-			i++;
-		}
-	}
-	return (0);
-}
 
 int	echo_check_opt(char *str)
 {
@@ -126,7 +145,7 @@ int	echo_check_opt(char *str)
 }
 //can take multiple arguments
 // Argument expansion should already be done here so we can print everything as it is?
-int	echo(int argc, char *argv[])
+int	bi_echo(int argc, char *argv[])
 {
 	int	i;
 	int	opt;
@@ -144,4 +163,5 @@ int	echo(int argc, char *argv[])
 	}
 	if (opt)
 		printf("\n");
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:32:26 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/12 15:29:50 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:28:55 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ const char	*find_env(t_char *source, t_data *data)
 	return (NULL);
 }
 //Our env is not supposed to take arguments so dicard or error?
-void	env(t_data *data)
+void	bi_env(t_data *data)
 {
 	const char	*str;
 	int			i;

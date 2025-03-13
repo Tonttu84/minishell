@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:41:58 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/09 19:08:01 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/13 14:50:57 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static void	set_type(t_node *new)
 	{
 		new->type = PIPE;
 		args = 0;
-		get_data()->herecount = 0;
 	}
 	else if (((new->str && new->str[0].c == '>') || (new->str
 				&&new->str[0].c == '<' && new->str[0].com)))

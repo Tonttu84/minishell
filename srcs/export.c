@@ -6,42 +6,23 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:32:40 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/12 15:30:29 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:03:16 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 //unset can take multiple argumetns
-int	unset(char **env, char *envvar)
+//rewrite to deal with
+int bi_unset(int argc, char *argv[])
 {
-	int	i;
-	int	len;
-	int	k;
+	(void)argc;
+	(void) argv;
 
-	k = 0;
-	len = strlen(envvar);
-	i = 0;
-	while (env[i] != NULL)
-	{
-		if (strncmp(env[i], envvar, len) == 0)
-		{
-			if (env[i][len] == '=' || env[i][len] == '\0')
-			{
-				while (env[i][k] != '\0')
-				{
-					env[i][k] = '\0';
-					k++;
-				}
-				return (0);
-			}
-		}
-		i++;
-	}
 	return (1);
 }
 //Gets the variable name , value and location of the free slot as input and writes the value there
-int	set_envvar(char **env, char *envvar, char *value, int free_slot)
+int	set_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar, char *value, int free_slot)
 {
 	int	i;
 	int	k;
@@ -72,11 +53,11 @@ int	set_envvar(char **env, char *envvar, char *value, int free_slot)
 }
 
 //First it unsets the variable, then it adds it with a new value
-int	add_envvar(char **env, char *envvar, char *value)
+int	add_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar, char *value)
 {
 	int	i;
 
-	unset(env, envvar);
+	bi_unset(1, &envvar);
 	i = 0;
 	while (i < ENV_SIZE)
 	{
@@ -124,7 +105,7 @@ void	final_print(char **env)
 	}
 }
 //Creates an array of pointers that are later sorted and printed
-int	print_alphabetically(char **env)
+int	print_alphabetically(char env[ENV_SIZE + 1][MAX_LENGTH + 1])
 {
 	char	*cpy[ENV_SIZE + 1];
 	int		i;
@@ -168,7 +149,7 @@ int	errorcheck_expand(char *var)
 	return (0);
 }
 
-void	process_new_envvarr(char **env, char *var)
+void	process_new_envvarr(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *var)
 {
 	char	name[MAX_LENGTH + 1];
 	char	value[MAX_LENGTH + 1];
@@ -197,12 +178,12 @@ void	process_new_envvarr(char **env, char *var)
 	add_envvar(env, name, value);
 }
 //Can take multiple arguments no idea what it does with them
-int	export(int argc, char *argv[], char **env)
+int	bi_export(int argc, char *argv[])
 {
 	int	i;
 
 	if (argc == 1)
-		return (print_alphabetically(env));
+		return (print_alphabetically(get_data()->env));
 	i = 1;
 	while (i < argc)
 	{
@@ -216,7 +197,7 @@ int	export(int argc, char *argv[], char **env)
 	i = 1;
 	while (i < argc)
 	{
-		process_new_envvarr(env, argv[i]);
+		process_new_envvarr(get_data()->env, argv[i]);
 		i++;
 	}
 	return (0);

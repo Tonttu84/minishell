@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:20:15 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/11 18:29:18 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/13 14:10:56 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_sent	*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence)
 		node = get_data()->tokens.first;
 		if (node->type == PIPE)
 		{
+			sentence->argc = k;
 			sentence->outpipe = 1;
 			return (sentence);
 		}

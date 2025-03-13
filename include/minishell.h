@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/12 19:09:46 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/13 16:14:14 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_sent
 	bool		outpipe;
 	int			error; 			//error code here
 	int			heredocs;
+	int			argc;
 }				t_sent;
 
 typedef struct s_data
@@ -153,6 +154,16 @@ int 			execute(t_sent *sentence, int pfd[2], pid_t my_child, int state);
 int				open_temp_heredocs(t_node *node, int expand);
 void 			util_parse_args(t_data *data, int i);
 int				cwd(void);
+int 			run_builtin(int argc, char *argv[]);
+int 			is_builtin(char *cmd);
+int				bi_pwd(void);
+int				bi_cd(int argc, char *argv[]);
+void	bi_env(t_data *data);
+int	bi_echo(int argc, char *argv[]);
+int bi_unset(int argc, char *argv[]);
+int	bi_export(int argc, char *argv[]);
+const char	*ft_get_env(const char *target);
+int	add_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar, char *value);
 /*
 ** SIGNALS
  */
