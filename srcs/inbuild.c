@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:05:36 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/13 16:14:00 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:48:59 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,26 @@ int	bi_exit(int argc, char *argv[])
 
 int run_builtin(int argc, char *argv[])
 {
+
 	//Not sure if I can take input like this to function withot counting variables?
 	if (argc == 0)
 		return (1);
-	if (ft_strncmp("cd", argv[0], 3 == 0 ))
-		bi_cd(argc, argv);
-	else if (ft_strncmp("pwd", argv[0], 4 == 0 ))
+	if (ft_strncmp("cd", argv[0], 3) == 0 )
+		{
+			printf("cd called\n");
+			bi_cd(argc, argv);
+		}
+	else if (ft_strncmp("pwd", argv[0], 4) == 0)
 		bi_pwd();
-	else if (ft_strncmp("echo", argv[0], 5 == 0 ))
+	else if (ft_strncmp("echo", argv[0], 5) == 0 )
 		bi_echo(argc, argv);
-	else if (ft_strncmp("env", argv[0], 4 == 0 ))
+	else if (ft_strncmp("env", argv[0], 4) == 0 )
 		bi_env(get_data());
-	else if (ft_strncmp("export", argv[0], 7 == 0 ))
+	else if (ft_strncmp("export", argv[0], 7) == 0 )
 		bi_export(argc, argv);
-	else if (ft_strncmp("unset", argv[0], 6 == 0 ))
+	else if (ft_strncmp("unset", argv[0], 6) == 0 )
 		bi_unset(argc, argv);
-	else if (ft_strncmp("exit", argv[0], 5 == 0 ))
+	else if (ft_strncmp("exit", argv[0], 5) == 0 )
 		bi_exit(argc, argv);
 	else if (1)
 		return (0);
@@ -64,7 +68,7 @@ int is_builtin(char *cmd)
         return (6); 
     else if (ft_strncmp("exit", cmd, 5) == 0)
         return (7); 
-
+	
     return (0); 
 }
 
@@ -98,6 +102,7 @@ int	bi_cd(int argc, char *argv[])
 	char	*cur;
 	char	cwd[PATH_MAX];
 
+	printf("Testing cd\n argc is %d, argv[0] is %s argv[1] is %s\n", argc, argv[0], argv[1]);
 	if (argc > 2)
 	{
 		(void) argv;
@@ -108,9 +113,12 @@ int	bi_cd(int argc, char *argv[])
 	if (is_valid_cd(argv[1]) == 0)
 		add_envvar(get_data()->env, "OLDPWD", getcwd(cwd, PATH_MAX));
 	if (argv[1] == NULL || argv[1] == 0)
-		chdir(ft_get_env("HOME"));
+		{
+			printf("ft_get_env(\"HOME\") is %s\n", find_env_char("$HOME", get_data()));
+			chdir(find_env_char("$HOME", get_data()));
+		}
 	else if (ft_strncmp(argv[1], "-", 2))
-		chdir(ft_get_env("OLDPWD"));
+		chdir(find_env_char("$OLDPWD", get_data()));
 	else
 		chdir(argv[1]);
 	add_envvar(get_data()->env, "PWD", getcwd(cwd, PATH_MAX));

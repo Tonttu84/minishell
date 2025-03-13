@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:32:26 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/13 15:28:55 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:44:31 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,22 @@ const char	*find_env(t_char *source, t_data *data)
 	}
 	return (NULL);
 }
+
+// const char	*find_env_char(char *source, t_data *data)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (i < data->env_count)
+// 	{
+// 		if (source && data->env[i] && ft_strncmp(source, data->env[i], ft_strlen(source) + 1))
+// 			return (ft_get_env(data->env[i]));
+// 		i++;
+// 	}
+// 	return (NULL);
+// }
+
+
 //Our env is not supposed to take arguments so dicard or error?
 void	bi_env(t_data *data)
 {
