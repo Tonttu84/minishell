@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/13 16:45:41 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/13 18:20:23 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ int	bi_export(int argc, char *argv[]);
 const char	*ft_get_env(const char *target);
 int	add_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar, char *value);
 const char	*find_env_char(char *source, t_data *data);
+const char	*find_env_value(char *source, t_data *data);
 /*
 ** SIGNALS
  */

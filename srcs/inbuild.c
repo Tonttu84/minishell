@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:05:36 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/13 16:48:59 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/13 18:18:44 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ int	bi_cd(int argc, char *argv[])
 {
 	char	*cur;
 	char	cwd[PATH_MAX];
+	
+	printf("ft_get_env(\"HOME\") is %s\n", find_env_value("$HOME", get_data()));
 
 	printf("Testing cd\n argc is %d, argv[0] is %s argv[1] is %s\n", argc, argv[0], argv[1]);
 	if (argc > 2)
@@ -114,11 +116,11 @@ int	bi_cd(int argc, char *argv[])
 		add_envvar(get_data()->env, "OLDPWD", getcwd(cwd, PATH_MAX));
 	if (argv[1] == NULL || argv[1] == 0)
 		{
-			printf("ft_get_env(\"HOME\") is %s\n", find_env_char("$HOME", get_data()));
-			chdir(find_env_char("$HOME", get_data()));
+			
+			chdir(find_env_value("$HOME", get_data()));
 		}
 	else if (ft_strncmp(argv[1], "-", 2))
-		chdir(find_env_char("$OLDPWD", get_data()));
+		chdir(find_env_value("$OLDPWD", get_data()));
 	else
 		chdir(argv[1]);
 	add_envvar(get_data()->env, "PWD", getcwd(cwd, PATH_MAX));

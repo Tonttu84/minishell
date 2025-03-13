@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:18:56 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/13 16:44:19 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/13 18:20:51 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	match_env_argument_char(char *source, char *env_var)
 	{
 		if (source[i] == env_var[i - 1])
 			i++;
+		else
+			break;
 	}
 	if ((env_var[i - 1] == 0 ||env_var[i - 1] == '=') && !ft_isalnum(source[i]) && source[i] != '_')
 		return (1);
@@ -47,6 +49,27 @@ const char	*find_env_char(char *source, t_data *data)
 	}
 	return (NULL);
 }
+
+
+const char	*find_env_value(char *source, t_data *data)
+{
+	int i;
+	const char *ptr;
+
+	i = 0;
+	ptr = find_env_char(source, data);
+	if (ptr)
+	{
+		while(ptr[i] && ptr[i] != '=')
+			i++;
+	}
+	if (ptr[i] == '=')
+	{
+		i++;
+	}
+	return (ptr + i);
+}
+
 
 // I have a pointer to the start of the env variable
 void	expand_envvar(char *unexp, char *exp, int *i, int *k)
