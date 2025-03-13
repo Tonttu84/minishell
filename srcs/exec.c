@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 19:21:45 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/12 19:46:32 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/13 15:18:26 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void deal_with_sentence(t_sent *sentence, int i, int pfd[2]);
 int execute(t_sent *sentence, int pfd[2], pid_t my_child, int state)
 {
   static int i;
+  int ret;
 
   if (my_child > 0 && get_data()->page[i])
     return execute(get_data()->page[i++], pfd, fork(), 0);
@@ -38,7 +39,14 @@ int execute(t_sent *sentence, int pfd[2], pid_t my_child, int state)
       print_error_and_exit(sentence->array[0], errno);
   } else if (my_child == -1)
     print_error_return_control();
-  waitpid(my_child, &state, 0);
+  close(pfd[0]);
+  close(pfd[1]);
+  while(i)
+  {
+    if(my_child == waitpid(0, &state, 0))
+       ret = state;
+    i--;
+  }
   i = 0;
   if (WIFEXITED(state))
     return (WEXITSTATUS(state));

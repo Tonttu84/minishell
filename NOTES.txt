@@ -10,6 +10,8 @@ testaa miten bash suhtautuu liian moneen argumenttiin builtineissa
 identify builtins
 
 Eli awk {print $1} on mita pitaisi menna ohjelmalle. Poistin escape characterien lisailyn ja vaikuttaisi toimivan
+bash: awk {print\ $1} <- toimii
+minishell: awk {print $1} <- ei saa EOF
 
 Builtin:
 	exit: printtaa virheen jos exit ajetaan putken kanssa yli 9223372036854775807 argumentilla. palautusarvo: 2.
