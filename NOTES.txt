@@ -3,7 +3,6 @@ Suojaa splitti tapaukselta PATH=::
 tiedostot ei toimi komentojen ja putkien kanssa
 <<EOF < > ottaa syntax errorit todella oudossa kohtaa
 
-Ilmeisesti escape characterit voi poistaa kun argumentteja passataan ohjelmille. 
 
 testaa miten bash suhtautuu liian moneen argumenttiin builtineissa
 
@@ -31,9 +30,7 @@ message of the day;
 _ is the last argument of executed command, this could be likely tested with inbuilds. Even if inbuids are not exactly executed the _ gets still updated
 it gets updated even inside children. in pipe the last pipe updates it. 
 
-cowsay fortune;
 
-When you launch it, print a shell?
 
 <<""EOF apparenty tells the heredocs not to expand env variables inside heredocs
 
@@ -47,5 +44,7 @@ _old=_old=export
 
 env is an external command in bash located in _=/usr/bin/env
 
+Jos poistaa kansion, unsettaa PWD:n ja OLDPWD:n niin bashin cd toimii siltikin
+eli meidan taytyy trakata pathia
 
 toimiiko cd jos kansio poistetaan alta
