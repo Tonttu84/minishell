@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:05:36 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/13 18:18:44 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/14 09:31:40 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	bi_cd(int argc, char *argv[])
 			
 			chdir(find_env_value("$HOME", get_data()));
 		}
-	else if (ft_strncmp(argv[1], "-", 2))
+	else if (ft_strncmp(argv[1], "-", 2) == 0)
 		chdir(find_env_value("$OLDPWD", get_data()));
 	else
 		chdir(argv[1]);
