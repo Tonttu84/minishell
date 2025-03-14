@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:11:31 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/14 12:17:14 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:54:27 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 
 int	cwd(void)
 {
-	
-
 	getcwd(get_data()->cwd, sizeof(get_data()->cwd));
 	return (0);
 }
@@ -80,7 +78,6 @@ void	prompt_input(void)
 		if (!data->page[0]->inpipe && !data->page[0]->outpipe && is_builtin(data->page[0]->array[0]))
 		{
 			run_builtin(data->page[0]->argc, data->page[0]->array);
-			
 		}
 		else 
 		{
