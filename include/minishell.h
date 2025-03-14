@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/13 18:20:23 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:22:46 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ char			*cnvrt_to_char(t_char *line);
 t_char			*lexify(char *line, t_data *data);
 t_sent			**create_page(t_list *stack);
 void			print_sentence(t_sent *sentence);
-char		*create_heredoc(char *terminator, int expand);
+char			*create_heredoc(char *terminator, int expand);
 char 			*test_infile(t_char *raw_path);
 char 			*test_outfile(t_char *raw_path);
 char 			*test_append(t_char *raw_path);
@@ -158,14 +158,15 @@ int 			run_builtin(int argc, char *argv[]);
 int 			is_builtin(char *cmd);
 int				bi_pwd(void);
 int				bi_cd(int argc, char *argv[]);
-void	bi_env(t_data *data);
-int	bi_echo(int argc, char *argv[]);
-int bi_unset(int argc, char *argv[]);
-int	bi_export(int argc, char *argv[]);
-const char	*ft_get_env(const char *target);
-int	add_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar, char *value);
-const char	*find_env_char(char *source, t_data *data);
-const char	*find_env_value(char *source, t_data *data);
+void			bi_env(t_data *data);
+int				bi_echo(int argc, char *argv[]);
+int 			bi_unset(int argc, char *argv[]);
+int				bi_export(int argc, char *argv[]);
+const char		*ft_get_env(const char *target);
+int				add_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar, char *value);
+const char		*find_env_char(char *source, t_data *data);
+const char		*find_env_value(char *source, t_data *data);
+void			mark_commands(t_char *com_line, int i);
 /*
 ** SIGNALS
  */

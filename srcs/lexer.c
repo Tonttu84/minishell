@@ -6,17 +6,14 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:32:12 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/11 17:51:35 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/14 12:27:59 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	mark_commands(t_char *com_line, t_data *data)
+void	mark_commands(t_char *com_line, int i)
 {
-	int	i;
-
-	(void)data;
 	i = 0;
 	while (com_line[i].c != 0)
 	{
@@ -53,11 +50,10 @@ void	mark_commands(t_char *com_line, t_data *data)
 	}
 }
 
-void	mark_env_var(t_char *newline, int start, t_data *data)
+void	mark_env_var(t_char *newline, int start)
 {
 	int	end;
 
-	(void)data;
 	end = start;
 	newline[end].var = 1;
 	end++;
@@ -80,18 +76,17 @@ void	mark_env_var(t_char *newline, int start, t_data *data)
 	}
 }
 
-void	mark_arguments(t_char *newline, t_data *data)
+void	mark_arguments(t_char *newline)
 {
 	int	i;
 
-	(void)data;
 	i = 0;
 	while (newline[i].c != 0)
 	{
 		if (newline[i].esc)
 			;
 		else if (newline[i].c == '$')
-			mark_env_var(newline, i, data);
+			mark_env_var(newline, i);
 		i++;
 	}
 }
@@ -135,10 +130,10 @@ t_char	*lexify(char *line, t_data *data)
 	remove_quotes(newline, line, 0, 0);
 //	debug_print(newline, data);
 //	printf("\n");
-	mark_commands(newline, data);
+	mark_commands(newline, 0);
 	//debug_print(newline, data);
 //	printf("\n");
-	mark_arguments(newline, data);
+	mark_arguments(newline);
 //	debug_print(newline, data);
 //	printf("\n");
 	expand_arguments(expanded, newline, data);

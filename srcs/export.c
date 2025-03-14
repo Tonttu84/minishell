@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:32:40 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/14 10:54:14 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:50:46 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,49 @@
 
 //unset can take multiple argumetns
 //rewrite to deal with
+
+
+static int unset_one(char *env_val)
+{
+	t_data *data;
+	int i;
+	int lenght;
+
+	i = 0;
+	data = get_data();
+	if (env_val == NULL)
+		return (1);
+	lenght = ft_strlen(env_val);
+	while (i < ENV_SIZE)
+	{
+		if (data->env[i] && ft_strncmp(env_val, data->env[i], lenght+ 1) && (data->env[i][lenght + 1] == 0 || data->env[i][lenght + 1] == '=') )
+			{
+				ft_memset(data->env[i], 0, MAX_LENGTH + 1);
+				return (1);
+			}
+		i++;
+	}
+	return (0);
+}
+
 int bi_unset(int argc, char *argv[])
 {
-	(void)argc;
-	(void) argv;
+	int i;
 
-	return (1);
+	if (argc == 1)
+		return (0);
+	i = 1;
+	while (i < argc)
+	{
+		if (argv[i])
+		{
+			unset_one(argv[i]);
+		}
+		i++;
+	}
+	return (0);
 }
+
 //Gets the variable name , value and location of the free slot as input and writes the value there
 int	set_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar, char *value, int free_slot)
 {
@@ -57,7 +93,7 @@ int	add_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar, char *value
 {
 	int	i;
 
-	bi_unset(1, &envvar);
+	unset_one(envvar);
 	i = 0;
 	while (i < ENV_SIZE)
 	{
@@ -93,6 +129,7 @@ void	sort_cpy(char **cpy)
 	}
 }
 
+//Prints the variables in the format desired by export;
 void	final_print(char **env)
 {
 	int	i;
@@ -128,7 +165,7 @@ int	print_alphabetically(char env[ENV_SIZE + 1][MAX_LENGTH + 1])
 	final_print(cpy);
 	return (0);
 }
-
+//bash: export: `': not a valid identifier
 // Not sure what the valid env variable values can be
 int	errorcheck_expand(char *var)
 {
@@ -178,7 +215,7 @@ void	process_new_envvarr(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *var)
 	value[k] = '\0';
 	add_envvar(env, name, value);
 }
-//Can take multiple arguments no idea what it does with them
+
 int	bi_export(int argc, char *argv[])
 {
 	int	i;
