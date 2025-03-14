@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:05:36 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/14 09:31:40 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/14 10:14:24 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int run_builtin(int argc, char *argv[])
 		return (1);
 	if (ft_strncmp("cd", argv[0], 3) == 0 )
 		{
-			printf("cd called\n");
 			bi_cd(argc, argv);
 		}
 	else if (ft_strncmp("pwd", argv[0], 4) == 0)
@@ -102,9 +101,6 @@ int	bi_cd(int argc, char *argv[])
 	char	*cur;
 	char	cwd[PATH_MAX];
 	
-	printf("ft_get_env(\"HOME\") is %s\n", find_env_value("$HOME", get_data()));
-
-	printf("Testing cd\n argc is %d, argv[0] is %s argv[1] is %s\n", argc, argv[0], argv[1]);
 	if (argc > 2)
 	{
 		(void) argv;

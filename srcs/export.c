@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:32:40 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/13 16:03:16 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/14 10:32:14 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	sort_cpy(char **cpy)
 				cpy[i] = cpy[i + 1];
 				cpy[i + 1] = tmp;
 			}
+			i++;
 		}
 		k++;
 	}
@@ -113,9 +114,9 @@ int	print_alphabetically(char env[ENV_SIZE + 1][MAX_LENGTH + 1])
 
 	i = 0;
 	k = 0;
-	while (env[k] != NULL)
+	while (k < ENV_SIZE )
 	{
-		if (env[k][0] != '\0')
+		if (env[k] != NULL && env[k][0] != '\0')
 		{
 			cpy[i] = env[k];
 			i++;
@@ -185,9 +186,9 @@ int	bi_export(int argc, char *argv[])
 	if (argc == 1)
 		return (print_alphabetically(get_data()->env));
 	i = 1;
-	while (i < argc)
+	while (i < argc )
 	{
-		if (errorcheck_expand(argv[i]))
+		if (argv[i] && errorcheck_expand(argv[i]))
 		{
 			perror("Print error, set errno and so on");
 			return (-1);
@@ -197,7 +198,8 @@ int	bi_export(int argc, char *argv[])
 	i = 1;
 	while (i < argc)
 	{
-		process_new_envvarr(get_data()->env, argv[i]);
+		if (argv[i])
+			process_new_envvarr(get_data()->env, argv[i]);
 		i++;
 	}
 	return (0);
