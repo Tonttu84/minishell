@@ -14,7 +14,7 @@
 
 // Untested 24.2
 
-//static int	ft_isescapable(char c);
+// static int	ft_isescapable(char c);
 
 size_t	ft_tcharlen(t_char *line)
 {

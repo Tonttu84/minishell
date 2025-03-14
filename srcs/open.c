@@ -12,8 +12,6 @@
 
 #include "../include/minishell.h"
 
-
-
 char	*test_outfile(t_char *raw_path)
 {
 	int		fd;
@@ -29,31 +27,30 @@ char	*test_outfile(t_char *raw_path)
 
 char	*test_append(t_char *raw_path)
 {
-	int fd;
-	char *proc_path;
+	int		fd;
+	char	*proc_path;
 
 	proc_path = cnvrt_to_char(raw_path);
-	fd = open(proc_path, O_WRONLY | O_CREAT , 0644);
+	fd = open(proc_path, O_WRONLY | O_CREAT, 0644);
 	close(fd);
 	if (fd == -1)
 		return (NULL);
 	return (proc_path);
 }
 
-//O_EXCL prevents the file from being linked to filesystem when used together with __)
+// O_EXCL prevents the file from being linked to filesystem when used together with __)
 int	open_temp_heredocs(t_node *node, int expand)
 {
-	int	fd;
+	int fd;
 	char *eof;
 	char *txt;
-	
-	
+
 	fd = open("/tmp", O_RDWR | __O_TMPFILE, 0640);
 	if (-1 == fd)
-		{
-			perror("Failed to create a tmp file\n");
-			return (fd);
-		}
+	{
+		perror("Failed to create a tmp file\n");
+		return (fd);
+	}
 	eof = cnvrt_to_char(node->str);
 	printf("%s\n", eof);
 	txt = create_heredoc(eof, expand);

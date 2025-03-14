@@ -16,20 +16,18 @@
 jrimpila@c1r4p7:~/Git/minishell$ $GHOST
 include  input	input2	libft  Makefile  minishell  srcs*/
 
-
 void	test(void)
 {
-    t_char *result;
-	int i;
-	t_data *data;
+	t_char	*result;
+	int		i;
+	t_data	*data;
 
 	data = get_data();
 	// Example lines for testing your parsing function
-	char *test_lines[] =
-	{
-	    " ",
+	char *test_lines[] = {
+		" ",
 		"<< EOF",
-        "awk '{print $1}'",
+		"awk '{print $1}'",
 		"cat \"$HOME/i\"\"nput.txt\">>outfile.txt \'\' \'\'\"\" | echo $US\"\"ER \'\'grep $invalid \"search_pattern\" <<EOF < \"$HOME/input.txt\" <<EOF > \"$HOME/error.log\" | sort | uniq |   echo > test.txt \"Found line: \"$line\"\" | echo \"Current user: $USER\" | echo \"Non-existent variable: $NONEXISTENTVAR\" ",
 	};
 	for (i = 0; (unsigned int)i < sizeof(test_lines)
@@ -43,12 +41,11 @@ void	test(void)
 		iterate_list(&data->tokens, print_node);
 		create_page(&data->tokens);
 	}
-
-		i = 0;
-		while (i < MAX_VARS)
-		{
-			if (data->env[i][0])
-				printf("%s\n", data->env[i]);
-			i++;
-		}
+	i = 0;
+	while (i < MAX_VARS)
+	{
+		if (data->env[i][0])
+			printf("%s\n", data->env[i]);
+		i++;
+	}
 }

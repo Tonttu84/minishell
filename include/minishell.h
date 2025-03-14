@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/14 12:22:46 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/14 14:36:38 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@
 # endif
 # include "../libft/libft.h"
 # include <errno.h>
+# include <fcntl.h>
 # include <limits.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 # include <stdbool.h>
 # include <stdio.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <fcntl.h>
 # include <stdlib.h>
-# include <sys/wait.h>
 # include <sys/types.h>
-# ifndef PATH_MAX			///Max path lenght
+# include <sys/wait.h>
+# include <unistd.h>
+# ifndef PATH_MAX /// Max path lenght
 #  define PATH_MAX (500)
 # endif
 # define ENV_SIZE 4096
@@ -49,7 +49,7 @@
 #  define USER minishell
 # endif
 
-# define PROMPT GREEN USER":"RESET
+# define PROMPT GREEN USER ":" RESET
 
 # define RED "\x1b[31m"
 # define GREEN "\x1b[32m" // Used for variable expansion
@@ -70,14 +70,13 @@
 
 const char		*token_to_string(t_token token);
 
-
 typedef struct s_dir
 {
-	char 		*path;
+	char		*path;
 	t_token		type;
 	int			here_fd;
-	
-}	t_dir;
+
+}				t_dir;
 
 typedef struct s_sent
 {
@@ -85,7 +84,7 @@ typedef struct s_sent
 	bool		inpipe;
 	t_dir		redirs[20];
 	bool		outpipe;
-	int			error; 			//error code here
+	int error; // error code here
 	int			heredocs;
 	int			argc;
 }				t_sent;
@@ -110,18 +109,41 @@ typedef struct s_point
 
 /*
 ** BUILT' INS
- */
-int builtin_cd(char *path);
-void builtin_echo(char *str);
-void builtin_pwd(void);
-void builtin_exit(char *arg);
-void builtin_env(t_data *data);
-void builtin_export(t_data *data);
+*/
+int				cwd(void);
+int				run_builtin(int argc, char *argv[]);
+int				is_builtin(char *cmd);
+int				bi_pwd(void);
+int				bi_cd(int argc, char *argv[]);
+void			bi_env(t_data *data);
+int				bi_echo(int argc, char *argv[]);
+int				bi_unset(int argc, char *argv[]);
+int				bi_export(int argc, char *argv[]);
+const char		*ft_get_env(const char *target);
+int				add_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar,
+					char *value);
+const char		*find_env_char(char *source, t_data *data);
+const char		*find_env_value(char *source, t_data *data);
+int				builtin_cd(char *path);
 
+/*
+** EXECUTION
+*/
+void			util_parse_args(t_data *data, int i);
+int				execute(t_sent *sentence, int pfd[2], pid_t my_child,
+					int state);
 
+/*
+** EXIT & ERROR PRINTING
+*/
+void			ft_exit(t_data *data, char *cmd, char *message, int exit_code);
+void			error_printf(char *cmd, char *message);
 void			test(void);
+
+/*
+** UTILITIES
+*/
 typedef void	(*node_func)(t_list *list, t_node *node);
-void			ft_exit(t_data *data, char *message, int exit_code);
 void			*ft_xcalloc(size_t nmemb, size_t size);
 size_t			ft_strlen(const char *s);
 void			*ft_memset(void *s, int c, size_t n);
@@ -138,41 +160,32 @@ size_t			ft_tcharlen(t_char *line);
 t_node			*destroy_node(t_list *list, t_node *node);
 int				copy_env_to_tchar(t_char *dst, int i, const char *env);
 char			*cnvrt_to_char(t_char *line);
+
+/*
+** LEXING & PARSING
+*/
 t_char			*lexify(char *line, t_data *data);
 t_sent			**create_page(t_list *stack);
 void			print_sentence(t_sent *sentence);
 char			*create_heredoc(char *terminator, int expand);
-char 			*test_infile(t_char *raw_path);
-char 			*test_outfile(t_char *raw_path);
-char 			*test_append(t_char *raw_path);
-void 			prompt_input(void);
-void  			add_redirection(t_node *node, t_sent *sentence, int i);
-t_sent			*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence);
+char			*test_infile(t_char *raw_path);
+char			*test_outfile(t_char *raw_path);
+char			*test_append(t_char *raw_path);
+void			prompt_input(char *line, int pfd[2], t_data *data);
+void			add_redirection(t_node *node, t_sent *sentence, int i);
+t_sent			*conv_linked_to_sentence(int i, int k, t_node *node,
+					t_sent *sentence);
 int				check_emp_arg(char *src, int i, t_char *dst, int *k);
 void			remove_quotes(t_char *dst, char *src, int i, int k);
-int 			execute(t_sent *sentence, int pfd[2], pid_t my_child, int state);
 int				open_temp_heredocs(t_node *node, int expand);
-void 			util_parse_args(t_data *data, int i);
-int				cwd(void);
-int 			run_builtin(int argc, char *argv[]);
-int 			is_builtin(char *cmd);
-int				bi_pwd(void);
-int				bi_cd(int argc, char *argv[]);
-void			bi_env(t_data *data);
-int				bi_echo(int argc, char *argv[]);
-int 			bi_unset(int argc, char *argv[]);
-int				bi_export(int argc, char *argv[]);
-const char		*ft_get_env(const char *target);
-int				add_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar, char *value);
-const char		*find_env_char(char *source, t_data *data);
-const char		*find_env_value(char *source, t_data *data);
 void			mark_commands(t_char *com_line, int i);
+
 /*
 ** SIGNALS
- */
-void block_signals_in_parent(void);
-void set_signals(void);
-void signal_handler(int sig_nbr);
-void void_signal(int sig_nbr);
-void unset_signals(void);
+*/
+void			block_signals_in_parent(void);
+void			set_signals(void);
+void			signal_handler(int sig_nbr);
+void			void_signal(int sig_nbr);
+void			unset_signals(void);
 #endif

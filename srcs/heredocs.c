@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-//Did the final check while tired, check the logic while fresh
+// Did the final check while tired, check the logic while fresh
 int	match_env_argument_char(char *source, char *env_var)
 {
 	int	i;
@@ -20,8 +20,7 @@ int	match_env_argument_char(char *source, char *env_var)
 	i = 0;
 	if (env_var == NULL || env_var[0] == '\0')
 		return (0);
-	if (source[0] != '$' || (ft_isalnum(source[1]) == 0
-			&& source[1] != '_'))
+	if (source[0] != '$' || (ft_isalnum(source[1]) == 0 && source[1] != '_'))
 		perror("DEBUG iffy input to match_env_argument\n");
 	i = 1;
 	while (ft_isalnum(source[i]) || source[i] == '_')
@@ -29,9 +28,10 @@ int	match_env_argument_char(char *source, char *env_var)
 		if (source[i] == env_var[i - 1])
 			i++;
 		else
-			break;
+			break ;
 	}
-	if ((env_var[i - 1] == 0 ||env_var[i - 1] == '=') && !ft_isalnum(source[i]) && source[i] != '_')
+	if ((env_var[i - 1] == 0 || env_var[i - 1] == '=') && !ft_isalnum(source[i])
+		&& source[i] != '_')
 		return (1);
 	return (0);
 }
@@ -50,17 +50,16 @@ const char	*find_env_char(char *source, t_data *data)
 	return (NULL);
 }
 
-
 const char	*find_env_value(char *source, t_data *data)
 {
-	int i;
-	const char *ptr;
+	int			i;
+	const char	*ptr;
 
 	i = 0;
 	ptr = find_env_char(source, data);
 	if (ptr)
 	{
-		while(ptr[i] && ptr[i] != '=')
+		while (ptr[i] && ptr[i] != '=')
 			i++;
 	}
 	if (ptr[i] == '=')
@@ -70,12 +69,11 @@ const char	*find_env_value(char *source, t_data *data)
 	return (ptr + i);
 }
 
-
 // I have a pointer to the start of the env variable
 void	expand_envvar(char *unexp, char *exp, int *i, int *k)
 {
-	const char *ptr_envvar;
-	int j;
+	const char	*ptr_envvar;
+	int			j;
 
 	ptr_envvar = find_env_char(unexp + *i, get_data());
 	j = 0;
@@ -93,18 +91,15 @@ void	expand_envvar(char *unexp, char *exp, int *i, int *k)
 		(*i)++;
 	else
 		perror("DEBUG, something seems wrong");
-	while(ft_isalnum(unexp[*i]) ||unexp[*i] == '_')
+	while (ft_isalnum(unexp[*i]) || unexp[*i] == '_')
 		(*i)++;
-	
 }
-
-
 
 char	*expand_heredocs(char *unexpanded)
 {
-	int	i;
-	int	k;
-	char *expanded;
+	int		i;
+	int		k;
+	char	*expanded;
 
 	i = 0;
 	k = 0;
@@ -115,7 +110,7 @@ char	*expand_heredocs(char *unexpanded)
 		{
 			expand_envvar(unexpanded, expanded, &i, &k);
 		}
-		expanded[k]=unexpanded[i];
+		expanded[k] = unexpanded[i];
 		i++;
 		k++;
 	}
@@ -154,7 +149,8 @@ char	*create_heredoc(char *terminator, int expand)
 	tmp = NULL;
 	result = NULL;
 	cpy = NULL;
-	while (tmp == NULL || ft_strncmp(terminator, tmp, ft_strlen(terminator + 1)))
+	while (tmp == NULL || ft_strncmp(terminator, tmp, ft_strlen(terminator
+				+ 1)))
 	{
 		if (tmp)
 		{

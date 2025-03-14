@@ -12,8 +12,7 @@
 
 #include "../include/minishell.h"
 
-
-//old is static char	**is_path_in_env(t_data *data, char *s, char *s1, int i)
+// old is static char	**is_path_in_env(t_data *data, char *s, char *s1, int i)
 static char	*is_path_in_env(t_data *data, char *s, char *s1, int i)
 {
 	while (data->env[i])
@@ -32,22 +31,21 @@ static char	*is_path_in_env(t_data *data, char *s, char *s1, int i)
 ** how to install or fix a typo etc.
 */
 
-
-//Check if arrays are malloced;
+// Check if arrays are malloced;
 static void	command_not_found(t_data *data, int nbr)
 {
-	int		i;
-	
+	int	i;
+
 	free(data->page[nbr]->array[1]);
 	data->page[nbr]->array[1] = data->page[nbr]->array[0];
 	data->page[nbr]->array[0] = ft_strdup("/usr/lib/command-not-found");
 	i = 2;
 	while (data->page[nbr]->array[i])
-		{
-			free(data->page[nbr]->array[i]);
-			data->page[nbr]->array[i]= NULL;
-			i++;
-		}
+	{
+		free(data->page[nbr]->array[i]);
+		data->page[nbr]->array[i] = NULL;
+		i++;
+	}
 }
 
 /*
@@ -98,13 +96,13 @@ bool	command_in_path(t_data *data, int nbr, char *cmd_p, int i)
 */
 void	util_parse_args(t_data *data, int i)
 {
-	char *temp;
-	
+	char	*temp;
+
 	if (data->env[0])
 	{
 		temp = is_path_in_env(data, "PATH=", NULL, 0);
 		data->path = ft_split(&temp[5], ':');
-		//data->path = is_path_in_env(data, "PATH=", NULL, 0);
+		// data->path = is_path_in_env(data, "PATH=", NULL, 0);
 	}
 	while (data->page[i] && data->page[i]->array[0])
 	{
@@ -124,4 +122,3 @@ void	util_parse_args(t_data *data, int i)
 		i++;
 	}
 }
-

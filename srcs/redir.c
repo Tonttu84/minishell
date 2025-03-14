@@ -12,10 +12,9 @@
 
 #include "../include/minishell.h"
 
-//What is the desired str for outputs.
+// What is the desired str for outputs.
 void	add_redirection(t_node *node, t_sent *sentence, int i)
 {
-	
 	if (node->type == HERE_DOCS && (node->str[0].esc || node->str[0].blok))
 		sentence->redirs[i].type = HERE_QUOTE;
 	else
@@ -23,7 +22,7 @@ void	add_redirection(t_node *node, t_sent *sentence, int i)
 	if (sentence->redirs[i].type == HERE_DOCS)
 		sentence->redirs[i].here_fd = open_temp_heredocs(node, 0);
 	else if (sentence->redirs[i].type == HERE_QUOTE)
-			sentence->redirs[i].here_fd = open_temp_heredocs(node, 1);
+		sentence->redirs[i].here_fd = open_temp_heredocs(node, 1);
 	else if (node->str)
 		sentence->redirs[i].path = cnvrt_to_char(node->str);
 	else

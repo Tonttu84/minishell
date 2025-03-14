@@ -54,7 +54,7 @@ void	create_list(t_data *data, t_char *line)
 		while (line[i].c != 0 && line[i].c == ' ' && line[i].esc == 0)
 			i++;
 		if (line[i].c == 0)
-			break; 
+			break ;
 		strsize = ft_wrdlen(line + i, data);
 		ft_lstadd_back(&data->tokens, create_node(line, i, strsize));
 		while (line[i].c != 0)
