@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:11:31 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/14 12:17:14 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/14 13:39:28 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,9 @@ static char *rl_gets(void)
 	return line;
 }
 
-void	prompt_input(void)
+void	prompt_input(char *line, int pfd[2], t_data *data)
 {
-	char	 *line;
-	int pfd[2];
-	t_data *data;
-
 	data = get_data();
-	pipe(pfd);
 	while (1)
 	{
 		set_signals();
@@ -78,15 +73,14 @@ void	prompt_input(void)
 			continue ;
 		process(line);
 		if (!data->page[0]->inpipe && !data->page[0]->outpipe && is_builtin(data->page[0]->array[0]))
-		{
 			run_builtin(data->page[0]->argc, data->page[0]->array);
-			
-		}
 		else 
 		{
-		util_parse_args(get_data(), 0);
-		block_signals_in_parent();
-		execute(get_data()->page[0], pfd, 1, 0);
+			util_parse_args(data, 0);
+			block_signals_in_parent();
+			if (-1 == pipe(pfd))
+				ft_exit(data, strerror(errno), errno);
+			execute(data->page[0], pfd, 1, 0);
 		}
 	}
 }
