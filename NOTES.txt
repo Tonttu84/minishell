@@ -15,7 +15,7 @@ minishell: awk {print $1} <- ei saa EOF
 
 Builtin:
 	exit: printtaa virheen jos exit ajetaan putken kanssa yli 9223372036854775807 argumentilla. palautusarvo: 2.
-	cd: kokeile statilla onko kohde kansio. 
+	cd: kokeile fstatilla onko kohde kansio tai lstat toimiva linkki. 
 	env: bash ajaa /usr/bin/env, voimmeko mekin?
 	export: ilman argumenttia tulostaa envin. muuten asettaa muuttujan arvon. ei validi tulostaa virheen. pa: 1.
 	echo: tulostaa ilman argumentteja putkesta ja argumenteilla annetun tekstin. -n optiolla ilman \n, muuten kanssa.
@@ -57,3 +57,4 @@ jtuomi:/home/jtuomi/test😎>cd test/
 jtuomi:/home/jtuomi/test/test😎>rmdir ../test/
 jtuomi:/home/jtuomi/test/test😎>cd ..
 Segmentation fault (core dumped)
+cd ../../../../../../../../../home/jrimpila/

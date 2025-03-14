@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 19:21:45 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/13 15:18:26 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/14 15:08:47 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,7 @@ void	deal_with_sentence(t_sent *sentence, int i, int pfd[2])
 */
 void	print_error_and_exit(char *error_msg, int error_nbr)
 {
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(error_msg, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(strerror(error_nbr), 2);
+	error_printf(error_msg, strerror(error_nbr));
 	if (error_nbr == 2)
 		error_nbr = 126;
 	else if (error_nbr == 13)
