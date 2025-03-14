@@ -16,8 +16,6 @@
 
 int	cwd(void)
 {
-	
-
 	getcwd(get_data()->cwd, sizeof(get_data()->cwd));
 	return (0);
 }
@@ -74,7 +72,7 @@ void	prompt_input(char *line, int pfd[2], t_data *data)
 		process(line);
 		if (!data->page[0]->inpipe && !data->page[0]->outpipe && is_builtin(data->page[0]->array[0]))
 			run_builtin(data->page[0]->argc, data->page[0]->array);
-		else 
+		else
 		{
 			util_parse_args(data, 0);
 			block_signals_in_parent();
