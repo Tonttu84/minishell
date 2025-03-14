@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:32:40 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/14 10:32:14 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/14 10:34:51 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	sort_cpy(char **cpy)
 		i = 0;
 		while (i < ENV_SIZE && cpy[i])
 		{
-			if (cpy[i + 1] && ft_strncmp(cpy[i], cpy[i + 1], MAX_LENGTH))
+			if (cpy[i + 1] && ft_strncmp(cpy[i], cpy[i + 1], MAX_LENGTH) > 0)
 			{
 				tmp = cpy[i];
 				cpy[i] = cpy[i + 1];
