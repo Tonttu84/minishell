@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:05:36 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/14 10:14:24 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:14:27 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int is_valid_cd(char *dir)
 	(void) dir;
 	return (0);
 }
-
+//TODO handle case where directory gets deleted while there
 int	bi_cd(int argc, char *argv[])
 {
 	char	*cur;

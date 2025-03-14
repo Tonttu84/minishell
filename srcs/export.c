@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:32:40 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/14 10:48:22 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/14 10:54:14 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	sort_cpy(char **cpy)
 		k++;
 	}
 }
-//Checks that the enviromental variable has a value then prints it
+
 void	final_print(char **env)
 {
 	int	i;
@@ -100,7 +100,7 @@ void	final_print(char **env)
 	i = 0;
 	while (i < ENV_SIZE && env[i])
 	{
-		if (ft_strchr(env[i], '='))
+		if (ft_strchr(env[i], '=') && (ft_strncmp(env[i], "_=", 2) != 0))
 			printf("declare -x \"%s\"\n", env[i]);
 		i++;
 	}

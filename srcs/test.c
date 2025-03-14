@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:23:16 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/07 14:41:39 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/14 12:20:09 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	test(void)
 	    " ",
 		"<< EOF",
         "awk '{print $1}'",
-		//"ls -la | cat > out.txt <test.c | echo $blaa?"
 		"cat \"$HOME/i\"\"nput.txt\">>outfile.txt \'\' \'\'\"\" | echo $US\"\"ER \'\'grep $invalid \"search_pattern\" <<EOF < \"$HOME/input.txt\" <<EOF > \"$HOME/error.log\" | sort | uniq |   echo > test.txt \"Found line: \"$line\"\" | echo \"Current user: $USER\" | echo \"Non-existent variable: $NONEXISTENTVAR\" ",
 	};
 	for (i = 0; (unsigned int)i < sizeof(test_lines)

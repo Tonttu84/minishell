@@ -28,8 +28,24 @@ SHLVL inkrementointi kun minishell ajetaan minishellin kautta.
 
 message of the day; 
 
+_ is the last argument of executed command, this could be likely tested with inbuilds. Even if inbuids are not exactly executed the _ gets still updated
+it gets updated even inside children. in pipe the last pipe updates it. 
+
 cowsay fortune;
 
 When you launch it, print a shell?
 
 <<""EOF apparenty tells the heredocs not to expand env variables inside heredocs
+
+
+rimpila@c3r1p7:~$ export _old=$_
+jrimpila@c3r1p7:~$ env | grep old
+_old=export
+jrimpila@c3r1p7:~$ export _old=$_
+jrimpila@c3r1p7:~$ env | grep old
+_old=_old=export
+
+env is an external command in bash located in _=/usr/bin/env
+
+
+toimiiko cd jos kansio poistetaan alta

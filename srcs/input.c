@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:11:31 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/13 16:35:25 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:17:14 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	process(char *line)
 
 	data = get_data();
 	result = lexify(line, data);
-//	write(1, "\n", 1);
 	free(result);
 	result = NULL;
 	iterate_list(&data->tokens, print_node);
@@ -85,7 +84,6 @@ void	prompt_input(void)
 		}
 		else 
 		{
-			//verify that signals are not blocked when we run lone inbuilt
 		util_parse_args(get_data(), 0);
 		block_signals_in_parent();
 		execute(get_data()->page[0], pfd, 1, 0);

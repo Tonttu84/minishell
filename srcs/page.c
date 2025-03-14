@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:20:15 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/13 16:34:28 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:17:56 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ t_sent	*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence)
 	if (node && node->type == PIPE)
 	{
 		sentence->inpipe = 1;
-		//check if the pipe is the last is not currently working i dont know why. The pipe should point to itself in any case and result in an error
+		
 		if (get_data()->tokens.last == node || node->next->type == PIPE)
 		{
 			perror("Pipe cannot be empty");
-				exit (1); //should not exit but instead give control to minishell so likely set an error flag somewhere and delete all nodes
+				exit (1); 
 		}
 		node = destroy_node(&get_data()->tokens, node);
 
@@ -49,7 +49,7 @@ t_sent	*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence)
 				if (node->next->type == REDIRECT || node->next->type == PIPE || get_data()->tokens.last == node)
 				{
 					perror("syntax error near unexpected token `newline'\n");
-					exit (1); //should not exit but instead give control to minishell so likely set an error flag somewhere and delete all nodes
+					exit (1); 
 				
 				}
 			}
@@ -107,9 +107,6 @@ t_sent	**create_page(t_list *stack)
 		page[i] = conv_linked_to_sentence(0, 0, get_data()->tokens.first,
 				ft_xcalloc(sizeof(t_sent), 1));
 		cur = stack->first;
-//		printf("\n");
-//		print_sentence(page[i]);
-//		printf("\n");
 		i++;
 	}
 	return (page);
