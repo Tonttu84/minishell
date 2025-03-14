@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:32:40 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/14 10:34:51 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/14 10:48:22 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	final_print(char **env)
 	while (i < ENV_SIZE && env[i])
 	{
 		if (ft_strchr(env[i], '='))
-			printf("declare -x %s\n", env[i]);
+			printf("declare -x \"%s\"\n", env[i]);
 		i++;
 	}
 }
