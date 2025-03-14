@@ -12,15 +12,14 @@
 
 #include "../include/minishell.h"
 
-//unset can take multiple argumetns
-//rewrite to deal with
+// unset can take multiple argumetns
+// rewrite to deal with
 
-
-static int unset_one(char *env_val)
+static int	unset_one(char *env_val)
 {
-	t_data *data;
-	int i;
-	int lenght;
+	t_data	*data;
+	int		i;
+	int		lenght;
 
 	i = 0;
 	data = get_data();
@@ -29,19 +28,20 @@ static int unset_one(char *env_val)
 	lenght = ft_strlen(env_val);
 	while (i < ENV_SIZE)
 	{
-		if (data->env[i] && ft_strncmp(env_val, data->env[i], lenght+ 1) && (data->env[i][lenght] == 0 || data->env[i][lenght] == '=') )
-			{
-				ft_memset(data->env[i], 0, MAX_LENGTH + 1);
-				return (1);
-			}
+		if (data->env[i] && ft_strncmp(env_val, data->env[i], lenght + 1)
+			&& (data->env[i][lenght] == 0 || data->env[i][lenght] == '='))
+		{
+			ft_memset(data->env[i], 0, MAX_LENGTH + 1);
+			return (1);
+		}
 		i++;
 	}
 	return (0);
 }
 
-int bi_unset(int argc, char *argv[])
+int	bi_unset(int argc, char *argv[])
 {
-	int i;
+	int	i;
 
 	if (argc == 1)
 		return (0);
@@ -57,8 +57,10 @@ int bi_unset(int argc, char *argv[])
 	return (0);
 }
 
-//Gets the variable name , value and location of the free slot as input and writes the value there
-int	set_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar, char *value, int free_slot)
+// Gets the variable name ,
+	value and location of the free slot as input and writes the value there
+int	set_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar,
+		char *value, int free_slot)
 {
 	int	i;
 	int	k;
@@ -88,8 +90,9 @@ int	set_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar, char *value
 	return (0);
 }
 
-//First it unsets the variable, then it adds it with a new value
-int	add_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar, char *value)
+// First it unsets the variable, then it adds it with a new value
+int	add_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar,
+		char *value)
 {
 	int	i;
 
@@ -129,7 +132,7 @@ void	sort_cpy(char **cpy)
 	}
 }
 
-//Prints the variables in the format desired by export;
+// Prints the variables in the format desired by export;
 void	final_print(char **env)
 {
 	int	i;
@@ -142,7 +145,7 @@ void	final_print(char **env)
 		i++;
 	}
 }
-//Creates an array of pointers that are later sorted and printed
+// Creates an array of pointers that are later sorted and printed
 int	print_alphabetically(char env[ENV_SIZE + 1][MAX_LENGTH + 1])
 {
 	char	*cpy[ENV_SIZE + 1];
@@ -151,7 +154,7 @@ int	print_alphabetically(char env[ENV_SIZE + 1][MAX_LENGTH + 1])
 
 	i = 0;
 	k = 0;
-	while (k < ENV_SIZE )
+	while (k < ENV_SIZE)
 	{
 		if (env[k] != NULL && env[k][0] != '\0')
 		{
@@ -165,7 +168,7 @@ int	print_alphabetically(char env[ENV_SIZE + 1][MAX_LENGTH + 1])
 	final_print(cpy);
 	return (0);
 }
-//bash: export: `': not a valid identifier
+// bash: export: `': not a valid identifier
 // Not sure what the valid env variable values can be
 int	errorcheck_expand(char *var)
 {
@@ -223,7 +226,7 @@ int	bi_export(int argc, char *argv[])
 	if (argc == 1)
 		return (print_alphabetically(get_data()->env));
 	i = 1;
-	while (i < argc )
+	while (i < argc)
 	{
 		if (argv[i] && errorcheck_expand(argv[i]))
 		{

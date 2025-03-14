@@ -12,44 +12,44 @@
 
 #include "../include/minishell.h"
 
-
-//heredocs needs to be counted at this point 
-//BASH actually prints some redirection errors at this point but doesnt stop, it waits until "page creation" to stop so heredocs happens even after error is detected
+// heredocs needs to be counted at this point
+// BASH actually prints some redirection errors at this point but doesnt stop,
+	it waits until "page creation" to stop so heredocs happens even after error is detected
 static void	set_type(t_node *new)
 {
 	static int	args = 0;
 
 	if (new->str == NULL)
 		new->type = DELIMIT;
-	else if (new->str && new->str[0].c == '|' && new->str[0].com)
+	else if (new->str &&new->str[0].c == '|' && new->str[0].com)
 	{
 		new->type = PIPE;
 		args = 0;
 	}
-	else if (((new->str && new->str[0].c == '>') || (new->str
+	else if (((new->str &&new->str[0].c == '>') || (new->str
 				&&new->str[0].c == '<' && new->str[0].com)))
 		new->type = REDIRECT;
-	else if (new->prev->str && new->prev->str[0].c == '>'
+	else if (new->prev->str &&new->prev->str[0].c == '>'
 		&& new->prev->str[1].c == '>' && new->prev->str[0].com)
 		new->type = APPEND;
-	else if (new->prev->str && new->prev->str[0].c == '>'
+	else if (new->prev->str &&new->prev->str[0].c == '>'
 		&& new->prev->str[0].com)
 		new->type = OUT_FILE;
-	else if (new->prev->str && new->prev->str[0].c == '<'
+	else if (new->prev->str &&new->prev->str[0].c == '<'
 		&& new->prev->str[1].c == '<' && new->prev->str[0].com)
+	{
+		new->type = HERE_DOCS;
+		get_data()->herecount++;
+		if (get_data()->herecount >= 17)
 		{
-			new->type = HERE_DOCS;
-			get_data()->herecount++;
-			if (get_data()->herecount >= 17)
-			{
-				perror("Maximum amount of heredocs is 16");
-				exit (2);
-			}
+			perror("Maximum amount of heredocs is 16");
+			exit(2);
 		}
-	else if (new->prev->str && new->prev->str[0].c == '<'
+	}
+	else if (new->prev->str &&new->prev->str[0].c == '<'
 		&& new->prev->str[0].com)
 		new->type = IN_FILE;
-	else if (new->str && new->str[0].com)
+	else if (new->str &&new->str[0].com)
 		new->type = CTRL;
 	else
 	{

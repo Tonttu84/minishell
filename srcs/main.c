@@ -6,15 +6,15 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:36:25 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/12 17:58:26 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/14 13:53:24 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-volatile sig_atomic_t flag = 0;
+volatile sig_atomic_t	flag = 0;
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size);
+size_t					ft_strlcpy(char *dst, const char *src, size_t size);
 
 void	init(char env_cpy[MAX_VARS + 1][MAX_LENGTH + 1], char **orig)
 {
@@ -29,7 +29,6 @@ void	init(char env_cpy[MAX_VARS + 1][MAX_LENGTH + 1], char **orig)
 	get_data()->env_count = i;
 }
 
-
 int	main(int argc, char **argv, char *envp[])
 {
 	(void)argv;
@@ -39,5 +38,5 @@ int	main(int argc, char **argv, char *envp[])
 	}
 	init(get_data()->env, envp);
 	set_signals();
-	prompt_input();
+	prompt_input(NULL, NULL, get_data());
 }

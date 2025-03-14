@@ -14,7 +14,7 @@
 
 int	copy_env_to_tchar(t_char *dst, int i, const char *env)
 {
-	int env_i;
+	int	env_i;
 
 	if (env == NULL)
 		return (i);

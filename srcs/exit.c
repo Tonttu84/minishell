@@ -21,5 +21,3 @@ void	ft_exit(t_data *data, char *message, int exit_code)
 }
 
 void	deallocate(void);
-
- 

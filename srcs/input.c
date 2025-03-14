@@ -33,11 +33,11 @@ void	process(char *line)
 	create_page(&data->tokens);
 }
 
-static char *rl_gets(void)
+static char	*rl_gets(void)
 {
-	static char *line = NULL;
-	static char *strcwd;
-	static char *tmp;
+	static char	*line = NULL;
+	static char	*strcwd;
+	static char	*tmp;
 
 	cwd();
 	tmp = ft_strjoin(PROMPT, get_data()->cwd);
@@ -46,7 +46,7 @@ static char *rl_gets(void)
 	tmp = NULL;
 	if (line)
 	{
-		free (line);
+		free(line);
 		line = NULL;
 	}
 	line = readline(strcwd);
@@ -54,7 +54,7 @@ static char *rl_gets(void)
 	strcwd = NULL;
 	if (line && *line)
 		add_history(line);
-	return line;
+	return (line);
 }
 
 void	prompt_input(char *line, int pfd[2], t_data *data)
@@ -70,7 +70,8 @@ void	prompt_input(char *line, int pfd[2], t_data *data)
 		if (line[0] == '\0')
 			continue ;
 		process(line);
-		if (!data->page[0]->inpipe && !data->page[0]->outpipe && is_builtin(data->page[0]->array[0]))
+		if (!data->page[0]->inpipe && !data->page[0]->outpipe
+			&& is_builtin(data->page[0]->array[0]))
 			run_builtin(data->page[0]->argc, data->page[0]->array);
 		else
 		{
@@ -82,4 +83,3 @@ void	prompt_input(char *line, int pfd[2], t_data *data)
 		}
 	}
 }
-

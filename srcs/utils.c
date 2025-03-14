@@ -49,7 +49,7 @@ size_t	ft_wrdlen(t_char *str, t_data *data)
 	}
 	return (count_i);
 }
-//Destroys the current node and moves to the next node
+// Destroys the current node and moves to the next node
 t_node	*destroy_node(t_list *list, t_node *node)
 {
 	t_node	*cur;

@@ -47,10 +47,9 @@ int	match_env_argument(t_char *source, char *env_var)
 	return (0);
 }
 
-//retrns a pointer to the start of env variable if you have the 
+// retrns a pointer to the start of env variable if you have the
 const char	*ft_get_env(const char *target)
 {
-
 	if (target == NULL)
 		return (NULL);
 	while (*target && *target != '=')
@@ -76,9 +75,7 @@ const char	*find_env(t_char *source, t_data *data)
 	return (NULL);
 }
 
-
-
-//Our env is not supposed to take arguments so dicard or error?
+// Our env is not supposed to take arguments so dicard or error?
 void	bi_env(t_data *data)
 {
 	const char	*str;
