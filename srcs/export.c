@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:32:40 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/14 13:33:08 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/15 13:22:14 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	bi_unset(int argc, char *argv[])
 }
 
 // Gets the variable name ,
-	value and location of the free slot as input and writes the value there
+//	value and location of the free slot as input and writes the value there
 int	set_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar,
 		char *value, int free_slot)
 {
@@ -145,6 +145,7 @@ void	final_print(char **env)
 		i++;
 	}
 }
+
 // Creates an array of pointers that are later sorted and printed
 int	print_alphabetically(char env[ENV_SIZE + 1][MAX_LENGTH + 1])
 {
@@ -168,6 +169,7 @@ int	print_alphabetically(char env[ENV_SIZE + 1][MAX_LENGTH + 1])
 	final_print(cpy);
 	return (0);
 }
+
 // bash: export: `': not a valid identifier
 // Not sure what the valid env variable values can be
 int	errorcheck_expand(char *var)

@@ -6,7 +6,7 @@
 /*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 18:45:11 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/11 17:06:48 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/15 13:23:48 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,7 @@ bool	command_in_path(t_data *data, int nbr, char *cmd_p, int i)
 	while (data->path[i])
 	{
 		tmp = ft_strjoin(data->path[i], "/");
-		if (!tmp)
-			ft_exit(data, "malloc", errno);
 		cmd_p = ft_strjoin(tmp, data->page[nbr]->array[0]);
-		if (!cmd_p)
-			ft_exit(data, "malloc", errno);
 		free(tmp);
 		if (0 == access(cmd_p, X_OK))
 		{
@@ -102,19 +98,9 @@ void	util_parse_args(t_data *data, int i)
 	{
 		temp = is_path_in_env(data, "PATH=", NULL, 0);
 		data->path = ft_split(&temp[5], ':');
-		// data->path = is_path_in_env(data, "PATH=", NULL, 0);
 	}
 	while (data->page[i] && data->page[i]->array[0])
 	{
-		/* Currently this is checking if the first slot is empty which doesnt seem to be what is intended
-		if (!data->env[0])
-		{
-			if (path_is_abs_or_rel(pipex, i))
-				return ;
-			command_not_found(pipex, i);
-			return ;
-		}
-		*/
 		if (path_is_abs_or_rel(data, i))
 			;
 		else if (command_in_path(data, i, NULL, 0))

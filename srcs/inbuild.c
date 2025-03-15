@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:05:36 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/14 12:14:27 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/15 13:26:11 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ int	bi_cd(int argc, char *argv[])
 	else
 		chdir(argv[1]);
 	add_envvar(get_data()->env, "PWD", getcwd(cwd, PATH_MAX));
+	(void)cur;
 	return (0);
 }
 
@@ -138,6 +139,7 @@ int	echo_check_opt(char *str)
 	}
 	return (isvalid);
 }
+
 // can take multiple arguments
 // Argument expansion should already be done here so we can print everything as it is?
 int	bi_echo(int argc, char *argv[])

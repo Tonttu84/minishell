@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:41:58 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/13 14:50:57 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/15 13:19:05 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 // heredocs needs to be counted at this point
 // BASH actually prints some redirection errors at this point but doesnt stop,
-	it waits until "page creation" to stop so heredocs happens even after error is detected
+//	it waits until "page creation" to stop so heredocs happens even after error
+//	is detected
 static void	set_type(t_node *new)
 {
 	static int	args = 0;

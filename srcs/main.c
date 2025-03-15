@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:36:25 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/14 13:53:24 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/15 13:30:14 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	init(char env_cpy[MAX_VARS + 1][MAX_LENGTH + 1], char **orig)
 
 int	main(int argc, char **argv, char *envp[])
 {
+	int pfd[2];
+
 	(void)argv;
 	if (argc != 1)
 	{
@@ -38,5 +40,5 @@ int	main(int argc, char **argv, char *envp[])
 	}
 	init(get_data()->env, envp);
 	set_signals();
-	prompt_input(NULL, NULL, get_data());
+	prompt_input(NULL, pfd, get_data());
 }
