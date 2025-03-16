@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:05:36 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/16 11:40:37 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/16 11:42:18 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int	bi_pwd(void)
 // Only takes 1 argument, throws error otherwise
 // TODO handle -1 Has some issues, needs debugging
 //Bash doesnt care if HOME is set to HOME= 
-//JOS cd "" niin $_ ei paivity :DDD
 static int	is_valid_cd(const char *dir)
 {
 	struct stat	file_stat;

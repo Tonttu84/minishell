@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:32:40 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/16 10:32:56 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/16 12:16:39 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,9 @@ int	add_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar,
 		char *value)
 {
 	int	i;
-
+	
+	if (envvar == NULL || value == NULL)
+		return (1);
 	unset_one(envvar);
 	i = 0;
 	while (i < ENV_SIZE)
