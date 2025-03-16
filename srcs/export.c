@@ -28,7 +28,7 @@ static int	unset_one(char *env_val)
 	lenght = ft_strlen(env_val);
 	while (i < ENV_SIZE)
 	{
-		if (data->env[i] && ft_strncmp(env_val, data->env[i], lenght + 1)
+		if (ft_strncmp(env_val, data->env[i], lenght + 1)
 			&& (data->env[i][lenght] == 0 || data->env[i][lenght] == '='))
 		{
 			ft_memset(data->env[i], 0, MAX_LENGTH + 1);
@@ -95,14 +95,14 @@ int	add_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar,
 		char *value)
 {
 	int	i;
-	
+
 	if (envvar == NULL || value == NULL)
 		return (1);
 	unset_one(envvar);
 	i = 0;
 	while (i < ENV_SIZE)
 	{
-		if (env[i] == NULL || env[i][0] == '\0')
+		if (env[i][0] == '\0')
 			return (set_envvar(env, envvar, value, i));
 		i++;
 	}
@@ -159,7 +159,7 @@ int	print_alphabetically(char env[ENV_SIZE + 1][MAX_LENGTH + 1])
 	k = 0;
 	while (k < ENV_SIZE)
 	{
-		if (env[k] != NULL && env[k][0] != '\0')
+		if (env[k][0] != '\0')
 		{
 			cpy[i] = env[k];
 			i++;
