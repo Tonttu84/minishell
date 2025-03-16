@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:11:31 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/14 13:39:28 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/15 13:20:56 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	prompt_input(char *line, int pfd[2], t_data *data)
 			util_parse_args(data, 0);
 			block_signals_in_parent();
 			if (-1 == pipe(pfd))
-				ft_exit(data, strerror(errno), errno);
+				ft_exit(data, "pipe", strerror(errno), errno);
 			execute(data->page[0], pfd, 1, 0);
 		}
 	}

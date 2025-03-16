@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 19:21:45 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/14 15:08:47 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/15 13:22:53 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int	execute(t_sent *sentence, int pfd[2], pid_t my_child, int state)
 		i--;
 	}
 	i = 0;
-	if (WIFEXITED(state))
-		return (WEXITSTATUS(state));
+	if (WIFEXITED(ret))
+		return (WEXITSTATUS(ret));
 	return (EXIT_SUCCESS);
 }
 
