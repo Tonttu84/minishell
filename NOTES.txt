@@ -1,4 +1,4 @@
-MAX_NBR_HERE_DOC = 16
+
 Suojaa splitti tapaukselta PATH=::
 tiedostot ei toimi komentojen ja putkien kanssa
 <<EOF < > ottaa syntax errorit todella oudossa kohtaa
@@ -8,9 +8,6 @@ testaa miten bash suhtautuu liian moneen argumenttiin builtineissa
 
 identify builtins
 
-Eli awk {print $1} on mita pitaisi menna ohjelmalle. Poistin escape characterien lisailyn ja vaikuttaisi toimivan
-bash: awk {print\ $1} <- toimii
-minishell: awk {print $1} <- ei saa EOF
 
 Builtin:
 	exit: printtaa virheen jos exit ajetaan putken kanssa yli 9223372036854775807 argumentilla. palautusarvo: 2.
@@ -25,7 +22,6 @@ SHLVL inkrementointi kun minishell ajetaan minishellin kautta.
 
 <Makefile cat | awk '{print $1}'
 
-message of the day; 
 
 _ is the last argument of executed command, this could be likely tested with inbuilds. Even if inbuids are not exactly executed the _ gets still updated
 it gets updated even inside children. in pipe the last pipe updates it. 
@@ -34,6 +30,7 @@ it gets updated even inside children. in pipe the last pipe updates it.
 
 <<""EOF apparenty tells the heredocs not to expand env variables inside heredocs
 
+Jos HOME on unset bash antaa sen errorina, mutta jos HOME= niin bash ei anna erroria ja exit status on 0 
 
 rimpila@c3r1p7:~$ export _old=$_
 jrimpila@c3r1p7:~$ env | grep old
@@ -41,6 +38,8 @@ _old=export
 jrimpila@c3r1p7:~$ export _old=$_
 jrimpila@c3r1p7:~$ env | grep old
 _old=_old=export
+
+$_ paivittyy todella oudosti, cd "" antaa sen arvoksi "" kun taas echo blaablaa laittaa arvoksi echo
 
 env is an external command in bash located in _=/usr/bin/env
 
@@ -57,3 +56,4 @@ jtuomi:/home/jtuomi/test/test😎>rmdir ../test/
 jtuomi:/home/jtuomi/test/test😎>cd ..
 Segmentation fault (core dumped)
 cd ../../../../../../../../../home/jrimpila/
+

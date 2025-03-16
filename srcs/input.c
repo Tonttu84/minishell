@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:11:31 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/15 13:20:56 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/16 10:24:05 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	prompt_input(char *line, int pfd[2], t_data *data)
 		process(line);
 		if (!data->page[0]->inpipe && !data->page[0]->outpipe
 			&& is_builtin(data->page[0]->array[0]))
-			run_builtin(data->page[0]->argc, data->page[0]->array);
+			run_builtin(data->page[0]->argc, data->page[0]->array, data->page[0]);
 		else
 		{
 			util_parse_args(data, 0);

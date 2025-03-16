@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:32:40 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/15 13:22:14 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/16 10:32:56 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ static int	unset_one(char *env_val)
 	}
 	return (0);
 }
-
-int	bi_unset(int argc, char *argv[])
+//seems to return 0 even if the value does not exist, maybe errors if you cant find env variable
+int	bi_unset(int argc, char *argv[], t_sent *sent)
 {
 	int	i;
 
-	if (argc == 1)
+	if (argc == 1 || sent->inpipe || sent->outpipe)
 		return (0);
 	i = 1;
 	while (i < argc)
@@ -221,12 +221,14 @@ void	process_new_envvarr(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *var)
 	add_envvar(env, name, value);
 }
 
-int	bi_export(int argc, char *argv[])
+int	bi_export(int argc, char *argv[], t_sent *sent)
 {
 	int	i;
 
 	if (argc == 1)
 		return (print_alphabetically(get_data()->env));
+	if (sent->outpipe || sent->inpipe)
+		return (0);
 	i = 1;
 	while (i < argc)
 	{

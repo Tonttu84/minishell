@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/15 13:02:11 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/16 11:40:26 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <sys/stat.h>
 # ifndef PATH_MAX /// Max path lenght
 #  define PATH_MAX (500)
 # endif
@@ -111,14 +112,14 @@ typedef struct s_point
 ** BUILT' INS
 */
 int				cwd(void);
-int				run_builtin(int argc, char *argv[]);
+int				run_builtin(int argc, char *argv[], t_sent *sent);
 int				is_builtin(char *cmd);
 int				bi_pwd(void);
-int				bi_cd(int argc, char *argv[]);
+int				bi_cd(int argc, char *argv[], t_sent *sent);
 void			bi_env(t_data *data);
 int				bi_echo(int argc, char *argv[]);
-int				bi_unset(int argc, char *argv[]);
-int				bi_export(int argc, char *argv[]);
+int				bi_unset(int argc, char *argv[], t_sent *sent);
+int				bi_export(int argc, char *argv[], t_sent *sent);
 const char		*ft_get_env(const char *target);
 int				add_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar,
 					char *value);
