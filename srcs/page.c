@@ -12,10 +12,10 @@
 
 #include "../include/minishell.h"
 
-char	*test_infile(t_char *raw_path)
+bool	test_file(t_token type)
 {
-	(void)raw_path;
-	return (NULL);
+	return (type == IN_FILE || type == OUT_FILE || type == HERE_DOCS ||
+	type == APPEND || type == HERE_QUOTE);
 }
 
 // i is 0, k is 0, sentence is calloced, node is pulled from data
@@ -25,10 +25,7 @@ t_sent	*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence)
 	{
 		sentence->inpipe = 1;
 		if (get_data()->tokens.last == node || node->next->type == PIPE)
-		{
-			perror("Pipe cannot be empty");
-			exit(1);
-		}
+    		ft_exit(get_data(), "syntax error near token", "|", 1);
 		node = destroy_node(&get_data()->tokens, node);
 	}
 	while (node)
@@ -40,21 +37,11 @@ t_sent	*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence)
 			sentence->outpipe = 1;
 			return (sentence);
 		}
-		if (node->type == REDIRECT)
-		{
-			if (node->next->type == REDIRECT || node->next->type == PIPE
-				|| get_data()->tokens.last == node)
-			{
-				perror("syntax error near unexpected token `newline'\n");
-				exit(1);
-			}
-		}
-		else if (node->type == IN_FILE || node->type == OUT_FILE
-			|| node->type == APPEND || node->type == HERE_DOCS
-			|| node->type == HERE_QUOTE)
-		{
+		if (node->type == REDIRECT && (node->next->type == PIPE ||
+		node->next->type == REDIRECT || get_data()->tokens.last == node))
+            ft_exit(get_data(), "syntax error near unexpected token", "nl", 1);
+		else if (test_file(node->type))
 			add_redirection(node, sentence, k++);
-		}
 		else
 			sentence->array[i++] = cnvrt_to_char(node->str);
 		node = destroy_node(&get_data()->tokens, node);
@@ -97,8 +84,6 @@ t_sent	**create_page(t_list *stack)
 	if (stack == NULL || stack->first == NULL)
 		return (NULL);
 	cur = stack->first;
-	if (!cur)
-		perror("CUR IS NULL");
 	i = 0;
 	while (cur)
 	{

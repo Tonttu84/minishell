@@ -46,6 +46,10 @@ env is an external command in bash located in _=/usr/bin/env
 Jos poistaa kansion, unsettaa PWD:n ja OLDPWD:n niin bashin cd toimii siltikin
 eli meidan taytyy trakata pathia
 
+unset PATH; ls toimii edelleen
+
+? ei palauta edellisen palauttamaa arvoa
+
 toimiiko cd jos kansio poistetaan alta -> ei, segfault.
 
 jtuomi:/home/jtuomi😎>mkdir test
@@ -56,4 +60,3 @@ jtuomi:/home/jtuomi/test/test😎>rmdir ../test/
 jtuomi:/home/jtuomi/test/test😎>cd ..
 Segmentation fault (core dumped)
 cd ../../../../../../../../../home/jrimpila/
-

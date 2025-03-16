@@ -85,7 +85,7 @@ typedef struct s_sent
 	bool		inpipe;
 	t_dir		redirs[20];
 	bool		outpipe;
-	int error; // error code here
+	int            error; // error code here
 	int			heredocs;
 	int			argc;
 }				t_sent;
@@ -169,7 +169,7 @@ t_char			*lexify(char *line, t_data *data);
 t_sent			**create_page(t_list *stack);
 void			print_sentence(t_sent *sentence);
 char			*create_heredoc(char *terminator, int expand);
-char			*test_infile(t_char *raw_path);
+bool			test_file(t_token type);
 char			*test_outfile(t_char *raw_path);
 char			*test_append(t_char *raw_path);
 void			prompt_input(char *line, int pfd[2], t_data *data);

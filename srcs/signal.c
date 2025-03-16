@@ -11,42 +11,20 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <readline/readline.h>
-#include <signal.h>
-
-extern volatile sig_atomic_t	flag;
 
 void	signal_handler(int sig_nbr)
 {
-	flag = sig_nbr;
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-}
-
-void	void_signal(int sig_nbr)
-{
-	flag = sig_nbr;
-	rl_redisplay();
+	(void)sig_nbr;
 }
 
 void	set_signals(void)
 {
-	struct sigaction	sigint;
-	struct sigaction	sigquit;
-	sigset_t			blocked;
-
-	sigemptyset(&blocked);
-	sigaddset(&blocked, SIGINT);
-	sigaddset(&blocked, SIGQUIT);
-	sigint.sa_handler = signal_handler;
-	sigint.sa_mask = blocked;
-	sigint.sa_flags = 0;
-	sigquit.sa_handler = SIG_IGN;
-	sigaction(SIGTSTP, &sigint, NULL);
-	sigaction(SIGINT, &sigint, NULL);
-	sigaction(SIGQUIT, &sigquit, NULL);
+	signal(SIGINT, &signal_handler);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	unset_signals(void)
