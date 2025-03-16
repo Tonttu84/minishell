@@ -1,6 +1,7 @@
 
 Suojaa splitti tapaukselta PATH=::
-tiedostot ei toimi komentojen ja putkien kanssa
+tiedostot ei toimi komentojen ja putkien kanssa <- nyt toimii
+kaksi putkea ei toimi juuri nyt
 <<EOF < > ottaa syntax errorit todella oudossa kohtaa
 
 
