@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:05:36 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/16 11:42:18 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/16 13:20:32 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	bi_exit(int argc, char *argv[])
 	return (0);
 }
 
+//Cant handle redirection support currently
 int	run_builtin(int argc, char *argv[], t_sent *sent)
 {
 	// Not sure if I can take input like this to function withot counting variables?
