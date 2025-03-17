@@ -51,7 +51,10 @@ unset PATH; ls toimii edelleen
 
 ? ei palauta edellisen palauttamaa arvoa
 
-toimiiko cd jos kansio poistetaan alta -> ei, segfault.
+export blaa"'"blaa=duu
+bash: export: `blaa'blaa=duu': not a valid identifier
+
+toimiiko cd jos kansio poistetaan alta -> pitaisi toimia nyt. Testaa viela ja poista kommentti jos toimii
 
 jtuomi:/home/jtuomi😎>mkdir test
 jtuomi:/home/jtuomi😎>cd test/
