@@ -31,6 +31,8 @@ void	init(char env_cpy[MAX_VARS + 1][MAX_LENGTH + 1], char **orig)
 
 int	main(int argc, char **argv, char *envp[])
 {
+	int pfd[2];
+
 	(void)argv;
 	if (argc != 1)
 	{
@@ -38,5 +40,5 @@ int	main(int argc, char **argv, char *envp[])
 	}
 	init(get_data()->env, envp);
 	set_signals();
-	prompt_input(NULL, NULL, get_data());
+	prompt_input(NULL, pfd, get_data());
 }

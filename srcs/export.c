@@ -58,7 +58,7 @@ int	bi_unset(int argc, char *argv[])
 }
 
 // Gets the variable name ,
-	value and location of the free slot as input and writes the value there
+//	value and location of the free slot as input and writes the value there
 int	set_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar,
 		char *value, int free_slot)
 {

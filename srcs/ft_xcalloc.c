@@ -21,6 +21,6 @@ void	*ft_xcalloc(size_t nmemb, size_t size)
 
 	ptr = ft_calloc(nmemb, size);
 	if (!ptr)
-		ft_exit(get_data(), "malloc", EXIT_FAILURE);
+		ft_exit(get_data(), "malloc", strerror(errno), EXIT_FAILURE);
 	return (ptr);
 }

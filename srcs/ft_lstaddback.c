@@ -14,7 +14,7 @@
 
 // heredocs needs to be counted at this point
 // BASH actually prints some redirection errors at this point but doesnt stop,
-	it waits until "page creation" to stop so heredocs happens even after error is detected
+//	it waits until "page creation" to stop so heredocs happens even after error is detected
 static void	set_type(t_node *new)
 {
 	static int	args = 0;

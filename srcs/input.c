@@ -78,7 +78,7 @@ void	prompt_input(char *line, int pfd[2], t_data *data)
 			util_parse_args(data, 0);
 			block_signals_in_parent();
 			if (-1 == pipe(pfd))
-				ft_exit(data, strerror(errno), errno);
+				ft_exit(data, "pipe", strerror(errno), errno);
 			execute(data->page[0], pfd, 1, 0);
 		}
 	}

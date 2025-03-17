@@ -58,3 +58,8 @@ jtuomi:/home/jtuomi/test/test😎>rmdir ../test/
 jtuomi:/home/jtuomi/test/test😎>cd ..
 Segmentation fault (core dumped)
 cd ../../../../../../../../../home/jrimpila/
+
+$
+$()
+$(env)
+

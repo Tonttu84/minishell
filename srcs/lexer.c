@@ -122,7 +122,7 @@ void	expand_arguments(t_char *dst, t_char *src, t_data *data)
 	dst[di].c = 0;
 }
 // dynamic memory is problematic due to unknown sizes,
-	last few characters are missing sometimes
+//	last few characters are missing sometimes
 t_char	*lexify(char *line, t_data *data)
 {
 	t_char			*newline;

@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 19:21:45 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/14 15:08:47 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/14 19:56:04 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	execute(t_sent *sentence, int pfd[2], pid_t my_child, int state)
 		deal_with_sentence(sentence, -1, pfd);
 		if (!sentence->array[0])
 			exit(0);
+		if(is_builtin(sentence->array[0]))
+			run_builtin(get_data()->page[i]->argc, sentence->array);
 		if (-1 == execve(sentence->array[0], sentence->array, __environ))
 			print_error_and_exit(sentence->array[0], errno);
 	}
