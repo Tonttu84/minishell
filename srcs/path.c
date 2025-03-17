@@ -15,7 +15,7 @@
 // old is static char	**is_path_in_env(t_data *data, char *s, char *s1, int i)
 static char	*is_path_in_env(t_data *data, char *s, char *s1, int i)
 {
-	while (data->env[i])
+	while (data->env[i][0])
 	{
 		s1 = ft_strnstr(data->env[i], s, 5);
 		if (s1)
@@ -94,7 +94,7 @@ void	util_parse_args(t_data *data, int i)
 {
 	char	*temp;
 
-	if (data->env[0])
+	if (data->env[0][0])
 	{
 		temp = is_path_in_env(data, "PATH=", NULL, 0);
 		data->path = ft_split(&temp[5], ':');

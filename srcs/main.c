@@ -12,8 +12,6 @@
 
 #include "../include/minishell.h"
 
-volatile sig_atomic_t	flag = 0;
-
 size_t					ft_strlcpy(char *dst, const char *src, size_t size);
 
 void	init(char env_cpy[MAX_VARS + 1][MAX_LENGTH + 1], char **orig)

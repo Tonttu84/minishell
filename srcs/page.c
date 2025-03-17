@@ -25,10 +25,7 @@ t_sent	*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence)
 	{
 		sentence->inpipe = 1;
 		if (get_data()->tokens.last == node || node->next->type == PIPE)
-		{
-			perror("Pipe cannot be empty");
-			exit(1);
-		}
+			ft_exit(get_data(), "syntax error near token", "|", 1);
 		node = destroy_node(&get_data()->tokens, node);
 	}
 	while (node)
@@ -44,17 +41,12 @@ t_sent	*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence)
 		{
 			if (node->next->type == REDIRECT || node->next->type == PIPE
 				|| get_data()->tokens.last == node)
-			{
-				perror("syntax error near unexpected token `newline'\n");
-				exit(1);
-			}
+			    ft_exit(get_data(), "syntax error near unexpected token", "nl", 1);
 		}
 		else if (node->type == IN_FILE || node->type == OUT_FILE
 			|| node->type == APPEND || node->type == HERE_DOCS
 			|| node->type == HERE_QUOTE)
-		{
 			add_redirection(node, sentence, k++);
-		}
 		else
 			sentence->array[i++] = cnvrt_to_char(node->str);
 		node = destroy_node(&get_data()->tokens, node);
@@ -97,8 +89,6 @@ t_sent	**create_page(t_list *stack)
 	if (stack == NULL || stack->first == NULL)
 		return (NULL);
 	cur = stack->first;
-	if (!cur)
-		perror("CUR IS NULL");
 	i = 0;
 	while (cur)
 	{
