@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 18:45:11 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/15 13:23:48 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/16 13:25:39 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	util_parse_args(t_data *data, int i)
 	}
 	while (data->page[i] && data->page[i]->array[0])
 	{
+		//check for inbuilts here?
 		if (path_is_abs_or_rel(data, i))
 			;
 		else if (command_in_path(data, i, NULL, 0))

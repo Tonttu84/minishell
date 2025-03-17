@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:11:31 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/16 10:24:05 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/16 13:21:46 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	prompt_input(char *line, int pfd[2], t_data *data)
 			block_signals_in_parent();
 			if (-1 == pipe(pfd))
 				ft_exit(data, "pipe", strerror(errno), errno);
+			//if inbuild then run inbuilt, else execute?
 			execute(data->page[0], pfd, 1, 0);
 		}
 	}
