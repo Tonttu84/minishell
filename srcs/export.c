@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:32:40 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/14 13:33:08 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/17 11:19:59 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	unset_one(char *env_val)
 	lenght = ft_strlen(env_val);
 	while (i < ENV_SIZE)
 	{
-		if (data->env[i] && ft_strncmp(env_val, data->env[i], lenght + 1)
+		if (!ft_strncmp(env_val, data->env[i], lenght + 1)
 			&& (data->env[i][lenght] == 0 || data->env[i][lenght] == '='))
 		{
 			ft_memset(data->env[i], 0, MAX_LENGTH + 1);
@@ -38,12 +38,12 @@ static int	unset_one(char *env_val)
 	}
 	return (0);
 }
-
-int	bi_unset(int argc, char *argv[])
+//seems to return 0 even if the value does not exist, maybe errors if you cant find env variable
+int	bi_unset(int argc, char *argv[], t_sent *sent)
 {
 	int	i;
 
-	if (argc == 1)
+	if (argc == 1 || sent->inpipe || sent->outpipe)
 		return (0);
 	i = 1;
 	while (i < argc)
@@ -96,11 +96,13 @@ int	add_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar,
 {
 	int	i;
 
+	if (envvar == NULL || value == NULL || env == NULL)
+		return (1);
 	unset_one(envvar);
 	i = 0;
 	while (i < ENV_SIZE)
 	{
-		if (env[i] == NULL || env[i][0] == '\0')
+		if (env[i][0] == '\0')
 			return (set_envvar(env, envvar, value, i));
 		i++;
 	}
@@ -145,6 +147,7 @@ void	final_print(char **env)
 		i++;
 	}
 }
+
 // Creates an array of pointers that are later sorted and printed
 int	print_alphabetically(char env[ENV_SIZE + 1][MAX_LENGTH + 1])
 {
@@ -156,7 +159,7 @@ int	print_alphabetically(char env[ENV_SIZE + 1][MAX_LENGTH + 1])
 	k = 0;
 	while (k < ENV_SIZE)
 	{
-		if (env[k] != NULL && env[k][0] != '\0')
+		if (env[k][0] != '\0')
 		{
 			cpy[i] = env[k];
 			i++;
@@ -168,6 +171,7 @@ int	print_alphabetically(char env[ENV_SIZE + 1][MAX_LENGTH + 1])
 	final_print(cpy);
 	return (0);
 }
+
 // bash: export: `': not a valid identifier
 // Not sure what the valid env variable values can be
 int	errorcheck_expand(char *var)
@@ -177,14 +181,14 @@ int	errorcheck_expand(char *var)
 	i = 0;
 	if (!var || (var[i] != '_' && ft_isalpha(var[i]) == 0))
 	{
-		perror("Not a valid variable");
+		fprintf(stderr,"minishell: export `%s': not a valid identifier\n", var);
 		return (-1);
 	}
 	while (ft_isalnum(var[i]) || var[i] == '_')
 		i++;
 	if (var[i] != 0 && var[i] != '=')
 	{
-		perror("Not a valid variable");
+		fprintf(stderr,"minishell: export `%s': not a valid identifier\n", var);
 		return (-1);
 	}
 	return (0);
@@ -218,29 +222,28 @@ void	process_new_envvarr(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *var)
 	value[k] = '\0';
 	add_envvar(env, name, value);
 }
-
-int	bi_export(int argc, char *argv[])
+//The actual export goes through the arguments and even if there is error in one it applies the rest if one of them fails the return value is 1
+int	bi_export(int argc, char *argv[], t_sent *sent)
 {
 	int	i;
+	int retval;
 
+	retval = 0;
 	if (argc == 1)
 		return (print_alphabetically(get_data()->env));
+	if (sent->outpipe || sent->inpipe)
+		return (0);
 	i = 1;
 	while (i < argc)
 	{
-		if (argv[i] && errorcheck_expand(argv[i]))
+		if (argv[i] && !errorcheck_expand(argv[i]))
 		{
-			perror("Print error, set errno and so on");
-			return (-1);
+			if (sent->inpipe == 0 && sent->outpipe == 0)
+				process_new_envvarr(get_data()->env, argv[i]);
 		}
+		else 
+			retval = 1;
 		i++;
 	}
-	i = 1;
-	while (i < argc)
-	{
-		if (argv[i])
-			process_new_envvarr(get_data()->env, argv[i]);
-		i++;
-	}
-	return (0);
+	return (retval);
 }

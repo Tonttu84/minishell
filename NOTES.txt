@@ -1,17 +1,14 @@
-MAX_NBR_HERE_DOC = 16
+
 Suojaa splitti tapaukselta PATH=::
-tiedostot ei toimi komentojen ja putkien kanssa
+tiedostot ei toimi komentojen ja putkien kanssa <- nyt toimii
+kaksi putkea ei toimi juuri nyt
 <<EOF < > ottaa syntax errorit todella oudossa kohtaa
 
-Ilmeisesti escape characterit voi poistaa kun argumentteja passataan ohjelmille. 
 
 testaa miten bash suhtautuu liian moneen argumenttiin builtineissa
 
 identify builtins
 
-Eli awk {print $1} on mita pitaisi menna ohjelmalle. Poistin escape characterien lisailyn ja vaikuttaisi toimivan
-bash: awk {print\ $1} <- toimii
-minishell: awk {print $1} <- ei saa EOF
 
 Builtin:
 	exit: printtaa virheen jos exit ajetaan putken kanssa yli 9223372036854775807 argumentilla. palautusarvo: 2.
@@ -26,17 +23,15 @@ SHLVL inkrementointi kun minishell ajetaan minishellin kautta.
 
 <Makefile cat | awk '{print $1}'
 
-message of the day; 
 
 _ is the last argument of executed command, this could be likely tested with inbuilds. Even if inbuids are not exactly executed the _ gets still updated
 it gets updated even inside children. in pipe the last pipe updates it. 
 
-cowsay fortune;
 
-When you launch it, print a shell?
 
 <<""EOF apparenty tells the heredocs not to expand env variables inside heredocs
 
+Jos HOME on unset bash antaa sen errorina, mutta jos HOME= niin bash ei anna erroria ja exit status on 0 
 
 rimpila@c3r1p7:~$ export _old=$_
 jrimpila@c3r1p7:~$ env | grep old
@@ -45,10 +40,21 @@ jrimpila@c3r1p7:~$ export _old=$_
 jrimpila@c3r1p7:~$ env | grep old
 _old=_old=export
 
+$_ paivittyy todella oudosti, cd "" antaa sen arvoksi "" kun taas echo blaablaa laittaa arvoksi echo
+
 env is an external command in bash located in _=/usr/bin/env
 
+Jos poistaa kansion, unsettaa PWD:n ja OLDPWD:n niin bashin cd toimii siltikin
+eli meidan taytyy trakata pathia
 
-toimiiko cd jos kansio poistetaan alta -> ei, segfault.
+unset PATH; ls toimii edelleen
+
+? ei palauta edellisen palauttamaa arvoa
+
+export blaa"'"blaa=duu
+bash: export: `blaa'blaa=duu': not a valid identifier
+
+toimiiko cd jos kansio poistetaan alta -> pitaisi toimia nyt. Testaa viela ja poista kommentti jos toimii
 
 jtuomi:/home/jtuomi😎>mkdir test
 jtuomi:/home/jtuomi😎>cd test/

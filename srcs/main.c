@@ -6,13 +6,11 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:36:25 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/14 13:53:24 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/15 13:30:14 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-volatile sig_atomic_t	flag = 0;
 
 size_t					ft_strlcpy(char *dst, const char *src, size_t size);
 

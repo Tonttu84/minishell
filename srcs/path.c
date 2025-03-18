@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 18:45:11 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/14 20:00:20 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/17 12:53:16 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// old is static char	**is_path_in_env(t_data *data, char *s, char *s1, int i)
+/*
+ * search our env for PATH= variable
+ */
 static char	*is_path_in_env(t_data *data, char *s, char *s1, int i)
 {
-	while (data->env[i])
+	while (data->env[i][0])
 	{
 		s1 = ft_strnstr(data->env[i], s, 5);
 		if (s1)
@@ -30,8 +31,6 @@ static char	*is_path_in_env(t_data *data, char *s, char *s1, int i)
 ** later to be executed by /usr/lib/command-not-found to offer suggestions
 ** how to install or fix a typo etc.
 */
-
-// Check if arrays are malloced;
 static void	command_not_found(t_data *data, int nbr)
 {
 	int	i;
@@ -68,11 +67,7 @@ bool	command_in_path(t_data *data, int nbr, char *cmd_p, int i)
 	while (data->path[i])
 	{
 		tmp = ft_strjoin(data->path[i], "/");
-		if (!tmp)
-			ft_exit(data, "malloc", strerror(errno), errno);
 		cmd_p = ft_strjoin(tmp, data->page[nbr]->array[0]);
-		if (!cmd_p)
-			ft_exit(data, "malloc", strerror(errno), errno);
 		free(tmp);
 		if (0 == access(cmd_p, X_OK))
 		{
@@ -98,7 +93,7 @@ void	util_parse_args(t_data *data, int i)
 {
 	char	*temp;
 
-	if (data->env[0])
+	if (data->env[0][0])
 	{
 		temp = is_path_in_env(data, "PATH=", NULL, 0);
 		data->path = ft_split(&temp[5], ':');

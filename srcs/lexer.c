@@ -6,49 +6,40 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:32:12 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/14 12:27:59 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/15 13:17:04 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	mark_commands(t_char *com_line, int i)
+void	mark_commands(t_char *cli, int i)
 {
-	i = 0;
-	while (com_line[i].c != 0)
-	{
-		if (i == 0 || com_line[i].esc || com_line[i - 1].esc || com_line[i
-			+ 1].c == 0 || com_line[i + 1].esc)
+		if (i == 0 || cli[i].esc || cli[i - 1].esc || cli[i	+ 1].c == 0 || cli[i + 1].esc)
 			;
-		else if (com_line[i - 1].c == '<' && !com_line[i - 2].esc && com_line[i
-			- 2].c == ' ' && com_line[i].c == '<' && com_line[i + 1].c == ' ')
+		else if (cli[i - 1].c == '<' && !cli[i - 2].esc && cli[i
+			- 2].c == ' ' && cli[i].c == '<' && cli[i + 1].c == ' ')
 		{
-			com_line[i].com = 1;
-			com_line[i - 1].com = 1;
+			cli[i].com = 1;
+			cli[i - 1].com = 1;
 		}
-		else if (com_line[i - 1].c == '>' && !com_line[i - 2].esc && com_line[i
-			- 2].c == ' ' && com_line[i].c == '>' && com_line[i + 1].c == ' ')
+		else if (cli[i - 1].c == '>' && !cli[i - 2].esc && cli[i
+			- 2].c == ' ' && cli[i].c == '>' && cli[i + 1].c == ' ')
 		{
-			com_line[i - 1].com = 1;
-			com_line[i].com = 1;
+			cli[i - 1].com = 1;
+			cli[i].com = 1;
 		}
-		else if (com_line[i - 1].c == ' ' && com_line[i].c == '>' && com_line[i
-			+ 1].c == '>' && !com_line[i + 2].esc && com_line[i + 2].c == ' ')
+		else if (cli[i - 1].c == ' ' && cli[i].c == '>' && cli[i
+			+ 1].c == '>' && !cli[i + 2].esc && cli[i + 2].c == ' ')
 		{
-			com_line[i].com = 1;
-			com_line[i + 1].com = 1;
+			cli[i].com = 1;
+			cli[i + 1].com = 1;
 		}
-		else if (com_line[i].c == '<' && com_line[i + 1].c == '<' && com_line[i
-			+ 2].c != 0 && (com_line[i + 2].esc == 0 && com_line[i
-				+ 2].c != ' '))
-			com_line[i].com = 1;
-		else if (com_line[i - 1].c != ' ' || com_line[i + 1].c != ' ')
+		else if (cli[i].c == '<' && cli[i + 1].c == '<' && cli[i + 2].c != 0 && (cli[i + 2].esc == 0 && cli[i+ 2].c != ' '))
+			cli[i].com = 1;
+		else if (cli[i - 1].c != ' ' || cli[i + 1].c != ' ')
 			;
-		else if (com_line[i].c == '|' || com_line[i].c == '<'
-			|| com_line[i].c == '>')
-			com_line[i].com = 1;
-		i++;
-	}
+		else if (cli[i].c == '|' || cli[i].c == '<'	|| cli[i].c == '>')
+			cli[i].com = 1;
 }
 
 void	mark_env_var(t_char *newline, int start)
@@ -121,26 +112,22 @@ void	expand_arguments(t_char *dst, t_char *src, t_data *data)
 	}
 	dst[di].c = 0;
 }
+
 // dynamic memory is problematic due to unknown sizes,
 //	last few characters are missing sometimes
 t_char	*lexify(char *line, t_data *data)
 {
 	t_char			*newline;
 	static t_char	expanded[1000];
+	int i;
 
 	newline = ft_xcalloc(ft_strlen(line) * 3 + 10, sizeof(t_char));
 	remove_quotes(newline, line, 0, 0);
-	//	debug_print(newline, data);
-	//	printf("\n");
-	mark_commands(newline, 0);
-	// debug_print(newline, data);
-	//	printf("\n");
+	i = 0;
+	while (newline[i].c != 0)
+		mark_commands(newline, i++);
 	mark_arguments(newline);
-	//	debug_print(newline, data);
-	//	printf("\n");
 	expand_arguments(expanded, newline, data);
-	//	debug_print(expanded, data);
-	//	printf("\n");
 	create_list(data, expanded);
 	return (newline);
 }

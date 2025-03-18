@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:05:36 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/14 12:14:27 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/16 13:20:32 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,15 @@ int	bi_exit(int argc, char *argv[])
 	return (0);
 }
 
-int	run_builtin(int argc, char *argv[])
+//Cant handle redirection support currently
+int	run_builtin(int argc, char *argv[], t_sent *sent)
 {
 	// Not sure if I can take input like this to function withot counting variables?
 	if (argc == 0)
 		return (1);
 	if (ft_strncmp("cd", argv[0], 3) == 0)
 	{
-		bi_cd(argc, argv);
+		bi_cd(argc, argv, sent);
 	}
 	else if (ft_strncmp("pwd", argv[0], 4) == 0)
 		bi_pwd();
@@ -35,9 +36,9 @@ int	run_builtin(int argc, char *argv[])
 	else if (ft_strncmp("env", argv[0], 4) == 0)
 		bi_env(get_data());
 	else if (ft_strncmp("export", argv[0], 7) == 0)
-		bi_export(argc, argv);
+		bi_export(argc, argv, sent);
 	else if (ft_strncmp("unset", argv[0], 6) == 0)
-		bi_unset(argc, argv);
+		bi_unset(argc, argv, sent);
 	else if (ft_strncmp("exit", argv[0], 5) == 0)
 		bi_exit(argc, argv);
 	else if (1)
@@ -80,14 +81,38 @@ int	bi_pwd(void)
 
 // Only takes 1 argument, throws error otherwise
 // TODO handle -1 Has some issues, needs debugging
-
-int	is_valid_cd(char *dir)
+//Bash doesnt care if HOME is set to HOME= 
+static int	is_valid_cd(const char *dir)
 {
-	(void)dir;
-	return (0);
+	struct stat	file_stat;
+	
+	if (dir == NULL)
+		dir = find_env_value("$HOME", get_data());
+	if (dir == NULL)
+		{
+			printf("minishell: cd : HOME not set\n");
+			return (0);
+		}
+	if (dir[0] == 0)
+		return (1);
+	if (stat(dir, &file_stat) == -1) 
+	{
+		if (!S_ISREG(file_stat.st_mode) && !S_ISDIR(file_stat.st_mode) && !S_ISLNK(file_stat.st_mode))
+			printf ("minishell: cd: %s: No such file or directory\n", dir);
+		else if (!S_ISDIR(file_stat.st_mode) && !S_ISLNK(file_stat.st_mode))
+			printf("minishell: cd %s: Not a directory\n", dir);
+		else if (access(dir, X_OK))
+			printf("minishell: cd %s: Permission denied\n", dir);
+		else 
+			printf("minishell: cd %s: Unknown stat error\n", dir);
+		return (0);
+	}
+		return (1);
 }
+
 // TODO handle case where directory gets deleted while there
-int	bi_cd(int argc, char *argv[])
+//return values need fixing
+int	bi_cd(int argc, char *argv[], t_sent *sent)
 {
 	char	*cur;
 	char	cwd[PATH_MAX];
@@ -99,9 +124,11 @@ int	bi_cd(int argc, char *argv[])
 		return (1);
 	}
 	cur = ft_strjoin("OLDPWD=", getcwd(cwd, PATH_MAX));
-	if (is_valid_cd(argv[1]) == 0)
+	if (is_valid_cd(argv[1]) && !sent->inpipe && !sent->outpipe)
 		add_envvar(get_data()->env, "OLDPWD", getcwd(cwd, PATH_MAX));
-	if (argv[1] == NULL || argv[1] == 0)
+	else
+		return (1);
+	if (argv[1] == NULL)
 	{
 		chdir(find_env_value("$HOME", get_data()));
 	}
@@ -110,6 +137,7 @@ int	bi_cd(int argc, char *argv[])
 	else
 		chdir(argv[1]);
 	add_envvar(get_data()->env, "PWD", getcwd(cwd, PATH_MAX));
+	(void)cur;
 	return (0);
 }
 
@@ -138,6 +166,7 @@ int	echo_check_opt(char *str)
 	}
 	return (isvalid);
 }
+
 // can take multiple arguments
 // Argument expansion should already be done here so we can print everything as it is?
 int	bi_echo(int argc, char *argv[])
@@ -148,7 +177,7 @@ int	bi_echo(int argc, char *argv[])
 	opt = 0;
 	if (argc > 1)
 		opt = echo_check_opt(argv[1]);
-	i = 2;
+	i = opt + 1;
 	while (opt && echo_check_opt(argv[i]) && i < argc)
 		i++;
 	while (i < argc)
@@ -156,7 +185,7 @@ int	bi_echo(int argc, char *argv[])
 		printf("%s", argv[i]);
 		i++;
 	}
-	if (opt)
+	if (!opt)
 		printf("\n");
 	return (0);
 }

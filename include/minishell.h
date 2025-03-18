@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/14 14:36:38 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/16 11:40:26 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <sys/stat.h>
 # ifndef PATH_MAX /// Max path lenght
 #  define PATH_MAX (500)
 # endif
@@ -84,7 +85,7 @@ typedef struct s_sent
 	bool		inpipe;
 	t_dir		redirs[20];
 	bool		outpipe;
-	int error; // error code here
+	int            error; // error code here
 	int			heredocs;
 	int			argc;
 }				t_sent;
@@ -111,14 +112,14 @@ typedef struct s_point
 ** BUILT' INS
 */
 int				cwd(void);
-int				run_builtin(int argc, char *argv[]);
+int				run_builtin(int argc, char *argv[], t_sent *sent);
 int				is_builtin(char *cmd);
 int				bi_pwd(void);
-int				bi_cd(int argc, char *argv[]);
+int				bi_cd(int argc, char *argv[], t_sent *sent);
 void			bi_env(t_data *data);
 int				bi_echo(int argc, char *argv[]);
-int				bi_unset(int argc, char *argv[]);
-int				bi_export(int argc, char *argv[]);
+int				bi_unset(int argc, char *argv[], t_sent *sent);
+int				bi_export(int argc, char *argv[], t_sent *sent);
 const char		*ft_get_env(const char *target);
 int				add_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar,
 					char *value);
@@ -168,7 +169,7 @@ t_char			*lexify(char *line, t_data *data);
 t_sent			**create_page(t_list *stack);
 void			print_sentence(t_sent *sentence);
 char			*create_heredoc(char *terminator, int expand);
-char			*test_infile(t_char *raw_path);
+bool			test_file(t_token type);
 char			*test_outfile(t_char *raw_path);
 char			*test_append(t_char *raw_path);
 void			prompt_input(char *line, int pfd[2], t_data *data);

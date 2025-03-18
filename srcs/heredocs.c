@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:18:56 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/13 18:20:51 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/16 11:20:11 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ const char	*find_env_value(char *source, t_data *data)
 		while (ptr[i] && ptr[i] != '=')
 			i++;
 	}
-	if (ptr[i] == '=')
+	if (ptr && ptr[i] == '=')
 	{
 		i++;
 	}
