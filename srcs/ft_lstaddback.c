@@ -6,16 +6,14 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:41:58 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/18 20:06:01 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/18 20:40:17 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// heredocs needs to be counted at this point
-// BASH actually prints some redirection errors at this point but doesnt stop,
-//	it waits until "page creation" to stop so heredocs happens even after error
-//	is detected
+//BASH counts heredocs quite early so we do it here
+//Im counting the args but I dont seen to use it for anything will delete later when I have a stable commit
 static void	set_type(t_node *new)
 {
 	static int	args = 0;
@@ -42,10 +40,7 @@ static void	set_type(t_node *new)
 		new->type = HERE_DOCS;
 		get_data()->herecount++;
 		if (get_data()->herecount >= 17)
-		{
-			perror("Maximum amount of heredocs is 16");
-			exit(2);
-		}
+			ft_exit(get_data(), "Maximum amount of heredocs is 16", "", 2);
 	}
 	else if (new->prev->str &&new->prev->str[0].c == '<'
 		&& new->prev->str[0].com)

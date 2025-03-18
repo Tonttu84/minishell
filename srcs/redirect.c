@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtuomi <jtuomi@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 13:25:30 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/18 20:08:31 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/18 20:42:59 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	handle_infile(char *sent, int fd)
 
 static void	handle_heredoc(char *sent, int fd)
 {
-	sent = create_heredoc(sent, 0);
+	sent = create_heredoc(sent, 0, NULL, NULL);
 	write(fd, sent, ft_strlen(sent));
 }
 

@@ -56,16 +56,12 @@ bash: export: `blaa'blaa=duu': not a valid identifier
 
 toimiiko cd jos kansio poistetaan alta -> pitaisi toimia nyt. Testaa viela ja poista kommentti jos toimii
 
-jtuomi:/home/jtuomi😎>mkdir test
-jtuomi:/home/jtuomi😎>cd test/
-jtuomi:/home/jtuomi/test😎>mkdir test
-jtuomi:/home/jtuomi/test😎>cd test/
-jtuomi:/home/jtuomi/test/test😎>rmdir ../test/
-jtuomi:/home/jtuomi/test/test😎>cd ..
-Segmentation fault (core dumped)
-cd ../../../../../../../../../home/jrimpila/
-
-$
 $()
 $(env)
 
+=======
+tarkista <<EO"F" should not expand I think?
+
+cat blaa | echo $HOME | <Makefile | echo duh <-this is valid
+
+cat blaa | echo $HOME

@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/16 11:40:26 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/18 12:48:31 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 # endif
 
 # ifndef USER
-#  define USER minishell
+#  define USER "minishell"
 # endif
 
 # define PROMPT GREEN USER ":" RESET
@@ -128,6 +128,17 @@ const char		*find_env_value(char *source, t_data *data);
 int				builtin_cd(char *path);
 
 /*
+** BUILT' IN UTISLS
+*/
+int	print_alphabetically(char env[ENV_SIZE + 1][MAX_LENGTH + 1]);
+int	unset_one(char *env_val);
+
+/*
+** ENVVAR UTILS
+*/
+void	expand_envvar(char *unexp, char *exp, int *i, int *k);
+
+/*
 ** EXECUTION
 */
 void			util_parse_args(t_data *data, int i);
@@ -144,7 +155,7 @@ void			test(void);
 /*
 ** UTILITIES
 */
-typedef void	(*node_func)(t_list *list, t_node *node);
+typedef void	(*t_node_func)(t_list *list, t_node *node);
 void			*ft_xcalloc(size_t nmemb, size_t size);
 size_t			ft_strlen(const char *s);
 void			*ft_memset(void *s, int c, size_t n);
@@ -153,7 +164,7 @@ int				ft_isalnum(int c);
 size_t			ft_wrdlen(t_char *str, t_data *data);
 const char		*find_env(t_char *source, t_data *data);
 void			create_list(t_data *data, t_char *line);
-void			iterate_list(t_list *list, node_func func);
+void			iterate_list(t_list *list, t_node_func func);
 t_data			*get_data(void);
 void			debug_print(t_char *array, t_data *data);
 void			print_node(t_list *list, t_node *node);
@@ -162,13 +173,17 @@ t_node			*destroy_node(t_list *list, t_node *node);
 int				copy_env_to_tchar(t_char *dst, int i, const char *env);
 char			*cnvrt_to_char(t_char *line);
 
+
+
+
+
 /*
 ** LEXING & PARSING
 */
 t_char			*lexify(char *line, t_data *data);
 t_sent			**create_page(t_list *stack);
 void			print_sentence(t_sent *sentence);
-char			*create_heredoc(char *terminator, int expand);
+char			*create_heredoc(char *terminator, int expand, char *result, char *tmp);
 bool			test_file(t_token type);
 char			*test_outfile(t_char *raw_path);
 char			*test_append(t_char *raw_path);
@@ -180,6 +195,14 @@ int				check_emp_arg(char *src, int i, t_char *dst, int *k);
 void			remove_quotes(t_char *dst, char *src, int i, int k);
 int				open_temp_heredocs(t_node *node, int expand);
 void			mark_commands(t_char *com_line, int i);
+
+/*
+** LEXING & PARSING UTILS
+*/
+
+int				handle_rest(char *src, t_char *dst, int i, int *k);
+int				handle_d_quotes(char *src, t_char *dst, int *k, int *exp);
+int				handle_s_quotes(char *src, t_char *dst, int i, int *k);
 
 /*
 ** SIGNALS

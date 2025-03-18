@@ -6,13 +6,13 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:41:05 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/05 12:37:02 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/18 12:02:48 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	iterate_list(t_list *list, node_func func)
+void	iterate_list(t_list *list, t_node_func func)
 {
 	t_node	*current;
 
