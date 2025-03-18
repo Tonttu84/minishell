@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 19:21:45 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/17 12:54:40 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/18 20:16:56 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@ static void execute_child(t_sent *sent, int pfd[2], pid_t child, int i)
 		if (-1 == execve(sent->array[0], sent->array, __environ))
 			ft_exit(get_data(), sent->array[0], strerror(errno), errno);
 	}
-	else
+	else if(child == -1)
 		ft_exit(get_data(), "fork", strerror(errno), errno);
-
 }
 
 /*
