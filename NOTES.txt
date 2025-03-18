@@ -66,3 +66,7 @@ Segmentation fault (core dumped)
 cd ../../../../../../../../../home/jrimpila/
 
 tarkista <<EO"F" should not expand I think?
+
+cat blaa | echo $HOME | <Makefile | echo duh <-this is valid
+
+cat blaa | echo $HOME
