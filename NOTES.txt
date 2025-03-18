@@ -64,3 +64,5 @@ jtuomi:/home/jtuomi/test/test😎>rmdir ../test/
 jtuomi:/home/jtuomi/test/test😎>cd ..
 Segmentation fault (core dumped)
 cd ../../../../../../../../../home/jrimpila/
+
+tarkista <<EO"F" should not expand I think?
