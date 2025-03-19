@@ -6,11 +6,12 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:29:12 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/18 12:49:15 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/18 15:57:01 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
 static void	sort_cpy(char **cpy);
 static void	final_print(char **env);
 
@@ -75,5 +76,3 @@ static void	final_print(char **env)
 		i++;
 	}
 }
-
-

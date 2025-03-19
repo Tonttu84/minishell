@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:40:32 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/18 11:43:23 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/18 15:51:02 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,3 @@ long	ft_atol(char *nptr)
 	i = 0;
 	while (ft_isspace(nptr[i]))
 }
-

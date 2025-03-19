@@ -6,20 +6,13 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:20:15 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/18 12:57:38 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/18 16:14:01 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*test_infile(t_char *raw_path)
-{
-	(void)raw_path;
-	return (NULL);
-}
-
-// i is 0, k is 0, sentence is calloced, node is pulled from data
-t_sent	*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence)
+static t_node	*check_inpipe(t_sent *sentence, t_node *node)
 {
 	if (node && node->type == PIPE)
 	{
@@ -28,6 +21,13 @@ t_sent	*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence)
 			ft_exit(get_data(), "syntax error near token", "|", 1);
 		node = destroy_node(&get_data()->tokens, node);
 	}
+	return (node);
+}
+
+// i is 0, k is 0, sentence is calloced, node is pulled from data
+t_sent	*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence)
+{
+	node = check_inpipe(sentence, node);
 	while (node)
 	{
 		node = get_data()->tokens.first;
@@ -41,11 +41,10 @@ t_sent	*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence)
 		{
 			if (node->next->type == REDIRECT || node->next->type == PIPE
 				|| get_data()->tokens.last == node)
-			    ft_exit(get_data(), "syntax error near unexpected token", "nl", 1);
+				ft_exit(get_data(), "syntax error near unexpected token", "nl", 1);
 		}
-		else if (node->type == IN_FILE || node->type == OUT_FILE
-			|| node->type == APPEND || node->type == HERE_DOCS
-			|| node->type == HERE_QUOTE)
+		else if (node->type == IN_FILE || node->type == OUT_FILE || node->type
+			== APPEND || node->type == HERE_DOCS || node->type == HERE_QUOTE)
 			add_redirection(node, sentence, k++);
 		else
 			sentence->array[i++] = cnvrt_to_char(node->str);

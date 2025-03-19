@@ -6,24 +6,25 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:41:58 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/18 12:18:19 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/18 15:33:41 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+//Commented out some lines that seem unnecessary. If nothing breaks, delete them permanently
 //BASH counts heredocs quite early so we do it here
 //Im counting the args but I dont seen to use it for anything will delete later when I have a stable commit
 static void	set_type(t_node *new)
 {
-	static int	args = 0;
+	// static int	args = 0;
 
 	if (new->str == NULL)
 		new->type = DELIMIT;
 	else if (new->str &&new->str[0].c == '|' && new->str[0].com)
 	{
 		new->type = PIPE;
-		args = 0;
+		// args = 0;
 	}
 	else if (((new->str &&new->str[0].c == '>') || (new->str
 				&&new->str[0].c == '<' && new->str[0].com)))
@@ -52,13 +53,13 @@ static void	set_type(t_node *new)
 		new->type = CTRL;
 	else
 	{
-		if (args == 0)
-			new->type = CMD;
-		else
-		{
+		// if (args == 0)
+		// 	new->type = CMD;
+		// else
+		// {
 			new->type = ARG;
-		}
-		args++;
+		// }
+		// args++;
 	}
 }
 

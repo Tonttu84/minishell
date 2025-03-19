@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:41:05 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/18 12:02:48 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/18 15:50:12 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ size_t	ft_wrdlen(t_char *str, t_data *data)
 	}
 	return (count_i);
 }
+
 // Destroys the current node and moves to the next node
 t_node	*destroy_node(t_list *list, t_node *node)
 {

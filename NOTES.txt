@@ -70,3 +70,12 @@ tarkista <<EO"F" should not expand I think?
 cat blaa | echo $HOME | <Makefile | echo duh <-this is valid
 
 cat blaa | echo $HOME
+
+<<EOF grep jrimpila seems to explode
+heredocs expansion seems to have trouble
+
+rimpila:/home/jrimpila/Git/minishell😎><Makefile >test 
+jrimpila:/home/jrimpila/Git/minishell😎>cat test 
+infile: Makefileoutfile: test
+
+<<BLAA >test ls ei luo outfilea
