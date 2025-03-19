@@ -74,3 +74,9 @@ jrimpila:/home/jrimpila/Git/minishell😎>cat test
 infile: Makefileoutfile: test
 
 <<BLAA >test ls ei luo outfilea
+
+cat $HOME/input.txt cat $HOME/input.txt >> outfile.txt | echo $USER grep $invalid search_pattern <<EOF < $HOME/input.txt <<EOF > $HOME/error.log | sort | uniq | echo > test.txt Found line: $line | echo Current user: $USER | echo Non-existent variable: $NONEXISTENTVA
+
+vetaa jumiin. 
+
+ls >>test2 | echo blaa <<TEST test2 ei sisalla ls outputtia

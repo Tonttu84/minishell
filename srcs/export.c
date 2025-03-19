@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:32:40 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/18 12:33:17 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/19 12:49:04 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,9 @@ int	set_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar,
 		i++;
 	}
 	if (envvar[i])
-		return (perror("Env max exceeded\n"), 1);
+		return (error_printf("export", "Env max exceeded"), 1);
 	if (value && i < MAX_LENGTH)
-	{
-		env[free_slot][i] = '=';
-		i++;
-	}
+		env[free_slot][i++] = '=';
 	k = 0;
 	while (value && value[k] && i < MAX_LENGTH)
 	{
@@ -41,7 +38,7 @@ int	set_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar,
 		k++;
 	}
 	if (value[k])
-		return (perror("Env max exceeded\n"), 1);
+		return (error_printf("export", "Env max exceeded"), 1);
 	return (0);
 }
 
@@ -73,14 +70,14 @@ int	errorcheck_expand(char *var)
 	i = 0;
 	if (!var || (var[i] != '_' && ft_isalpha(var[i]) == 0))
 	{
-		fprintf(stderr,"minishell: export `%s': not a valid identifier\n", var);
+		error_printf("export", "Env max exceeded");
 		return (-1);
 	}
 	while (ft_isalnum(var[i]) || var[i] == '_')
 		i++;
 	if (var[i] != 0 && var[i] != '=')
 	{
-		fprintf(stderr,"minishell: export `%s': not a valid identifier\n", var);
+		error_printf("export", "Env max exceeded");
 		return (-1);
 	}
 	return (0);
@@ -115,12 +112,13 @@ void	process_new_envvarr(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *var)
 	add_envvar(env, name, value);
 }
 
-//BASH goes through the arguments and even if there is error in one it applies the rest
+//BASH goes through the arguments and even if 
+//there is error in one it applies the rest
 // if any one of them fails the return value is 1
 int	bi_export(int argc, char *argv[], t_sent *sent)
 {
 	int	i;
-	int retval;
+	int	retval;
 
 	retval = 0;
 	if (argc == 1)
@@ -135,7 +133,7 @@ int	bi_export(int argc, char *argv[], t_sent *sent)
 			if (sent->inpipe == 0 && sent->outpipe == 0)
 				process_new_envvarr(get_data()->env, argv[i]);
 		}
-		else 
+		else
 			retval = 1;
 		i++;
 	}

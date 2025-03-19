@@ -5,90 +5,50 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 14:42:12 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/11 18:24:21 by jtuomi           ###   ########.fr       */
+/*   Created: 2024/10/29 10:56:52 by jrimpila          #+#    #+#             */
+/*   Updated: 2024/11/03 11:47:54 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdio.h>
+#include <limits.h>
 
-static int	all_isspace(char *nptr);
-
-
-int  overflow_check(long ret, int sign, int addition)
+static int	ft_check_overflow(long long overflow, int positive, int last)
 {
-	if (ret == 922337203685477580 && addition > 7)
+	if (overflow < LLONG_MIN / 10 || (last == 9 && overflow == LLONG_MIN / 10))
 	{
-			perror("Overflow happens");
-			return (2);
+		if (positive == 1)
+			return (-1);
+		else
+			return (0);
 	}
-	if (ret >= 922337203685477581)
-	{
-			perror("Overflow happens");
-			return (2);
-	}
-	if (ret == 922337203685477580 && addition > 8 && sign == -1)
-	{
-			perror("Overflow happens");
-			return (2);
-	}
-	return (0);
+	return (2);
 }
 
 int	ft_atoi(const char *nptr)
 {
-	long	ret;
-	int	sign;
-	int	i;
+	int			positive;
+	long long	rval;
 
-	sign = 1;
-	ret = 0;
-	i = all_isspace((char *)nptr);
-	if (nptr[i] == '-')
+	rval = 0;
+	positive = 1;
+	while ((*nptr > 8 && *nptr < 14) || (*nptr == 32))
+		nptr++;
+	if (*nptr == '-')
 	{
-		sign = -1;
-		i++;
+		positive = 0;
+		nptr++;
 	}
-	else if (nptr[i] == '+')
-		i++;
-	while (ft_isdigit(nptr[i]))
+	else if (*nptr == '+')
+		nptr++;
+	while (*nptr >= '0' && *nptr <= '9')
 	{
-		if (overflow_check(ret, sign, (nptr[i] - '0')))
-			return (2);
-		ret *= 10;
-		ret += nptr[i] - '0';
-		i++;
+		if (ft_check_overflow(rval, positive, *nptr) != 2)
+			return (ft_check_overflow(rval, positive, *nptr));
+		rval = rval * 10 - (*nptr - '0');
+		nptr++;
 	}
-	if (nptr[i] != 0)
-	{
-		perror("numeric argument required");
-		return (2);
-	}
-	return (ret * sign);
-}
-
-static int	all_isspace(char *nptr)
-{
-	int	ret;
-
-	ret = 0;
-	while (nptr[ret])
-	{
-		if (nptr[ret] == '\n')
-			ret++;
-		else if (nptr[ret] == '\t')
-			ret++;
-		else if (nptr[ret] == '\v')
-			ret++;
-		else if (nptr[ret] == '\r')
-			ret++;
-		else if (nptr[ret] == ' ')
-			ret++;
-		else if (nptr[ret] == '\f')
-			ret++;
-		else
-			break ;
-	}
-	return (ret);
+	if (positive == 1)
+		return (rval * -1);
+	else
+		return (rval);
 }
