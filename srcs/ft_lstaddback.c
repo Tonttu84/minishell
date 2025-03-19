@@ -6,43 +6,37 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:41:58 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/19 11:41:55 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/19 12:13:31 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-//Commented out some lines that seem unnecessary. If nothing breaks, delete them permanently
-//BASH counts heredocs quite early so we do it here
-//Im counting the args but I dont seen to use it for anything will delete later when I have a stable commit
+//BASH counts heredocs quite early so we do it while creating nodes
 static void	set_type(t_node *new)
 {
-	if (new->str == NULL)
-		new->type = DELIMIT;
-	else if (new->str &&new->str[0].c == '|' && new->str[0].com)
+	if (new->str && new->str[0].c == '|' && new->str[0].com)
 		new->type = PIPE;
-	else if (((new->str &&new->str[0].c == '>') || (new->str
-				&&new->str[0].c == '<' && new->str[0].com)))
+	else if (((new->str && new->str[0].c == '>') || (new->str \
+	&& new->str[0].c == '<' && new->str[0].com)))
 		new->type = REDIRECT;
-	else if (new->prev->str &&new->prev->str[0].c == '>'
-		&& new->prev->str[1].c == '>' && new->prev->str[0].com)
+	else if (new->prev->str && new->prev->str[0].c == '>' \
+	&& new->prev->str[1].c == '>' && new->prev->str[0].com)
 		new->type = APPEND;
-	else if (new->prev->str &&new->prev->str[0].c == '>'
-		&& new->prev->str[0].com)
+	else if (new->prev->str && new->prev->str[0].c == '>' \
+	&& new->prev->str[0].com)
 		new->type = OUT_FILE;
-	else if (new->prev->str &&new->prev->str[0].c == '<'
-		&& new->prev->str[1].c == '<' && new->prev->str[0].com)
+	else if (new->prev->str && new->prev->str[0].c == '<' \
+	&& new->prev->str[1].c == '<' && new->prev->str[0].com)
 	{
 		new->type = HERE_DOCS;
 		get_data()->herecount++;
 		if (get_data()->herecount >= 17)
 			ft_exit(get_data(), "Maximum amount of heredocs is 16", "", 2);
 	}
-	else if (new->prev->str &&new->prev->str[0].c == '<'
+	else if (new->prev->str && new->prev->str[0].c == '<'
 		&& new->prev->str[0].com)
 		new->type = IN_FILE;
-	else if (new->str &&new->str[0].com)
-		new->type = CTRL;
 	else
 		new->type = ARG;
 }

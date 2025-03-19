@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:25:07 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/18 20:51:21 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/19 12:04:37 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	unset_one(char *env_val)
 	length = ft_strlen(env_val);
 	while (i < ENV_SIZE)
 	{
-		if (!ft_strncmp(env_val, data->env[i], lenght + 1)
+		if (!ft_strncmp(env_val, data->env[i], length + 1)
 			&& (data->env[i][length] == 0 || data->env[i][length] == '='))
 		{
 			ft_memset(data->env[i], 0, MAX_LENGTH + 1);
