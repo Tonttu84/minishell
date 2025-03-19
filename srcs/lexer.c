@@ -6,38 +6,39 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:32:12 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/19 11:41:15 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/19 11:51:31 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-//rewriting some commands, keeping the old commands commented out. Remove old commands if nothing breaks.
 void	mark_commands(t_char *cli, int i)
 {
-		if (i == 0 || cli[i].esc || cli[i - 1].esc || cli[i	+ 1].c == 0 || cli[i + 1].esc)
-			;
-		else if (cli[i - 1].c == cli[i].c && !cli[i - 2].esc && cli[i - 2].c == ' '
-			&& cli[i + 1].c == ' ' && (cli[i].c == '<' ||  cli[i].c == '>'))
-		{
-				cli[i].com = 1;
-				cli[i - 1].com = 1;
-		}
-		else if (cli[i - 1].c == ' ' && cli[i].c == '>' && cli[i
-			+ 1].c == '>' && !cli[i + 2].esc && cli[i + 2].c == ' ')
-		{
-			cli[i].com = 1;
-			cli[i + 1].com = 1;
-		}
-		else if (cli[i].c == '<' && cli[i + 1].c == '<' && cli[i + 2].c != 0 && (cli[i + 2].esc == 0 && cli[i+ 2].c != ' '))
-		{
-			cli[i].com = 1;
-			cli[i + 1].com = 1;
-		}	
-		else if (cli[i - 1].c != ' ' || cli[i + 1].c != ' ')
-			;
-		else if (cli[i].c == '|' || cli[i].c == '<'	|| cli[i].c == '>')
-			cli[i].com = 1;
+	if (i == 0 || cli[i].esc || cli[i - 1].esc || cli[i + 1].c == 0 || \
+	cli[i + 1].esc)
+		;
+	else if (cli[i - 1].c == cli[i].c && !cli[i - 2].esc && cli[i - 2].c == \
+	' ' && cli[i + 1].c == ' ' && (cli[i].c == '<' || cli[i].c == '>'))
+	{
+		cli[i].com = 1;
+		cli[i - 1].com = 1;
+	}
+	else if (cli[i - 1].c == ' ' && cli[i].c == '>' && cli[i \
+	+ 1].c == '>' && !cli[i + 2].esc && cli[i + 2].c == ' ')
+	{
+		cli[i].com = 1;
+		cli[i + 1].com = 1;
+	}
+	else if (cli[i].c == '<' && cli[i + 1].c == '<' && cli[i + 2].c != 0 && \
+	cli[i + 2].esc == 0 && cli[i + 2].c == ' ')
+	{
+		cli[i].com = 1;
+		cli[i + 1].com = 1;
+	}	
+	else if (cli[i - 1].c != ' ' || cli[i + 1].c != ' ')
+		;
+	else if (cli[i].c == '|' || cli[i].c == '<' || cli[i].c == '>')
+		cli[i].com = 1;
 }
 
 void	mark_env_var(t_char *newline, int start)
@@ -116,7 +117,7 @@ t_char	*lexify(char *line, t_data *data)
 {
 	t_char			*newline;
 	static t_char	expanded[1000];
-	int i;
+	int				i;
 
 	newline = ft_xcalloc(ft_strlen(line) * 3 + 10, sizeof(t_char));
 	remove_quotes(newline, line, 0, 0);
