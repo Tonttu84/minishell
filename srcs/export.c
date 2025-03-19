@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:32:40 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/19 15:20:11 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/19 17:35:26 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	add_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar,
 			return (set_envvar(env, envvar, value, i));
 		i++;
 	}
-	error_printf("minishell" "env variables full");
+	error_printf("export", "env variables full");
 	return (231);
 }
 
