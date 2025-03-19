@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:32:12 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/18 15:48:42 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/19 11:41:15 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,6 @@ void	mark_commands(t_char *cli, int i)
 				cli[i].com = 1;
 				cli[i - 1].com = 1;
 		}
-		// else if (cli[i - 1].c == '<' && !cli[i - 2].esc && cli[i
-		// 	- 2].c == ' ' && cli[i].c == '<' && cli[i + 1].c == ' ')
-		// {
-		// 	cli[i].com = 1;
-		// 	cli[i - 1].com = 1;
-		// }
-		// else if (cli[i - 1].c == '>' && !cli[i - 2].esc && cli[i
-		// 	- 2].c == ' ' && cli[i].c == '>' && cli[i + 1].c == ' ')
-		// {
-		// 	cli[i - 1].com = 1;
-		// 	cli[i].com = 1;
-		// }
-
-		//These should also be unnecessary as the earlier test should catch them
 		else if (cli[i - 1].c == ' ' && cli[i].c == '>' && cli[i
 			+ 1].c == '>' && !cli[i + 2].esc && cli[i + 2].c == ' ')
 		{

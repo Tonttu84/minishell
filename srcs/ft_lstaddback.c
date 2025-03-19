@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:41:58 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/19 11:38:24 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/19 11:41:55 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,10 @@
 //Im counting the args but I dont seen to use it for anything will delete later when I have a stable commit
 static void	set_type(t_node *new)
 {
-	// static int	args = 0;
-
 	if (new->str == NULL)
 		new->type = DELIMIT;
 	else if (new->str &&new->str[0].c == '|' && new->str[0].com)
-	{
 		new->type = PIPE;
-		// args = 0;
-	}
 	else if (((new->str &&new->str[0].c == '>') || (new->str
 				&&new->str[0].c == '<' && new->str[0].com)))
 		new->type = REDIRECT;
@@ -49,15 +44,7 @@ static void	set_type(t_node *new)
 	else if (new->str &&new->str[0].com)
 		new->type = CTRL;
 	else
-	{
-		// if (args == 0)
-		// 	new->type = CMD;
-		// else
-		// {
-			new->type = ARG;
-		// }
-		// args++;
-	}
+		new->type = ARG;
 }
 
 static void	add_back_utils(t_list *stack, t_node *new, t_node *cur)
