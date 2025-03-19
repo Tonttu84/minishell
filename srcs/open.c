@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:59:49 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/19 11:55:32 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:14:19 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	open_temp_heredocs(t_node *node, int expand)
 	fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0640);
 	if (fd == -1)
 	{
-		perror("Failed to create a tmp file\n");
+		error_printf("system", "heredocs file creation failed");
 		free(file_name);
 		return (fd);
 	}
@@ -55,7 +55,7 @@ int	open_temp_heredocs(t_node *node, int expand)
 	{
 		unlink(file_name);
 		free(file_name);
-		perror("Write error");
+		error_printf("system", "write failed");
 		close(fd);
 		free(txt);
 		return (-1);
@@ -63,7 +63,7 @@ int	open_temp_heredocs(t_node *node, int expand)
 	close(fd);
 	fd = open(file_name, O_RDWR, 0640);
 	if (fd == -1)
-		perror("Failed to create a tmp file\n");
+		error_printf("system", "heredocs file creation failed");
 	unlink(file_name);
 	free(file_name);
 	free(txt);

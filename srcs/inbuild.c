@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:05:36 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/18 12:39:51 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:21:58 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	bi_pwd(void)
 	if (getcwd(cwd, sizeof(cwd)))
 		printf("%s\n", cwd);
 	else
-		perror("getcwd() error");
+		error_printf("system", "getcwd() error");
 	return (0);
 }
 

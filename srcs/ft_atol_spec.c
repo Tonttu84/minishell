@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi_spec.c                                     :+:      :+:    :+:   */
+/*   ft_atol_spec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:42:12 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/18 12:20:51 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:20:38 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_atoi_spec(const char *nptr, int sign)
 	}
 	if (nptr[i] != 0)
 	{
-		perror("numeric argument required");
+		error_printf("exit", "numeric argument required");
 		return (2);
 	}
 	return (ret * sign);

@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:39:31 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/18 12:39:55 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:18:49 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ static int	is_valid_cd(const char *dir)
 	{
 		if (!S_ISREG(file_stat.st_mode) && !S_ISDIR(file_stat.st_mode) \
 		&& !S_ISLNK(file_stat.st_mode))
-			printf ("minishell: cd: %s: No such file or directory\n", dir);
+		error_printf("cd", "no such file or directory");
 		else if (!S_ISDIR(file_stat.st_mode) && !S_ISLNK(file_stat.st_mode))
-			printf("minishell: cd %s: Not a directory\n", dir);
+		error_printf("cd", "not a directory");
 		else if (access(dir, X_OK))
-			printf("minishell: cd %s: Permission denied\n", dir);
+		error_printf("cd", "permission denied");
 		else
-			printf("minishell: cd %s: Unknown stat error\n", dir);
+			error_printf("cd", "unknown stat error");
 		return (0);
 	}
 	return (1);
@@ -54,7 +54,7 @@ int	bi_cd(int argc, char *argv[], t_sent *sent)
 	if (argc > 2)
 	{
 		(void)argv;
-		printf("cd: too many arguments\n");
+		error_printf("cd", "too many arguments\n");
 		return (1);
 	}
 	cur = ft_strjoin("OLDPWD=", getcwd(cwd, PATH_MAX));
