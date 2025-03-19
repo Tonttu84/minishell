@@ -6,22 +6,39 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 19:21:45 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/15 13:22:53 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/18 20:16:56 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <unistd.h>
 
 void		handle_redirection(char *sentence, enum e_token type, int fd);
-void		print_error_and_exit(char *error_msg, int error_nbr);
-static void	print_error_return_control(void);
-static void	free_and_close(void);
 static void	deal_with_sentence(t_sent *sentence, int i, int pfd[2]);
 
 /*
-** this is called recursively as long as there are new commands to
-** execute, with fork going to execve. then we wait for all pids to return.
+ * all the forked subprocesses end up here, redirections are dealt with
+ * and commands get executed.
+ */
+static void execute_child(t_sent *sent, int pfd[2], pid_t child, int i)
+{
+	if (!child)
+	{
+		unset_signals();
+		deal_with_sentence(sent, -1, pfd);
+		if (!sent->array[0])
+			exit(0);
+		if(is_builtin(sent->array[0]))
+			run_builtin(get_data()->page[i]->argc,
+						sent->array, get_data()->page[0]);
+		if (-1 == execve(sent->array[0], sent->array, __environ))
+			ft_exit(get_data(), sent->array[0], strerror(errno), errno);
+	}
+	else if(child == -1)
+		ft_exit(get_data(), "fork", strerror(errno), errno);
+}
+
+/*
+** this is forks recursively as long as there are new commands
 */
 int	execute(t_sent *sentence, int pfd[2], pid_t my_child, int state)
 {
@@ -30,17 +47,7 @@ int	execute(t_sent *sentence, int pfd[2], pid_t my_child, int state)
 
 	if (my_child > 0 && get_data()->page[i])
 		return (execute(get_data()->page[i++], pfd, fork(), 0));
-	if (!my_child)
-	{
-		unset_signals();
-		deal_with_sentence(sentence, -1, pfd);
-		if (!sentence->array[0])
-			exit(0);
-		if (-1 == execve(sentence->array[0], sentence->array, __environ))
-			print_error_and_exit(sentence->array[0], errno);
-	}
-	else if (my_child == -1)
-		print_error_return_control();
+	execute_child(sentence, pfd, my_child, i);
 	close(pfd[0]);
 	close(pfd[1]);
 	while (i)
@@ -78,28 +85,4 @@ void	deal_with_sentence(t_sent *sentence, int i, int pfd[2])
 		dup2(pfd[STDOUT_FILENO], STDOUT_FILENO);
 	close(pfd[STDIN_FILENO]);
 	close(pfd[STDOUT_FILENO]);
-}
-
-/*
-** let's see if this one makes it 'til end
-*/
-void	print_error_and_exit(char *error_msg, int error_nbr)
-{
-	error_printf(error_msg, strerror(error_nbr));
-	if (error_nbr == 2)
-		error_nbr = 126;
-	else if (error_nbr == 13)
-		error_nbr = 127;
-	free_and_close();
-	exit(error_nbr);
-}
-
-void	print_error_return_control(void)
-{
-	// TODO: error handling subprocess
-}
-
-void	free_and_close(void)
-{
-	// TODO: what to close? what to free?
 }

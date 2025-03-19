@@ -6,11 +6,13 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:11:31 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/19 11:38:33 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/14 13:39:28 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <readline/history.h>
+#include <readline/readline.h>
 
 int	cwd(void)
 {
@@ -46,7 +48,7 @@ static char	*rl_gets(void)
 	{
 		free(line);
 		line = NULL;
-	}
+}
 	line = readline(strcwd);
 	free(strcwd);
 	strcwd = NULL;
@@ -70,7 +72,7 @@ void	prompt_input(char *line, int pfd[2], t_data *data)
 		process(line);
 		if (!data->page[0]->inpipe && !data->page[0]->outpipe
 			&& is_builtin(data->page[0]->array[0]))
-			run_builtin(data->page[0]->argc, data->page[0]->array, data->page[0]);
+			run_builtin(data->page[0]->argc, data->page[0]->array);
 		else
 		{
 			util_parse_args(data, 0);

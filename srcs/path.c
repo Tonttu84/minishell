@@ -5,14 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 18:45:11 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/16 13:25:39 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/17 12:53:16 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// old is static char	**is_path_in_env(t_data *data, char *s, char *s1, int i)
+/*
+ * search our env for PATH= variable
+ */
 static char	*is_path_in_env(t_data *data, char *s, char *s1, int i)
 {
 	while (data->env[i][0])
@@ -30,8 +31,6 @@ static char	*is_path_in_env(t_data *data, char *s, char *s1, int i)
 ** later to be executed by /usr/lib/command-not-found to offer suggestions
 ** how to install or fix a typo etc.
 */
-
-// Check if arrays are malloced;
 static void	command_not_found(t_data *data, int nbr)
 {
 	int	i;
@@ -101,8 +100,7 @@ void	util_parse_args(t_data *data, int i)
 	}
 	while (data->page[i] && data->page[i]->array[0])
 	{
-		//check for inbuilts here?
-		if (path_is_abs_or_rel(data, i))
+		if (path_is_abs_or_rel(data, i) || is_builtin(data->page[i]->array[0]))
 			;
 		else if (command_in_path(data, i, NULL, 0))
 			command_not_found(data, i);
