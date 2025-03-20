@@ -6,18 +6,13 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:05:36 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/19 15:21:58 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/20 15:24:20 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	bi_exit(int argc, char *argv[])
-{
-	(void)argc;
-	(void)argv;
-	return (0);
-}
+
 
 //Cant handle redirection support currently
 int	run_builtin(int argc, char *argv[], t_sent *sent)
@@ -39,7 +34,7 @@ int	run_builtin(int argc, char *argv[], t_sent *sent)
 	else if (ft_strncmp("unset", argv[0], 6) == 0)
 		bi_unset(argc, argv, sent);
 	else if (ft_strncmp("exit", argv[0], 5) == 0)
-		bi_exit(argc, argv);
+		bi_exit(argc, argv, sent);
 	else if (1)
 		return (0);
 	return (1);

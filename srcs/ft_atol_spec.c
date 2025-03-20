@@ -6,13 +6,19 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:42:12 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/19 15:20:38 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/20 15:42:20 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 static int	all_isspace(char *nptr);
+
+static void error_print_spec(char *cmd, char *message)
+{
+	dup2(STDERR_FILENO, STDOUT_FILENO);
+	printf("minishell: %s: %s: %s\n", cmd, message);
+}
 
 int	overflow_check(long ret, int sign, int addition)
 {
