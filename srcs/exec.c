@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 19:21:45 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/18 20:16:56 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/20 15:02:47 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	execute(t_sent *sentence, int pfd[2], pid_t my_child, int state)
 			ret = state;
 		i--;
 	}
-	i = 0;
+	deallocate(get_data());
 	if (WIFEXITED(ret))
 		return (WEXITSTATUS(ret));
 	return (EXIT_SUCCESS);
@@ -85,4 +85,16 @@ void	deal_with_sentence(t_sent *sentence, int i, int pfd[2])
 		dup2(pfd[STDOUT_FILENO], STDOUT_FILENO);
 	close(pfd[STDIN_FILENO]);
 	close(pfd[STDOUT_FILENO]);
+}
+
+/*
+** keeps the last executed programs return value
+*/
+int store_return_value(int ret_val, bool add)
+{
+	static int ret;
+
+	if (add)
+		ret = ret_val;
+	return (ret);
 }

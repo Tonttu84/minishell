@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:11:31 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/20 12:54:08 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/20 14:54:37 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,32 +55,30 @@ static char	*rl_gets(void)
 	return (line);
 }
 
-void	prompt_input(char *line, int pfd[2], t_data *data, int input)
+int	prompt_input(char *line, int pfd[2], t_data *data, int input)
 {
-	data = get_data();
-	while (1)
-	{
 		set_signals();
 		if (input == 1)
 			input = 0;
-		else 
+		else
 			line = rl_gets();
 		rl_on_new_line();
 		if (line == NULL)
-			break ;
+			return (1);
 		else if (line[0] == '\0')
-			continue ;
+			return (0);
 		process(line);
 		if (data->page[0] && !data->page[0]->inpipe && !data->page[0]->outpipe
-			&& data->page[0]->array[0] != 0 && is_builtin(data->page[0]->array[0]))
-			run_builtin(data->page[0]->argc, data->page[0]->array, data->page[0]);
+			&& is_builtin(data->page[0]->array[0]))
+			store_return_value(run_builtin(data->page[0]->argc,
+					data->page[0]->array, data->page[0]), true);
 		else
 		{
 			util_parse_args(data, 0);
 			block_signals_in_parent();
 			if (-1 == pipe(pfd))
 				ft_exit(data, "pipe", strerror(errno), errno);
-			execute(data->page[0], pfd, 1, 0);
+			store_return_value(execute(data->page[0], pfd, 1, 0), true);
 		}
-	}
+		return (0);
 }

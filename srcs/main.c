@@ -6,13 +6,14 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:36:25 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/20 12:54:24 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/20 14:54:05 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 size_t					ft_strlcpy(char *dst, const char *src, size_t size);
+void deallocate(t_data *data);
 
 void	init(char env_cpy[MAX_VARS + 1][MAX_LENGTH + 1], char **orig)
 {
@@ -30,6 +31,7 @@ void	init(char env_cpy[MAX_VARS + 1][MAX_LENGTH + 1], char **orig)
 int	main(int argc, char **argv, char *envp[])
 {
 	int pfd[2];
+	int ret;
 
 	if (argc > 2)
 	{
@@ -37,8 +39,11 @@ int	main(int argc, char **argv, char *envp[])
 	}
 	init(get_data()->env, envp);
 	set_signals();
+	ret = 0;
 	if (argc == 2)
-		prompt_input(argv[1], pfd, get_data(), 1);
-	else
-		prompt_input(NULL, pfd, get_data(), 0);
+		ret = prompt_input(argv[1], pfd, get_data(), 1);
+	while(!ret)
+		ret = prompt_input(NULL, pfd, get_data(), 0);
+	rl_clear_history();
+	return (store_return_value(0, false));
 }
