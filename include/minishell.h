@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/20 15:27:15 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/20 15:43:34 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ void			expand_envvar(char *unexp, char *exp, int *i, int *k);
 void			util_parse_args(t_data *data, int i);
 int				execute(t_sent *sentence, int pfd[2], pid_t my_child,
 					int state);
+int				store_return_value(int ret_val, bool add);
 
 /*
 ** EXIT & ERROR PRINTING
@@ -181,11 +182,12 @@ char			*cnvrt_to_char(t_char *line);
 t_char			*lexify(char *line, t_data *data);
 t_sent			**create_page(t_list *stack);
 void			print_sentence(t_sent *sentence);
-char			*create_heredoc(char *terminator, int expand, char *result, char *tmp);
+char			*create_heredoc(char *terminator, int expand, char *result,
+					char *tmp);
 bool			is_file(t_token type);
 char			*test_outfile(t_char *raw_path);
 char			*test_append(t_char *raw_path);
-void			prompt_input(char *line, int pfd[2], t_data *data, int input);
+int				prompt_input(char *line, int pfd[2], t_data *data, int input);
 void			add_redirection(t_node *node, t_sent *sentence, int i);
 t_sent			*conv_linked_to_sentence(int i, int k, t_node *node,
 					t_sent *sentence);
