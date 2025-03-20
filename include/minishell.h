@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/20 15:43:34 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:05:26 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void			bi_env(t_data *data);
 int				bi_echo(int argc, char *argv[]);
 int				bi_unset(int argc, char *argv[], t_sent *sent);
 int				bi_export(int argc, char *argv[], t_sent *sent);
+int				bi_exit(int argc, char *argv[], t_sent *sentence);
 const char		*ft_get_env(const char *target);
 int				add_envvar(char env[ENV_SIZE + 1][MAX_LENGTH + 1], char *envvar,
 					char *value);
@@ -155,6 +156,7 @@ void			test(void);
 void			deallocate(t_data *data);
 int				ft_atoi_spec(const char *nptr, int sign);
 
+
 /*
 ** UTILITIES
 */
@@ -175,6 +177,7 @@ size_t			ft_tcharlen(t_char *line);
 t_node			*destroy_node(t_list *list, t_node *node);
 int				copy_env_to_tchar(t_char *dst, int i, const char *env);
 char			*cnvrt_to_char(t_char *line);
+void			destroy_old_page(void);
 
 /*
 ** LEXING & PARSING

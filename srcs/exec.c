@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 19:21:45 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/20 15:02:47 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/20 16:15:00 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static void execute_child(t_sent *sent, int pfd[2], pid_t child, int i)
 		if (!sent->array[0])
 			exit(0);
 		if(is_builtin(sent->array[0]))
-			run_builtin(get_data()->page[i]->argc,
-						sent->array, get_data()->page[0]);
+			exit(run_builtin(get_data()->page[i]->argc,
+						sent->array, get_data()->page[0]));
 		if (-1 == execve(sent->array[0], sent->array, __environ))
 			ft_exit(get_data(), sent->array[0], strerror(errno), errno);
 	}

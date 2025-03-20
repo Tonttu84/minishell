@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:55:05 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/20 15:38:54 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:04:43 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_exit(t_data *data, char *cmd, char *message, int exit_code)
 {
 	deallocate(data);
 	error_printf(cmd, message);
+	rl_clear_history();
 	exit(exit_code);
 }
 
@@ -32,29 +33,16 @@ void error_printf(char *cmd, char *message)
 void	deallocate(t_data *data)
 {
 	int i;
-	int i1;
 
+	destroy_old_page();
 	i = 0;
-	while(data->path[i])
+	while(data->path && data->path[i])
 	{
 		free(data->path[i]);
 		data->path[i++] = NULL;
 	}
 	free(data->path);
 	data->path = NULL;
-	i = 0;
-	i1 = 0;
-	while(data->page[i])
-	{
-		while(data->page[i]->array[i1])
-		{
-			free(data->page[i]->array[i1]);
-			data->page[i]->array[i1++] = NULL;
-		}
-		free(data->page[i]);
-		data->page[i++] = NULL;
-	}
-
 }
 //bash exits if first argument is  illegal even if it has too many arguments
 //if both arguments are legal it will fail to exit 
@@ -70,6 +58,7 @@ int	bi_exit(int argc, char *argv[], t_sent *sentence)
 		else
 		{
 			deallocate(get_data());
+			rl_clear_history();
 			exit (0);
 		}
 	}
@@ -81,6 +70,7 @@ int	bi_exit(int argc, char *argv[], t_sent *sentence)
 		else
 		{
 			deallocate(get_data());
+			rl_clear_history();
 			exit (2);
 		}
 	}
@@ -92,6 +82,7 @@ int	bi_exit(int argc, char *argv[], t_sent *sentence)
 	if (sentence->outpipe == 0 && sentence->inpipe == 0)
 	{
 		deallocate(get_data());
+		rl_clear_history();
 		exit (exit_status);
 	}
 	return (exit_status);
