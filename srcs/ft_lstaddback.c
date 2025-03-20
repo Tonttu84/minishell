@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:41:58 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/19 12:13:31 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/20 06:38:54 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	ft_lstadd_back(t_list *stack, t_node *new)
 	t_node	*cur;
 
 	if (new == NULL)
-		return (perror("DEBUG: Tried to add an empty stack"));
+		return (error_printf("list", "added to an empty list"));
 	if (stack->first == NULL)
 		return (initialize_empty_stack(stack, new));
 	cur = stack->first;

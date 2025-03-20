@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/18 12:48:31 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/20 07:04:52 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-# include <sys/stat.h>
 # ifndef PATH_MAX /// Max path lenght
 #  define PATH_MAX (500)
 # endif
@@ -85,7 +85,7 @@ typedef struct s_sent
 	bool		inpipe;
 	t_dir		redirs[20];
 	bool		outpipe;
-	int            error; // error code here
+	int error; // error code here
 	int			heredocs;
 	int			argc;
 }				t_sent;
@@ -130,13 +130,13 @@ int				builtin_cd(char *path);
 /*
 ** BUILT' IN UTISLS
 */
-int	print_alphabetically(char env[ENV_SIZE + 1][MAX_LENGTH + 1]);
-int	unset_one(char *env_val);
+int				print_alphabetically(char env[ENV_SIZE + 1][MAX_LENGTH + 1]);
+int				unset_one(char *env_val);
 
 /*
 ** ENVVAR UTILS
 */
-void	expand_envvar(char *unexp, char *exp, int *i, int *k);
+void			expand_envvar(char *unexp, char *exp, int *i, int *k);
 
 /*
 ** EXECUTION
@@ -151,6 +151,7 @@ int				execute(t_sent *sentence, int pfd[2], pid_t my_child,
 void			ft_exit(t_data *data, char *cmd, char *message, int exit_code);
 void			error_printf(char *cmd, char *message);
 void			test(void);
+void			deallocate(t_data *data);
 
 /*
 ** UTILITIES
@@ -173,17 +174,14 @@ t_node			*destroy_node(t_list *list, t_node *node);
 int				copy_env_to_tchar(t_char *dst, int i, const char *env);
 char			*cnvrt_to_char(t_char *line);
 
-
-
-
-
 /*
 ** LEXING & PARSING
 */
 t_char			*lexify(char *line, t_data *data);
 t_sent			**create_page(t_list *stack);
 void			print_sentence(t_sent *sentence);
-char			*create_heredoc(char *terminator, int expand, char *result, char *tmp);
+char			*create_heredoc(char *terminator, int expand, char *result,
+					char *tmp);
 bool			test_file(t_token type);
 char			*test_outfile(t_char *raw_path);
 char			*test_append(t_char *raw_path);
