@@ -16,7 +16,7 @@
 /*
  *frees all heap memory, prints message to stderr and exits with correct code
  */
-void	ft_exit(t_data *data, char *cmd, char *message, int exit_code)
+void ft_exit(t_data *data, char *cmd, char *message, int exit_code)
 {
 	deallocate(data);
 	error_printf(cmd, message);
@@ -26,7 +26,7 @@ void	ft_exit(t_data *data, char *cmd, char *message, int exit_code)
 
 /*
 ** writes to stderr
- */
+*/
 void error_printf(char *cmd, char *message)
 {
 	dup2(STDERR_FILENO, STDOUT_FILENO);
@@ -36,13 +36,13 @@ void error_printf(char *cmd, char *message)
 /*
 ** frees memory
 */
-void	deallocate(t_data *data)
+void deallocate(t_data *data)
 {
 	int i;
 
 	destroy_old_page();
 	i = 0;
-	while(data->path && data->path[i])
+	while (data->path && data->path[i])
 	{
 		free(data->path[i]);
 		data->path[i++] = NULL;
@@ -52,12 +52,11 @@ void	deallocate(t_data *data)
 }
 
 /*
-*   checks with what value and if to exit at all.
-*/
-static int check_exit_status(int exit_status, t_sent *sentence,
-   char **argv, int argc)
+ *   checks with what value and if to exit at all.
+ */
+static int check_exit_status(int exit_status, t_sent *sentence, char **argv, int argc)
 {
-   	if (exit_status == 2 && ft_strncmp(argv[1], "2", 2) != 0)
+	if (exit_status == 2 && ft_strncmp(argv[1], "2", 2) != 0)
 	{
 		if (sentence->outpipe || sentence->inpipe)
 			return (2);
@@ -65,7 +64,7 @@ static int check_exit_status(int exit_status, t_sent *sentence,
 		{
 			deallocate(get_data());
 			rl_clear_history();
-			exit (2);
+			exit(2);
 		}
 	}
 	if (argc > 2)
@@ -77,14 +76,15 @@ static int check_exit_status(int exit_status, t_sent *sentence,
 	{
 		deallocate(get_data());
 		rl_clear_history();
-		exit (exit_status);
+		exit(exit_status);
 	}
 	return (exit_status);
 }
 
-//bash exits if first argument is  illegal even if it has too many arguments
-//if both arguments are legal it will fail to exit
-int	bi_exit(int argc, char *argv[], t_sent *sentence)
+// minishell exits if first argument is illegal even if it has too many 
+// arguments
+// if both arguments are legal it will fail to exit
+int bi_exit(int argc, char *argv[], t_sent *sentence)
 {
 	int exit_status;
 
@@ -97,7 +97,7 @@ int	bi_exit(int argc, char *argv[], t_sent *sentence)
 		{
 			deallocate(get_data());
 			rl_clear_history();
-			exit (0);
+			exit(0);
 		}
 	}
 	exit_status = ft_atoi_spec(argv[1], 0);
