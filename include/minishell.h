@@ -180,9 +180,8 @@ char			*cnvrt_to_char(t_char *line);
 t_char			*lexify(char *line, t_data *data);
 t_sent			**create_page(t_list *stack);
 void			print_sentence(t_sent *sentence);
-char			*create_heredoc(char *terminator, int expand, char *result,
-					char *tmp);
-bool			test_file(t_token type);
+char			*create_heredoc(char *terminator, int expand, char *result, char *tmp);
+bool			is_file(t_token type);
 char			*test_outfile(t_char *raw_path);
 char			*test_append(t_char *raw_path);
 void			prompt_input(char *line, int pfd[2], t_data *data);
