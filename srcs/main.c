@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:36:25 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/18 15:55:48 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/20 12:54:24 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,14 @@ int	main(int argc, char **argv, char *envp[])
 {
 	int pfd[2];
 
-	(void)argv;
-	if (argc != 1)
+	if (argc > 2)
 	{
 		return (-1);
 	}
 	init(get_data()->env, envp);
 	set_signals();
-	prompt_input(NULL, pfd, get_data());
+	if (argc == 2)
+		prompt_input(argv[1], pfd, get_data(), 1);
+	else
+		prompt_input(NULL, pfd, get_data(), 0);
 }

@@ -6,7 +6,7 @@
 #    By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/14 13:14:15 by jtuomi            #+#    #+#              #
-#    Updated: 2025/03/18 15:51:54 by jrimpila         ###   ########.fr        #
+#    Updated: 2025/03/20 11:21:45 by jrimpila         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ LIBFT = ./libft/libft.a
 
 all: debug $(NAME)
 $(NAME) : $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) -o $@ $(OBJ) $(DEBUG_OBJ) -L $(INCLUDE_DIRS) -lft -lreadline
+	$(CC) $(CFLAGS) -o $@ $(OBJ) $(DEBUG_OBJ) -L $(INCLUDE_DIRS) -lft -lreadline -fsanitize=address
 %.o: %.c
 	$(CC) $(CFLAGS) -o $@ -c $<
 $(LIBFT):

@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:43:34 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/18 12:43:52 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/20 12:40:00 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,13 @@ int	handle_rest(char *src, t_char *dst, int i, int *k)
 	{
 		dst[(*k) + 1].blok = 1;
 		return (1);
+	}
+	else if (src[i] == '$' && !ft_isalnum(src[i + 1]) && src[i + 1] != \
+	'\'' && src[i + 1] != '\"' && src[i + 1] != '_' && src[i + 1] != '?')
+	{
+		dst[*k].c = src[i];
+		dst[*k].esc = 1;
+		(*k)++;
 	}
 	else
 	{

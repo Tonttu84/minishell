@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:32:26 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/20 06:43:50 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/20 11:06:56 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ int	match_env_argument(t_char *source, char *env_var)
 	i = 0;
 	if (env_var == NULL || env_var[0] == '\0')
 		return (0);
-	if (source[0].c != '$' || (ft_isalnum(source[1].c) == 0
-			&& source[1].c != '_'))
-		return (error_printf("illegal character expansion", &source[1].c), 1);
+	if ((ft_isalnum(source[1].c) == 0 && source[1].c != '_'))
+		{
+			source[0].esc = 1;
+			return (0);
+		}
 	i = 1;
 	while (env_var[i - 1] && source[i].c && source[i].c == env_var[i - 1]
 		&& source[i].var)

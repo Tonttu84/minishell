@@ -6,11 +6,13 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 11:55:23 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/18 12:05:50 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/20 12:46:19 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+//Todennakoisesti tahan kohtaan $?
 
 int	match_env_argument_char(char *source, char *env_var)
 {
@@ -19,8 +21,8 @@ int	match_env_argument_char(char *source, char *env_var)
 	i = 0;
 	if (env_var == NULL || env_var[0] == '\0')
 		return (0);
-	if (source[0] != '$' || (ft_isalnum(source[1]) == 0 && source[1] != '_'))
-		perror("DEBUG iffy input to match_env_argument\n");
+	if ((ft_isalnum(source[1]) == 0 && source[1] != '_'))
+		return (0);
 	i = 1;
 	while (ft_isalnum(source[i]) || source[i] == '_')
 	{

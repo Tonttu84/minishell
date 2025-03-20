@@ -6,11 +6,13 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:27:03 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/19 15:14:51 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/20 12:17:44 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+//jos seuraava ei ole alnum eika _ eika "" eika '' eika ?
 
 int	next_is_delim(char *str, int i, t_char *dst, int k)
 {
