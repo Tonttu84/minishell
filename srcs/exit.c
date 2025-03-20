@@ -31,7 +31,30 @@ void error_printf(char *cmd, char *message)
 
 void	deallocate(t_data *data)
 {
-	(void)data;
+	int i;
+	int i1;
+
+	i = 0;
+	while(data->path[i])
+	{
+		free(data->path[i]);
+		data->path[i++] = NULL;
+	}
+	free(data->path);
+	data->path = NULL;
+	i = 0;
+	i1 = 0;
+	while(data->page[i])
+	{
+		while(data->page[i]->array[i1])
+		{
+			free(data->page[i]->array[i1]);
+			data->page[i]->array[i1++] = NULL;
+		}
+		free(data->page[i]);
+		data->page[i++] = NULL;
+	}
+
 }
 //bash exits if first argument is  illegal even if it has too many arguments
 //if both arguments are legal it will fail to exit 
