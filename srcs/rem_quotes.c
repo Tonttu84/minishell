@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:27:03 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/20 12:17:44 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/20 15:14:43 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	next_is_delim(char *str, int i, t_char *dst, int k)
 	return (1);
 }
 
+
 int	mark_redir(char *src, int *i, t_char *dst, int *k)
 {
 	if (src[*i] == src[(*i) + 1] && (src[*i] == '>' || src[*i] == '<'))
@@ -52,7 +53,7 @@ int	mark_redir(char *src, int *i, t_char *dst, int *k)
 		(*k)++;
 		return (1);
 	}
-	else if (src[(*i) + 1] != src[*i] && (src[*i] == '>' || src[*i] == '<'))
+	else if (src[(*i) + 1] != src[*i] && (src[*i] == '>' || src[*i] == '<' || src[*i] == '|' ))
 	{
 		dst[*k].c = ' ';
 		(*k)++;
