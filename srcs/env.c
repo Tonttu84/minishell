@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:32:26 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/20 11:06:56 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:48:08 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ const char	*ft_get_env(const char *target)
 }
 
 // export finds all, ENV only finds if there is =
-
 const char	*find_env(t_char *source, t_data *data)
 {
 	int	i;
