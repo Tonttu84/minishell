@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:42:12 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/20 15:42:20 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/20 15:47:55 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,27 @@
 
 static int	all_isspace(char *nptr);
 
-static void error_print_spec(char *cmd, char *message)
+static void error_print_spec(char *cmd, char *message1, char *message2)
 {
 	dup2(STDERR_FILENO, STDOUT_FILENO);
-	printf("minishell: %s: %s: %s\n", cmd, message);
+	printf("minishell: %s: %s: %s\n", cmd, message1, message2);
 }
 
-int	overflow_check(long ret, int sign, int addition)
+int	overflow_check(long ret, int sign, int addition, char *nptr)
 {
 	if (ret == 922337203685477580 && addition > 7)
 	{
-		perror("Overflow happens");
+		error_printf_spec("exit", nptr, "numeric argument required");
 		return (2);
 	}
 	if (ret >= 922337203685477581)
 	{
-		perror("Overflow happens");
+		error_printf_spec("exit", nptr, "numeric argument required");
 		return (2);
 	}
 	if (ret == 922337203685477580 && addition > 8 && sign == -1)
 	{
-		perror("Overflow happens");
+		error_printf_spec("exit", nptr, "numeric argument required");
 		return (2);
 	}
 	return (0);
@@ -57,7 +57,7 @@ int	ft_atoi_spec(const char *nptr, int sign)
 		i++;
 	while (ft_isdigit(nptr[i]))
 	{
-		if (overflow_check(ret, sign, (nptr[i] - '0')))
+		if (overflow_check(ret, sign, (nptr[i] - '0'), nptr))
 			return (2);
 		ret *= 10;
 		ret += nptr[i] - '0';
@@ -65,7 +65,7 @@ int	ft_atoi_spec(const char *nptr, int sign)
 	}
 	if (nptr[i] != 0)
 	{
-		error_printf("exit", "numeric argument required");
+		error_printf_spec("exit", nptr, "numeric argument required");
 		return (2);
 	}
 	return (ret * sign);
