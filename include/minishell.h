@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 10:39:37 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/20 12:54:41 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/20 15:27:15 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ void			ft_exit(t_data *data, char *cmd, char *message, int exit_code);
 void			error_printf(char *cmd, char *message);
 void			test(void);
 void			deallocate(t_data *data);
+int				ft_atoi_spec(const char *nptr, int sign);
 
 /*
 ** UTILITIES

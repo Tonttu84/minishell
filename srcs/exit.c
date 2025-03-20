@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:55:05 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/20 07:04:54 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/20 15:38:54 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,45 @@ void error_printf(char *cmd, char *message)
 void	deallocate(t_data *data)
 {
 	(void)data;
+}
+//bash exits if first argument is  illegal even if it has too many arguments
+//if both arguments are legal it will fail to exit 
+int	bi_exit(int argc, char *argv[], t_sent *sentence)
+{
+	int exit_status;
+	
+	printf("exit\n");
+	if (argc == 0)
+	{
+		if (sentence->outpipe || sentence->inpipe)
+			return (0);
+		else
+		{
+			deallocate(get_data());
+			exit (0);
+		}
+	}
+	exit_status = ft_atoi_spec(argv[1], 0);
+	if (exit_status == 2 && ft_strncmp(argv[1], "2", 2) != 0)
+	{
+		if (sentence->outpipe || sentence->inpipe)
+			return (2);
+		else
+		{
+			deallocate(get_data());
+			exit (2);
+		}
+	}
+	if (argc > 2)
+	{
+		error_printf("exit", "too many arguments");
+		return (127);
+	}
+	if (sentence->outpipe == 0 && sentence->inpipe == 0)
+	{
+		deallocate(get_data());
+		exit (exit_status);
+	}
+	return (exit_status);
+	
 }
