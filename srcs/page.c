@@ -12,6 +12,15 @@
 
 #include "../include/minishell.h"
 
+bool	is_file(t_token type)
+{
+	return (type == IN_FILE || type == OUT_FILE
+		|| type == APPEND || type == HERE_DOCS
+		|| type == HERE_QUOTE);
+}
+
+// i is 0, k is 0, sentence is calloced, node is pulled from data
+t_sent	*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence);
 static t_node	*check_inpipe(t_sent *sentence, t_node *node)
 {
 	if (node && node->type == PIPE)
@@ -43,8 +52,7 @@ t_sent	*conv_linked_to_sentence(int i, int k, t_node *node, t_sent *sentence)
 				|| get_data()->tokens.last == node)
 				ft_exit(get_data(), "syntax error near unexpected token", "nl", 1);
 		}
-		else if (node->type == IN_FILE || node->type == OUT_FILE || node->type
-			== APPEND || node->type == HERE_DOCS || node->type == HERE_QUOTE)
+		else if (is_file(node->type))
 			add_redirection(node, sentence, k++);
 		else
 			sentence->array[i++] = cnvrt_to_char(node->str);
