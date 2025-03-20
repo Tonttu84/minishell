@@ -6,13 +6,13 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:41:05 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/05 12:37:02 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/19 14:25:45 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	iterate_list(t_list *list, node_func func)
+void	iterate_list(t_list *list, t_node_func func)
 {
 	t_node	*current;
 
@@ -28,27 +28,8 @@ void	iterate_list(t_list *list, node_func func)
 	}
 }
 
-size_t	ft_wrdlen(t_char *str, t_data *data)
-{
-	size_t	i;
-	size_t	count_i;
 
-	(void)data;
-	i = 0;
-	count_i = 0;
-	if (str == NULL)
-	{
-		perror("DEBUG: Pointer is NULL for ft_wrdlen\n");
-		return (-1);
-	}
-	while (str[i].c != 0 && (str[i].c != ' ' || str[i].esc == 1))
-	{
-		if (str[i].ghost == 0)
-			count_i++;
-		i++;
-	}
-	return (count_i);
-}
+
 // Destroys the current node and moves to the next node
 t_node	*destroy_node(t_list *list, t_node *node)
 {

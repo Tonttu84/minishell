@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:07:43 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/06 18:07:00 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/19 15:15:37 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ bool	command_in_path(t_data *data, int nbr, char *cmd_p, int i)
 	{
 		tmp = ft_strjoin(data->path[i], "/");
 		if (!tmp)
-			ft_exit(data, "malloc", errno);
+			ft_exit(data, "system" "malloc", errno);
 		cmd_p = ft_strjoin(tmp, data->page[nbr]->array[0]);
 		if (!cmd_p)
-			ft_exit(data, "malloc", errno);
+			ft_exit(data, "system" "malloc", errno);
 		free(tmp);
 		if (0 == access(cmd_p, X_OK))
 		{

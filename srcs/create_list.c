@@ -6,17 +6,17 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:50:42 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/10 17:33:29 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/18 12:07:58 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_node	*create_node(t_char *line, size_t start, size_t size)
+//int i is passed as 0
+t_node	*create_node(t_char *line, size_t start, size_t size, int i)
 {
 	t_node	*node;
 	t_char	*str;
-	int		i;
 
 	str = NULL;
 	node = ft_xcalloc(sizeof(t_node), 1);
@@ -27,7 +27,6 @@ t_node	*create_node(t_char *line, size_t start, size_t size)
 	}
 	else if (line)
 	{
-		i = 0;
 		str = ft_xcalloc(sizeof(t_char), size + 1);
 		while (line[start].c != 0 && (line[start].c != ' ' || line[start].esc))
 		{
@@ -56,7 +55,7 @@ void	create_list(t_data *data, t_char *line)
 		if (line[i].c == 0)
 			break ;
 		strsize = ft_wrdlen(line + i, data);
-		ft_lstadd_back(&data->tokens, create_node(line, i, strsize));
+		ft_lstadd_back(&data->tokens, create_node(line, i, strsize, 0));
 		while (line[i].c != 0)
 		{
 			if (line[i].c == ' ' && line[i].esc == 0)

@@ -6,62 +6,39 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:41:58 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/15 13:19:05 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/20 06:38:54 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// heredocs needs to be counted at this point
-// BASH actually prints some redirection errors at this point but doesnt stop,
-//	it waits until "page creation" to stop so heredocs happens even after error
-//	is detected
+//BASH counts heredocs quite early so we do it while creating nodes
 static void	set_type(t_node *new)
 {
-	static int	args = 0;
-
-	if (new->str == NULL)
-		new->type = DELIMIT;
-	else if (new->str &&new->str[0].c == '|' && new->str[0].com)
-	{
+	if (new->str && new->str[0].c == '|' && new->str[0].com)
 		new->type = PIPE;
-		args = 0;
-	}
-	else if (((new->str &&new->str[0].c == '>') || (new->str
-				&&new->str[0].c == '<' && new->str[0].com)))
+	else if (((new->str && new->str[0].c == '>') || (new->str \
+	&& new->str[0].c == '<' && new->str[0].com)))
 		new->type = REDIRECT;
-	else if (new->prev->str &&new->prev->str[0].c == '>'
-		&& new->prev->str[1].c == '>' && new->prev->str[0].com)
+	else if (new->prev->str && new->prev->str[0].c == '>' \
+	&& new->prev->str[1].c == '>' && new->prev->str[0].com)
 		new->type = APPEND;
-	else if (new->prev->str &&new->prev->str[0].c == '>'
-		&& new->prev->str[0].com)
+	else if (new->prev->str && new->prev->str[0].c == '>' \
+	&& new->prev->str[0].com)
 		new->type = OUT_FILE;
-	else if (new->prev->str &&new->prev->str[0].c == '<'
-		&& new->prev->str[1].c == '<' && new->prev->str[0].com)
+	else if (new->prev->str && new->prev->str[0].c == '<' \
+	&& new->prev->str[1].c == '<' && new->prev->str[0].com)
 	{
 		new->type = HERE_DOCS;
 		get_data()->herecount++;
 		if (get_data()->herecount >= 17)
-		{
-			perror("Maximum amount of heredocs is 16");
-			exit(2);
-		}
+			ft_exit(get_data(), "Maximum amount of heredocs is 16", "", 2);
 	}
-	else if (new->prev->str &&new->prev->str[0].c == '<'
+	else if (new->prev->str && new->prev->str[0].c == '<'
 		&& new->prev->str[0].com)
 		new->type = IN_FILE;
-	else if (new->str &&new->str[0].com)
-		new->type = CTRL;
 	else
-	{
-		if (args == 0)
-			new->type = CMD;
-		else
-		{
-			new->type = ARG;
-		}
-		args++;
-	}
+		new->type = ARG;
 }
 
 static void	add_back_utils(t_list *stack, t_node *new, t_node *cur)
@@ -84,7 +61,7 @@ void	ft_lstadd_back(t_list *stack, t_node *new)
 	t_node	*cur;
 
 	if (new == NULL)
-		return (perror("DEBUG: Tried to add an empty stack"));
+		return (error_printf("list", "added to an empty list"));
 	if (stack->first == NULL)
 		return (initialize_empty_stack(stack, new));
 	cur = stack->first;

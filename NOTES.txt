@@ -1,33 +1,10 @@
 
-Suojaa splitti tapaukselta PATH=::
-tiedostot ei toimi komentojen ja putkien kanssa <- nyt toimii
-kaksi putkea ei toimi juuri nyt
-<<EOF < > ottaa syntax errorit todella oudossa kohtaa
-
-
-testaa miten bash suhtautuu liian moneen argumenttiin builtineissa
-
-identify builtins
-
-
-Builtin:
-	exit: printtaa virheen jos exit ajetaan putken kanssa yli 9223372036854775807 argumentilla. palautusarvo: 2.
-	cd: kokeile fstatilla onko kohde kansio tai lstat toimiva linkki. 
-	env: bash ajaa /usr/bin/env, voimmeko mekin?
-	export: ilman argumenttia tulostaa envin. muuten asettaa muuttujan arvon. ei validi tulostaa virheen. pa: 1.
-	echo: tulostaa ilman argumentteja putkesta ja argumenteilla annetun tekstin. -n optiolla ilman \n, muuten kanssa.
-	unset: poistaa env:sta annetun arvon.
-
-
 SHLVL inkrementointi kun minishell ajetaan minishellin kautta.
-
-<Makefile cat | awk '{print $1}'
-
 
 _ is the last argument of executed command, this could be likely tested with inbuilds. Even if inbuids are not exactly executed the _ gets still updated
 it gets updated even inside children. in pipe the last pipe updates it. 
 
-
+_ ei ole subjektissa tai arviointilomakkeessa
 
 <<""EOF apparenty tells the heredocs not to expand env variables inside heredocs
 
@@ -44,20 +21,36 @@ $_ paivittyy todella oudosti, cd "" antaa sen arvoksi "" kun taas echo blaablaa 
 
 env is an external command in bash located in _=/usr/bin/env
 
-Jos poistaa kansion, unsettaa PWD:n ja OLDPWD:n niin bashin cd toimii siltikin
-eli meidan taytyy trakata pathia
-
 unset PATH; ls toimii edelleen
 
 ? ei palauta edellisen palauttamaa arvoa
 
-toimiiko cd jos kansio poistetaan alta -> ei, segfault.
+export blaa"'"blaa=duu
+bash: export: `blaa'blaa=duu': not a valid identifier
 
-jtuomi:/home/jtuomi😎>mkdir test
-jtuomi:/home/jtuomi😎>cd test/
-jtuomi:/home/jtuomi/test😎>mkdir test
-jtuomi:/home/jtuomi/test😎>cd test/
-jtuomi:/home/jtuomi/test/test😎>rmdir ../test/
-jtuomi:/home/jtuomi/test/test😎>cd ..
-Segmentation fault (core dumped)
-cd ../../../../../../../../../home/jrimpila/
+toimiiko cd jos kansio poistetaan alta -> pitaisi toimia nyt. Testaa viela ja poista kommentti jos toimii
+
+$()
+$(env)
+
+=======
+tarkista <<EO"F" should not expand I think?
+
+cat blaa | echo $HOME | <Makefile | echo duh <-this is valid
+
+cat blaa | echo $HOME
+
+<<EOF grep jrimpila seems to explode
+heredocs expansion seems to have trouble
+
+rimpila:/home/jrimpila/Git/minishell😎><Makefile >test 
+jrimpila:/home/jrimpila/Git/minishell😎>cat test 
+infile: Makefileoutfile: test
+
+<<BLAA >test ls ei luo outfilea
+
+cat $HOME/input.txt cat $HOME/input.txt >> outfile.txt | echo $USER grep $invalid search_pattern <<EOF < $HOME/input.txt <<EOF > $HOME/error.log | sort | uniq | echo > test.txt Found line: $line | echo Current user: $USER | echo Non-existent variable: $NONEXISTENTVA
+
+vetaa jumiin. 
+
+ls >>test2 | echo blaa <<TEST test2 ei sisalla ls outputtia

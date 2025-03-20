@@ -6,25 +6,45 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:06:42 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/11 17:56:01 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/19 14:33:14 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+size_t	ft_wrdlen(t_char *str, t_data *data)
+{
+	size_t	i;
+	size_t	count_i;
+
+	(void)data;
+	i = 0;
+	count_i = 0;
+	if (str == NULL)
+	{
+		perror("DEBUG: Pointer is NULL for ft_wrdlen\n");
+		return (-1);
+	}
+	while (str[i].c != 0 && (str[i].c != ' ' || str[i].esc == 1))
+	{
+		if (str[i].ghost == 0)
+			count_i++;
+		i++;
+	}
+	return (count_i);
+}
 
 const char	*token_to_string(t_token token)
 {
 	
 	if (token == ARG)
 		return ("ARG");
-	else if (token == CMD)
-		return ("CMD");
+
 	else if (token == OUT_FILE)
 		return ("OUT_FILE");
 	else if (token == IN_FILE)
 		return ("IN_FILE");
-	else if (token == CTRL)
-		return ("CTRL");
+
 	else if (token == PIPE)
 		return ("PIPE");
 	else if (token == REDIRECT)
@@ -41,20 +61,17 @@ const char	*token_to_color(t_token token)
 {
 	if (token == IN_FILE)
 		return (BRIGHT_BLUE);
-	else if (token == DELIMIT)
-		return (YELLOW);
+
 	else if (token == ARG)
 		return (CYAN);
 	else if (token == HERE_DOCS)
 		return (BRIGHT_CYAN);
-	else if (token == CMD)
-		return (MAGENTA);
+
 	else if (token == OUT_FILE)
 		return (WHITE);
 	else if (token == APPEND)
 		return (BRIGHT_WHITE);
-	else if (token == CTRL)
-		return (BLUE);
+
 	else if (token == REDIRECT)
 		return (BLUE);
 	else if (token == PIPE)

@@ -6,60 +6,66 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:59:49 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/10 15:30:47 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:14:19 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*test_outfile(t_char *raw_path)
+static char	*ft_itoa_rec(unsigned int nbr, char *buffer)
 {
-	int		fd;
-	char	*proc_path;
-
-	proc_path = cnvrt_to_char(raw_path);
-	fd = open(proc_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	close(fd);
-	if (fd == -1)
-		return (NULL);
-	return (proc_path);
+	if (nbr >= 10)
+		buffer = ft_itoa_rec(nbr / 10, buffer);
+	*buffer = (nbr % 10) + '0';
+	return (++buffer);
 }
 
-char	*test_append(t_char *raw_path)
+static char	*ft_itoa(unsigned int nbr)
 {
-	int		fd;
-	char	*proc_path;
+	static char	result[12];
+	char		*buffer;
 
-	proc_path = cnvrt_to_char(raw_path);
-	fd = open(proc_path, O_WRONLY | O_CREAT, 0644);
-	close(fd);
-	if (fd == -1)
-		return (NULL);
-	return (proc_path);
+	buffer = result;
+	buffer = ft_itoa_rec(nbr, buffer);
+	*buffer = '\0';
+	return (result);
 }
 
-// O_EXCL prevents the file from being linked to filesystem when used together with __)
 int	open_temp_heredocs(t_node *node, int expand)
 {
-	int fd;
-	char *eof;
-	char *txt;
+	int					fd;
+	char				*file_name;
+	char				*txt;
+	char				*eof;
+	static unsigned int	suffix = 0;
 
-	fd = open("/tmp", O_RDWR | __O_TMPFILE, 0640);
-	if (-1 == fd)
+	file_name = ft_strjoin("/tmp/here_docs_", ft_itoa(suffix++));
+	fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0640);
+	if (fd == -1)
 	{
-		perror("Failed to create a tmp file\n");
+		error_printf("system", "heredocs file creation failed");
+		free(file_name);
 		return (fd);
 	}
 	eof = cnvrt_to_char(node->str);
-	printf("%s\n", eof);
-	txt = create_heredoc(eof, expand);
+	txt = create_heredoc(eof, expand, NULL, NULL);
 	free(eof);
 	eof = NULL;
-	if (0 > write(fd, txt, ft_strlen(txt)))
+	if (write(fd, txt, ft_strlen(txt)) < 0)
 	{
-		perror("Write error, what to do");
+		unlink(file_name);
+		free(file_name);
+		error_printf("system", "write failed");
+		close(fd);
+		free(txt);
+		return (-1);
 	}
+	close(fd);
+	fd = open(file_name, O_RDWR, 0640);
+	if (fd == -1)
+		error_printf("system", "heredocs file creation failed");
+	unlink(file_name);
+	free(file_name);
 	free(txt);
 	return (fd);
 }
