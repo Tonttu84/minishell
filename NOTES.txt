@@ -58,3 +58,8 @@ ls >>test2 | echo blaa <<TEST test2 ei sisalla ls outputtia
 suunnitelma, otetaan _ getenvilla
 
 add support for /minishell command.
+
+bi_exit is buggy
+
+jrimpila:/home/jrimpila/Git/minishell😎><<EOF
+ctrl d ei toimi
