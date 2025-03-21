@@ -6,13 +6,11 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:05:36 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/20 15:24:20 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:48:07 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-
 
 //Cant handle redirection support currently
 int	run_builtin(int argc, char *argv[], t_sent *sent)

@@ -31,26 +31,8 @@ static char	*ft_itoa(unsigned int nbr)
 	return (result);
 }
 
-int	open_temp_heredocs(t_node *node, int expand)
+static bool	check_write(int fd, char *txt, char *file_name)
 {
-	int					fd;
-	char				*file_name;
-	char				*txt;
-	char				*eof;
-	static unsigned int	suffix = 0;
-
-	file_name = ft_strjoin("/tmp/here_docs_", ft_itoa(suffix++));
-	fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0640);
-	if (fd == -1)
-	{
-		error_printf("system", "heredocs file creation failed");
-		free(file_name);
-		return (fd);
-	}
-	eof = cnvrt_to_char(node->str);
-	txt = create_heredoc(eof, expand, NULL, NULL);
-	free(eof);
-	eof = NULL;
 	if (write(fd, txt, ft_strlen(txt)) < 0)
 	{
 		unlink(file_name);
@@ -58,12 +40,30 @@ int	open_temp_heredocs(t_node *node, int expand)
 		error_printf("system", "write failed");
 		close(fd);
 		free(txt);
-		return (-1);
+		return (false);
 	}
+	return (true);
+}
+
+int	open_temp_heredocs(t_node *node, int expand, char *eof, char *txt)
+{
+	int					fd;
+	char				*file_name;
+	static unsigned int	suffix = 0;
+
+	eof = ft_itoa(suffix++);
+	file_name = ft_strjoin("/tmp/here_docs_", eof);
+	free(eof);
+	fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0640);
+	if (-1 == fd)
+		return (free(file_name), fd);
+	eof = cnvrt_to_char(node->str);
+	txt = create_heredoc(eof, expand, NULL, NULL);
+	free(eof);
+	if (!check_write(fd, txt, file_name))
+		return (-1);
 	close(fd);
 	fd = open(file_name, O_RDWR, 0640);
-	if (fd == -1)
-		error_printf("system", "heredocs file creation failed");
 	unlink(file_name);
 	free(file_name);
 	free(txt);

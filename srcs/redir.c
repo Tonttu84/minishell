@@ -19,9 +19,9 @@ void	add_redirection(t_node *node, t_sent *sentence, int i)
 	else
 		sentence->redirs[i].type = node->type;
 	if (sentence->redirs[i].type == HERE_DOCS)
-		sentence->redirs[i].here_fd = open_temp_heredocs(node, 0);
+		sentence->redirs[i].here_fd = open_temp_heredocs(node, 0, NULL, NULL);
 	else if (sentence->redirs[i].type == HERE_QUOTE)
-		sentence->redirs[i].here_fd = open_temp_heredocs(node, 1);
+		sentence->redirs[i].here_fd = open_temp_heredocs(node, 1, NULL, NULL);
 	else if (node->str)
 		sentence->redirs[i].path = cnvrt_to_char(node->str);
 	else

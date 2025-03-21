@@ -65,7 +65,7 @@ bool	command_in_path(t_data *data, int nbr, char *cmd_p, int i)
 {
 	char	*tmp;
 
-	while (data->path[i])
+	while (data->path && data->path[i])
 	{
 		tmp = ft_strjoin(data->path[i], "/");
 		cmd_p = ft_strjoin(tmp, data->page[nbr]->array[0]);
@@ -92,12 +92,13 @@ bool	command_in_path(t_data *data, int nbr, char *cmd_p, int i)
 */
 void	util_parse_args(t_data *data, int i)
 {
-	char	*temp;
+	char	*tmp;
 
 	if (data->env[0][0])
 	{
-		temp = is_path_in_env(data, "PATH=", NULL, 0);
-		data->path = ft_split(&temp[5], ':');
+		tmp = is_path_in_env(data, "PATH=", NULL, 0);
+		if (tmp)
+		  data->path = ft_split(&tmp[5], ':');
 	}
 	while (data->page[i] && data->page[i]->array[0])
 	{

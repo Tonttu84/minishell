@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:55:05 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/20 16:04:43 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/20 17:16:03 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 /*
  *frees all heap memory, prints message to stderr and exits with correct code
  */
-void	ft_exit(t_data *data, char *cmd, char *message, int exit_code)
+void    ft_exit(t_data *data, char *cmd, char *message, int exit_code)
 {
 	deallocate(data);
 	error_printf(cmd, message);
@@ -24,19 +24,25 @@ void	ft_exit(t_data *data, char *cmd, char *message, int exit_code)
 	exit(exit_code);
 }
 
-void error_printf(char *cmd, char *message)
+/*
+** writes to stderr
+*/
+void    error_printf(char *cmd, char *message)
 {
 	dup2(STDERR_FILENO, STDOUT_FILENO);
 	printf("minishell: %s: %s\n", cmd, message);
 }
 
+/*
+** frees memory
+*/
 void	deallocate(t_data *data)
 {
-	int i;
+	int	i;
 
 	destroy_old_page();
 	i = 0;
-	while(data->path && data->path[i])
+	while (data->path && data->path[i])
 	{
 		free(data->path[i]);
 		data->path[i++] = NULL;
@@ -44,25 +50,13 @@ void	deallocate(t_data *data)
 	free(data->path);
 	data->path = NULL;
 }
-//bash exits if first argument is  illegal even if it has too many arguments
-//if both arguments are legal it will fail to exit 
-int	bi_exit(int argc, char *argv[], t_sent *sentence)
+
+/*
+ *   checks with what value and if to exit at all.
+ */
+static int	check_exit_status(int exit_status, t_sent *sentence, char **argv,
+		int argc)
 {
-	int exit_status;
-	
-	printf("exit\n");
-	if (argc == 0)
-	{
-		if (sentence->outpipe || sentence->inpipe)
-			return (0);
-		else
-		{
-			deallocate(get_data());
-			rl_clear_history();
-			exit (0);
-		}
-	}
-	exit_status = ft_atoi_spec(argv[1], 0);
 	if (exit_status == 2 && ft_strncmp(argv[1], "2", 2) != 0)
 	{
 		if (sentence->outpipe || sentence->inpipe)
@@ -71,7 +65,7 @@ int	bi_exit(int argc, char *argv[], t_sent *sentence)
 		{
 			deallocate(get_data());
 			rl_clear_history();
-			exit (2);
+			exit(2);
 		}
 	}
 	if (argc > 2)
@@ -83,8 +77,30 @@ int	bi_exit(int argc, char *argv[], t_sent *sentence)
 	{
 		deallocate(get_data());
 		rl_clear_history();
-		exit (exit_status);
+		exit(exit_status);
 	}
 	return (exit_status);
-	
+}
+
+// minishell exits if first argument is illegal even if it has too many
+// arguments
+// if both arguments are legal it will fail to exit
+int	bi_exit(int argc, char *argv[], t_sent *sentence)
+{
+	int	exit_status;
+
+	printf("exit\n");
+	if (argc == 0)
+	{
+		if (sentence->outpipe || sentence->inpipe)
+			return (0);
+		else
+		{
+			deallocate(get_data());
+			rl_clear_history();
+			exit(0);
+		}
+	}
+	exit_status = ft_atoi_spec(argv[1], 0);
+	return (check_exit_status(exit_status, sentence, argv, argc));
 }

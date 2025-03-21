@@ -196,7 +196,7 @@ t_sent			*conv_linked_to_sentence(int i, int k, t_node *node,
 					t_sent *sentence);
 int				check_emp_arg(char *src, int i, t_char *dst, int *k);
 void			remove_quotes(t_char *dst, char *src, int i, int k);
-int				open_temp_heredocs(t_node *node, int expand);
+int				open_temp_heredocs(t_node *node, int expand, char *eof, char *txt);
 void			mark_commands(t_char *com_line, int i);
 
 /*
