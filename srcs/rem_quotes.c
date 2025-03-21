@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:27:03 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/20 15:14:43 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/20 18:01:21 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	next_is_delim(char *str, int i, t_char *dst, int k)
 	}
 	return (1);
 }
-
+//need a specific test for pipe
 
 int	mark_redir(char *src, int *i, t_char *dst, int *k)
 {

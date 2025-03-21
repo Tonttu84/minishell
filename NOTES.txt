@@ -63,3 +63,8 @@ bi_exit is buggy
 
 jrimpila:/home/jrimpila/Git/minishell😎><<EOF
 ctrl d ei toimi
+
+Makefile | grep blaa
+minishell: �: No such file or directory
+
+cat << "$USER" exit is "$USER"
