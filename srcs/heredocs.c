@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:18:56 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/19 12:50:45 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/21 19:27:22 by jtuomi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,20 @@ int	t_compare(t_char *str, char *str2)
 	return (0);
 }
 
-//result and tmp are passed as NULL
+static char	*return_result(char *result, int expand)
+{
+	if (result == NULL)
+		result = ft_strdup("");
+	if (expand)
+		return (expand_heredocs(result));
+	return (result);
+}
+
+// result and tmp are passed as NULL
 char	*create_heredoc(char *terminator, int expand, char *result, char *tmp)
 {
-	while (tmp == NULL || ft_strncmp(terminator, tmp, \
-	ft_strlen(terminator + 1)))
+	while (tmp == NULL || ft_strncmp(terminator, tmp, ft_strlen(terminator
+				+ 1)))
 	{
 		if (tmp)
 		{
@@ -74,11 +83,12 @@ char	*create_heredoc(char *terminator, int expand, char *result, char *tmp)
 				result = tmp;
 		}
 		tmp = readline(">");
+		if (!tmp)
+		{
+			error_printf("warning", "here-document limited by end-of-file");
+			break ;
+		}
 	}
-	if (result == NULL)
-		result = ft_strdup("");
 	free(tmp);
-	if (expand)
-		return (expand_heredocs(result));
-	return (result);
+	return (return_result(result, expand));
 }

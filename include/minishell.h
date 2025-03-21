@@ -36,11 +36,11 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # ifndef PATH_MAX /// Max path lenght
-#  define PATH_MAX (500)
+#  define PATH_MAX (5000)
 # endif
 # define ENV_SIZE 4096
 # ifndef MAX_SENT_SIZE
-#  define MAX_SENT_SIZE (200)
+#  define MAX_SENT_SIZE (2000)
 # endif
 # ifndef MAX_SENTENCES
 #  define MAX_SENTENCES (50)

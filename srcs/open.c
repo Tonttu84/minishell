@@ -51,9 +51,7 @@ int	open_temp_heredocs(t_node *node, int expand, char *eof, char *txt)
 	char				*file_name;
 	static unsigned int	suffix = 0;
 
-	eof = ft_itoa(suffix++);
-	file_name = ft_strjoin("/tmp/here_docs_", eof);
-	free(eof);
+	file_name = ft_strjoin("/tmp/here_docs_", ft_itoa(suffix++));
 	fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0640);
 	if (-1 == fd)
 		return (free(file_name), fd);
