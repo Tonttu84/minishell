@@ -16,7 +16,7 @@
 /*
  *frees all heap memory, prints message to stderr and exits with correct code
  */
-void ft_exit(t_data *data, char *cmd, char *message, int exit_code)
+void    ft_exit(t_data *data, char *cmd, char *message, int exit_code)
 {
 	deallocate(data);
 	error_printf(cmd, message);
@@ -27,7 +27,7 @@ void ft_exit(t_data *data, char *cmd, char *message, int exit_code)
 /*
 ** writes to stderr
 */
-void error_printf(char *cmd, char *message)
+void    error_printf(char *cmd, char *message)
 {
 	dup2(STDERR_FILENO, STDOUT_FILENO);
 	printf("minishell: %s: %s\n", cmd, message);
@@ -36,9 +36,9 @@ void error_printf(char *cmd, char *message)
 /*
 ** frees memory
 */
-void deallocate(t_data *data)
+void	deallocate(t_data *data)
 {
-	int i;
+	int	i;
 
 	destroy_old_page();
 	i = 0;
@@ -54,7 +54,8 @@ void deallocate(t_data *data)
 /*
  *   checks with what value and if to exit at all.
  */
-static int check_exit_status(int exit_status, t_sent *sentence, char **argv, int argc)
+static int	check_exit_status(int exit_status, t_sent *sentence, char **argv,
+		int argc)
 {
 	if (exit_status == 2 && ft_strncmp(argv[1], "2", 2) != 0)
 	{
@@ -81,12 +82,12 @@ static int check_exit_status(int exit_status, t_sent *sentence, char **argv, int
 	return (exit_status);
 }
 
-// minishell exits if first argument is illegal even if it has too many 
+// minishell exits if first argument is illegal even if it has too many
 // arguments
 // if both arguments are legal it will fail to exit
-int bi_exit(int argc, char *argv[], t_sent *sentence)
+int	bi_exit(int argc, char *argv[], t_sent *sentence)
 {
-	int exit_status;
+	int	exit_status;
 
 	printf("exit\n");
 	if (argc == 0)
