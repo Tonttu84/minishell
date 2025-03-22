@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:42:12 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/22 19:09:39 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/22 19:25:01 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ int	overflow_check(long ret, int sign, int addition, const char *nptr)
 
 // Meant to handle the inbuilt exit the same way as bash. 
 // int sign should be passed as 1
-int	ft_atoi_spec(const char *nptr, int sign)
+int	ft_atoi_spec(const char *nptr, int sign, long ret)
 {
-	long	ret;
 	int		i;
 
 	ret = 0;
 	i = all_isspace((char *)nptr);
-	if (nptr[i++] == '-')
+	if (nptr[i] == '-')
 	{
+		i++;
 		sign = -1;
 	}
 	else if (nptr[i] == '+')
