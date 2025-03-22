@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 13:25:30 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/21 14:02:52 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/22 19:07:19 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static void	handle_infile(char *sent, int fd)
 	dup2(fd, STDIN_FILENO);
 	close(fd);
 }
+
 //This should depend on if there is a quote in the heredoc delimiter
 static void	handle_heredoc(char *sent, int fd)
 {

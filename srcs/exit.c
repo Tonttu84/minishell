@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:55:05 by jrimpila          #+#    #+#             */
-/*   Updated: 2025/03/20 17:16:03 by jtuomi           ###   ########.fr       */
+/*   Updated: 2025/03/22 19:04:56 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 /*
  *frees all heap memory, prints message to stderr and exits with correct code
  */
-void    ft_exit(t_data *data, char *cmd, char *message, int exit_code)
+void	ft_exit(t_data *data, char *cmd, char *message, int exit_code)
 {
 	deallocate(data);
 	error_printf(cmd, message);
@@ -27,7 +27,7 @@ void    ft_exit(t_data *data, char *cmd, char *message, int exit_code)
 /*
 ** writes to stderr
 */
-void    error_printf(char *cmd, char *message)
+void	error_printf(char *cmd, char *message)
 {
 	dup2(STDERR_FILENO, STDOUT_FILENO);
 	printf("minishell: %s: %s\n", cmd, message);

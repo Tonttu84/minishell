@@ -6,7 +6,7 @@
 /*   By: jrimpila <jrimpila@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 19:21:45 by jtuomi            #+#    #+#             */
-/*   Updated: 2025/03/20 16:33:35 by jrimpila         ###   ########.fr       */
+/*   Updated: 2025/03/22 19:09:11 by jrimpila         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,21 @@ static void	deal_with_sentence(t_sent *sentence, int i, int pfd[2]);
  * all the forked subprocesses end up here, redirections are dealt with
  * and commands get executed.
  */
-static void execute_child(t_sent *sent, int pfd[2], pid_t child, int i)
+static void	execute_child(t_sent *sent, int pfd[2], pid_t child, int i)
 {
 	if (!child)
 	{
 		unset_signals();
 		deal_with_sentence(sent, -1, pfd);
 		if (!sent->array[0])
-			exit(0);
-		if(is_builtin(sent->array[0]))
+			exit (0);
+		if (is_builtin(sent->array[0]))
 			exit(run_builtin(get_data()->page[i]->argc,
-						sent->array, get_data()->page[0]));
+					sent->array, get_data()->page[0]));
 		if (-1 == execve(sent->array[0], sent->array, __environ))
 			ft_exit(get_data(), sent->array[0], strerror(errno), errno);
 	}
-	else if(child == -1)
+	else if (child == -1)
 		ft_exit(get_data(), "fork", strerror(errno), errno);
 }
 
@@ -90,9 +90,9 @@ void	deal_with_sentence(t_sent *sentence, int i, int pfd[2])
 /*
 ** keeps the last executed programs return value
 */
-int store_return_value(int ret_val, bool add)
+int	store_return_value(int ret_val, bool add)
 {
-	static int ret;
+	static int	ret;
 
 	if (add)
 		ret = ret_val;
